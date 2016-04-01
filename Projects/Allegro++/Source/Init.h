@@ -1,0 +1,7 @@
+#ifndef ALLEGROPP_INIT
+#define ALLEGROPP_INIT
+
+
+
+
+#endif // ALLEGROPP_INIT 

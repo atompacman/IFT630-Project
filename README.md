@@ -1,1 +1,1 @@
-# IFT630-Project-Vulkan
+# IFT630 - Project
