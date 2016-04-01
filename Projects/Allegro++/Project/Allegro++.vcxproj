@@ -78,7 +78,7 @@
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Source;..\Include;..\..\..\Solution\packages\Allegro.5.2.0.0\build\native\include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
