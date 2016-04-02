@@ -19,7 +19,7 @@ protected:
 
     void onButtonPressed(uint8_t i_Button) override
     {
-
+		
     }
 
     void onButtonReleased(uint8_t i_Button) override
@@ -44,9 +44,15 @@ protected:
     bool tick() override
     {
         LOG_EVERY_N(60, INFO) << "Game tick";
-        auto color = al_map_rgb(100, 10, 50);
-        auto cmd = std::make_shared<alpp::render::DrawFilledCircle>(m_Mouse->m_PosX, m_Mouse->m_PosY, 10, color);
+        auto color = al_map_rgb(20, 20, 150);
+        auto cmd = std::make_shared<alpp::render::DrawFilledCircle>(m_Mouse->m_PosX, m_Mouse->m_PosY, 50, color);
+
         m_Renderer->enqueueCommand(cmd);
+
+		color = al_map_rgb(170, 170, 10);
+		auto cmd2 = std::make_shared<alpp::render::DrawFilledRectangle>(0, 0, 100, 800, color);
+
+		m_Renderer->enqueueCommand(cmd2);
         return true;
     }
 

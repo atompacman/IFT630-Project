@@ -45,6 +45,28 @@ private:
     ALLEGRO_COLOR m_Color;
 };
 
+class DrawFilledRectangle : public Command
+{
+public:
+
+	explicit DrawFilledRectangle(
+		float         i_PosLeft,
+		float         i_PosTop,
+		float         i_PosRight,
+		float         i_PosBottom,
+		ALLEGRO_COLOR i_Color);
+
+	void execute() override;
+
+private:
+
+	float         m_PosLeft;
+	float         m_PosTop;
+	float         m_PosRight;
+	float         m_PosBottom;
+	ALLEGRO_COLOR m_Color;
+};
+
 }}
 
 #endif // ALPP_RENDER_COMMAND 

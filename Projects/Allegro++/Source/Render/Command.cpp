@@ -31,3 +31,23 @@ void alpp::render::DrawFilledCircle::execute()
 {
     al_draw_filled_circle(m_CenterPosX, m_CenterPosY, m_Radius, m_Color);
 }
+
+alpp::render::DrawFilledRectangle::DrawFilledRectangle(float         i_PosLeft,
+													   float         i_PosTop,
+													   float         i_PosRight,
+													   float         i_PosBottom,
+													   ALLEGRO_COLOR i_Color) :
+	Command(),
+	m_PosLeft(i_PosLeft),
+	m_PosTop(i_PosTop),
+	m_PosRight(i_PosRight),
+	m_PosBottom(i_PosBottom),
+	m_Color(i_Color)
+{
+
+}
+
+void alpp::render::DrawFilledRectangle::execute()
+{
+	al_draw_filled_rectangle(m_PosLeft, m_PosTop, m_PosRight, m_PosBottom, m_Color);
+}
