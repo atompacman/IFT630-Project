@@ -1,29 +1,61 @@
-#include <Allegro++.h>
-#include <GameLoop.h>
-#include <Renderer.h>
+#include <string>
+#include <Event/GameUpdater.h>
+#include <Event/Manager.h>
+#include <Event/Mouse.h>
+#include <Render/Window.h>
 
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
 
+class MyMouse : public alpp::event::Mouse
+{
+protected:
+
+    void onMouseMoved() override
+    {
+        LOG(INFO) << "Mouse moved";
+    }
+
+    void onButtonPressed(uint8_t i_Button) override
+    {
+        LOG(INFO) << "Mouse button " << i_Button << " was pressed";
+    }
+
+    void onButtonReleased(uint8_t i_Button) override
+    {
+        LOG(INFO) << "Mouse button " << i_Button << " was released";
+    }
+};
+
+class MyGameUpdater : public alpp::event::GameUpdater
+{
+public:
+
+    explicit MyGameUpdater() { };
+
+protected:
+
+    bool tick() override
+    {
+        LOG(INFO) << "Game tick";
+        return true;
+    }
+};
+
 int main()
 {
-    // Initializes the Allegro++ wrapper library
     alpp::init(LOGGER_CONFIG_FILE);
 
-    // Set window creation settings
-    alpp::WindowSettings winSettings;
-    winSettings.displayMode = alpp::DisplayMode::WINDOWED;
-    winSettings.library     = alpp::GraphicsLibrary::OPEN_GL;
-    winSettings.width       = 1600;
-    winSettings.height      = 800;
-    winSettings.isResizable = true;
-    winSettings.title       = "Test";
+    alpp::event::Manager eventManager;
 
-    // Create the renderer, which will create the window for us
-    alpp::Renderer renderer(winSettings, 60);
+    eventManager.registerAgent(std::make_shared<alpp::render::Window>(
+                                    alpp::render::DisplayMode::WINDOWED,
+                                    alpp::render::GraphicsLibrary::OPEN_GL,
+                                    1600,
+                                    800,
+                                    true,
+                                    "Test"));
+    eventManager.registerAgent(std::make_shared<MyMouse>());
+    eventManager.registerAgent(std::make_shared<MyGameUpdater>());
 
-    // Create the game loop
-    alpp::GameLoop loop(renderer);
-
-    // Run the game loop
-    loop.run();
+    eventManager.run();
 }

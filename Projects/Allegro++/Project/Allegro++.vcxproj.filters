@@ -4,17 +4,23 @@
     <ClInclude Include="..\Include\easylogging++.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Renderer.h">
+    <ClInclude Include="..\Source\Event\Agent.h">
+      <Filter>Source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Event\Manager.h">
+      <Filter>Source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Event\Mouse.h">
+      <Filter>Source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Core.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\WindowSettings.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Source\Event\GameUpdater.h">
+      <Filter>Source\Event</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\GameLoop.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Allegro++.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Source\Render\Window.h">
+      <Filter>Source\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +33,12 @@
     <Filter Include="Project">
       <UniqueIdentifier>{17c304f4-0dd8-4f24-87d0-7018efa7e9d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Event">
+      <UniqueIdentifier>{3d6f919a-a6a9-4e32-9cee-92fb6e25d12e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Render">
+      <UniqueIdentifier>{d109bb04-8ffe-4003-8df7-a2ad5855d6df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -34,17 +46,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Renderer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Test.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\GameLoop.cpp">
+    <ClCompile Include="..\Source\Event\Manager.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\Mouse.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Core.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Allegro++.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="..\Source\Event\GameUpdater.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Render\Window.cpp">
+      <Filter>Source\Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

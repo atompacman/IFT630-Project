@@ -1,12 +1,9 @@
-#include <Allegro++.h>
+#include <Core.h>
 #include <allegro5/system.h>
 
 INITIALIZE_EASYLOGGINGPP
 
-namespace alpp
-{
-
-bool init(std::string const & i_LoggerConfigFilePath)
+bool alpp::init(std::string const & i_LoggerConfigFilePath)
 {
     // Initialize logger library
     el::Configurations conf;
@@ -25,4 +22,13 @@ bool init(std::string const & i_LoggerConfigFilePath)
     return success;
 }
 
+alpp::AllegroInitializable::AllegroInitializable() :
+    m_InitSuccess(true)
+{
+    
+}
+
+bool alpp::AllegroInitializable::isSuccessfullyInitialized() const
+{
+    return m_InitSuccess;
 }

@@ -146,16 +146,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\easylogging++.h" />
-    <ClInclude Include="..\Source\Allegro++.h" />
-    <ClInclude Include="..\Source\GameLoop.h" />
-    <ClInclude Include="..\Source\Renderer.h" />
-    <ClInclude Include="..\Source\WindowSettings.h" />
+    <ClInclude Include="..\Source\Core.h" />
+    <ClInclude Include="..\Source\Event\Agent.h" />
+    <ClInclude Include="..\Source\Event\GameUpdater.h" />
+    <ClInclude Include="..\Source\Event\Manager.h" />
+    <ClInclude Include="..\Source\Event\Mouse.h" />
+    <ClInclude Include="..\Source\Render\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\GameLoop.cpp" />
-    <ClCompile Include="..\Source\Allegro++.cpp" />
+    <ClCompile Include="..\Source\Event\GameUpdater.cpp" />
+    <ClCompile Include="..\Source\Event\Manager.cpp" />
+    <ClCompile Include="..\Source\Event\Mouse.cpp" />
+    <ClCompile Include="..\Source\Core.cpp" />
+    <ClCompile Include="..\Source\Render\Window.cpp" />
     <ClCompile Include="..\Source\Test.cpp" />
-    <ClCompile Include="..\Source\Renderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

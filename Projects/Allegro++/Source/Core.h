@@ -1,5 +1,5 @@
-#ifndef ALLEGROPP
-#define ALLEGROPP
+#ifndef ALPP_CORE
+#define ALPP_CORE
 
 #include <easylogging++.h>
 #include <memory>
@@ -26,11 +26,24 @@ using sptr = std::shared_ptr<T>;
 template <typename T>
 using sptrc = std::shared_ptr<T const>;
 
-namespace alpp
-{
+namespace alpp {
 
 bool init(std::string const & i_LoggerConfigFilePath);
 
+class AllegroInitializable
+{
+public:
+
+    explicit AllegroInitializable();
+    virtual ~AllegroInitializable() { }
+
+    bool isSuccessfullyInitialized() const;
+
+protected:
+
+    bool m_InitSuccess;
+};
+
 }
 
-#endif // ALLEGROPP 
+#endif // ALPP_CORE 
