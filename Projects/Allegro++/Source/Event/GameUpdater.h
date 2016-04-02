@@ -1,8 +1,10 @@
 #ifndef ALPP_EVENT_GAME_UPDATER
 #define ALPP_EVENT_GAME_UPDATER
 
-#include <event/Agent.h>
+#include <allegro5/events.h>
 #include <allegro5/timer.h>
+#include <event/Agent.h>
+#include <Render/Renderer.h>
 
 namespace alpp { namespace event {
 
@@ -10,7 +12,7 @@ class GameUpdater : public Agent
 {
 public:
 
-    explicit GameUpdater(double i_TargetFPS = 60.);
+    explicit GameUpdater(sptr<render::Renderer> io_Renderer, double i_TargetFPS = 60.);
     ~GameUpdater() override;
 
     bool handleEvent(ALLEGRO_EVENT i_Event) override;
@@ -21,9 +23,11 @@ protected:
 
     ALLEGRO_EVENT_SOURCE * getEventSource() const override;
 
+    sptr<render::Renderer> m_Renderer;
+
 private:
 
-    ALLEGRO_TIMER * m_Ticker;
+    ALLEGRO_TIMER *        m_Ticker;
 };
 
 }}

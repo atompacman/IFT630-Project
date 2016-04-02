@@ -19,7 +19,13 @@
     <ClInclude Include="..\Source\Event\GameUpdater.h">
       <Filter>Source\Event</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Render\Window.h">
+    <ClInclude Include="..\Source\Render\Renderer.h">
+      <Filter>Source\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Render\Command.h">
+      <Filter>Source\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Render\WindowSettings.h">
       <Filter>Source\Render</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,9 +36,6 @@
     <Filter Include="Include">
       <UniqueIdentifier>{ad0aba8e-72b2-4679-8009-bc79f5d19bf0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project">
-      <UniqueIdentifier>{17c304f4-0dd8-4f24-87d0-7018efa7e9d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Event">
       <UniqueIdentifier>{3d6f919a-a6a9-4e32-9cee-92fb6e25d12e}</UniqueIdentifier>
     </Filter>
@@ -41,14 +44,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <Filter>Project</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Source\Test.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Event\Manager.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>
@@ -61,7 +56,10 @@
     <ClCompile Include="..\Source\Event\GameUpdater.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Render\Window.cpp">
+    <ClCompile Include="..\Source\Render\Renderer.cpp">
+      <Filter>Source\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Render\Command.cpp">
       <Filter>Source\Render</Filter>
     </ClCompile>
   </ItemGroup>

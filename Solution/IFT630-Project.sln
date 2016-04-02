@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProductionLineHero", "..\Projects\ProductionLineHero\Project\ProductionLineHero.vcxproj", "{748EBC1B-C5C9-47AE-8A3B-FC12BF09F527}"
+	ProjectSection(ProjectDependencies) = postProject
+		{346A3C7F-C278-4888-9D2D-7D2B17E8D088} = {346A3C7F-C278-4888-9D2D-7D2B17E8D088}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Allegro++", "..\Projects\Allegro++\Project\Allegro++.vcxproj", "{346A3C7F-C278-4888-9D2D-7D2B17E8D088}"
 EndProject

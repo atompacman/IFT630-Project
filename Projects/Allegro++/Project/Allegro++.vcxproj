@@ -39,7 +39,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -78,8 +78,9 @@
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Source;..\Include;..\..\..\Solution\packages\Allegro.5.2.0.0\build\native\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
@@ -142,24 +143,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\Include\easylogging++.h" />
     <ClInclude Include="..\Source\Core.h" />
     <ClInclude Include="..\Source\Event\Agent.h" />
     <ClInclude Include="..\Source\Event\GameUpdater.h" />
     <ClInclude Include="..\Source\Event\Manager.h" />
     <ClInclude Include="..\Source\Event\Mouse.h" />
-    <ClInclude Include="..\Source\Render\Window.h" />
+    <ClInclude Include="..\Source\Render\Command.h" />
+    <ClInclude Include="..\Source\Render\Renderer.h" />
+    <ClInclude Include="..\Source\Render\WindowSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Event\GameUpdater.cpp" />
     <ClCompile Include="..\Source\Event\Manager.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Core.cpp" />
-    <ClCompile Include="..\Source\Render\Window.cpp" />
-    <ClCompile Include="..\Source\Test.cpp" />
+    <ClCompile Include="..\Source\Render\Command.cpp" />
+    <ClCompile Include="..\Source\Render\Renderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
