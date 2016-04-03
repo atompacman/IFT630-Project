@@ -23,6 +23,7 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Worker.cpp">
+    <ClCompile Include="..\Source\Resource.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,6 +43,10 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Worker.h">
+    <ClInclude Include="..\Source\Resource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Settings.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

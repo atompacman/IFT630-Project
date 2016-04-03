@@ -8,9 +8,6 @@
 #include <Render/Renderer.h>
 #include <Render/WindowSettings.h>
 
-// el
-#include <easylogging++.h>
-
 // plh
 #include <Factory.h>
 #include <Worker.h>
@@ -55,7 +52,9 @@ public:
         m_Factory(),
         m_Worker(400, 400, 1)
     {
-        m_Factory.buildWorkshop(2, 1);
+        auto workshop = m_Factory.buildWorkshop(2, 1);
+        workshop->addResourceStack(StackPosition::WEST, ResourceStack::Type::INPUT);
+        workshop->addResourceStack(StackPosition::EAST, ResourceStack::Type::OUTPUT);
     };
 
 protected:
