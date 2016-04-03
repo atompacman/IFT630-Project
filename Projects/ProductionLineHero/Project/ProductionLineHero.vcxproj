@@ -121,6 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Factory.cpp" />
+    <ClCompile Include="..\Source\Resource.cpp" />
     <ClCompile Include="..\Source\ResourceStack.cpp" />
     <ClCompile Include="..\Source\Test.cpp" />
     <ClCompile Include="..\Source\Workshop.cpp" />
@@ -130,7 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Factory.h" />
+    <ClInclude Include="..\Source\Resource.h" />
     <ClInclude Include="..\Source\ResourceStack.h" />
+    <ClInclude Include="..\Source\Settings.h" />
     <ClInclude Include="..\Source\Workshop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

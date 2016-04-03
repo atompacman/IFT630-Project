@@ -22,6 +22,9 @@
     <ClCompile Include="..\Source\ResourceStack.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Resource.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -36,6 +39,12 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\ResourceStack.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Resource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Settings.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
