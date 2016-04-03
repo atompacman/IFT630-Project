@@ -1,7 +1,15 @@
+// allegro
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/display.h>
+
+// alpp
 #include <Render/Command.h>
 #include <Render/Renderer.h>
+
+// el
+#include <easylogging++.h>
+
+// std
 #include <thread>
 
 alpp::render::Renderer::Renderer(WindowSettings i_WinSettings) :

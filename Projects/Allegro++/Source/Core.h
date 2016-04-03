@@ -1,7 +1,7 @@
 #ifndef ALPP_CORE
 #define ALPP_CORE
 
-#include <easylogging++.h>
+// std
 #include <memory>
 #include <string>
 

@@ -1,25 +1,39 @@
+// allegro
 #include <allegro5/bitmap.h>
-#include <Event/GameUpdater.h>
-#include <Event/Manager.h>
+
+// alpp
 #include <Event/Mouse.h>
+#include <Event/GameLoop.h>
 #include <Render/Command.h>
+#include <Render/Renderer.h>
 #include <Render/WindowSettings.h>
+
+// el
+#include <easylogging++.h>
+
+// std
 #include <string>
+
+using namespace alpp;
 
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
 
-class MyMouse : public alpp::event::Mouse
+uint16_t objPosX;
+uint16_t objPosY;
+
+class MyMouse : public event::Mouse
 {
 protected:
 
     void onMouseMoved() override
     {
-
+        objPosX = m_PosX;
+        objPosY = m_PosY;
     }
 
     void onButtonPressed(uint8_t i_Button) override
     {
-		
+
     }
 
     void onButtonReleased(uint8_t i_Button) override
@@ -28,15 +42,12 @@ protected:
     }
 };
 
-class MyGameUpdater : public alpp::event::GameUpdater
+class MyGameLoop : public event::GameLoop
 {
 public:
 
-    explicit MyGameUpdater(sptr<alpp::render::Renderer> io_Renderer,
-                           sptrc<alpp::event::Mouse>    i_Mouse,
-                           double                       i_TargetFPS = 60.) :
-        GameUpdater(io_Renderer, i_TargetFPS),
-        m_Mouse(i_Mouse)
+    explicit MyGameLoop(render::WindowSettings i_WinSettings, double i_TargetFPS = 60.) :
+        GameLoop(i_WinSettings, i_TargetFPS)
     {};
 
 protected:
@@ -45,49 +56,38 @@ protected:
     {
         LOG_EVERY_N(60, INFO) << "Game tick";
         auto color = al_map_rgb(20, 20, 150);
-        auto cmd = std::make_shared<alpp::render::DrawFilledCircle>(m_Mouse->m_PosX, m_Mouse->m_PosY, 50, color);
+        sptr<render::Command> cmd = std::make_shared<render::DrawFilledCircle>(objPosX, objPosY, 50, color);
 
         m_Renderer->enqueueCommand(cmd);
 
-		color = al_map_rgb(170, 170, 10);
-		auto cmd2 = std::make_shared<alpp::render::DrawFilledRectangle>(0, 0, 100, 800, color);
+        color = al_map_rgb(170, 170, 10);
+        cmd = std::make_shared<render::DrawFilledRectangle>(0, 0, 100, 800, color);
 
-		m_Renderer->enqueueCommand(cmd2);
+        m_Renderer->enqueueCommand(cmd);
         return true;
     }
-
-private:
-
-    sptrc<alpp::event::Mouse> m_Mouse;
 };
 
 int main()
 {
     // Initialize Allegro++ wrapper
-    alpp::init(LOGGER_CONFIG_FILE);
+    init(LOGGER_CONFIG_FILE);
 
     // Set window settings
-    alpp::render::WindowSettings winSettings;
-    winSettings.displayMode = alpp::render::DisplayMode::WINDOWED;
-    winSettings.library     = alpp::render::GraphicsLibrary::OPEN_GL;
+    render::WindowSettings winSettings;
+    winSettings.displayMode = render::DisplayMode::WINDOWED;
+    winSettings.library     = render::GraphicsLibrary::OPEN_GL;
     winSettings.width       = 1200;
     winSettings.height      = 800;
     winSettings.isResizable = true;
     winSettings.title       = "Test";
 
-    // Create renderer
-    auto renderer = std::make_shared<alpp::render::Renderer>(winSettings);
+    // Create game loop
+    auto gameLoop = std::make_shared<MyGameLoop>(winSettings);
 
-    // Create mouse event handler
-    auto mouseHandler = std::make_shared<MyMouse>();
+    // Register custom mouse handler
+    gameLoop->registerAgent(std::make_shared<MyMouse>());
 
-    // Create game updater
-    auto gameUpdater = std::make_shared<MyGameUpdater>(renderer, mouseHandler);
-    
-    // Create event manager and register all event agents
-    alpp::event::Manager eventManager;
-    eventManager.registerAgent(renderer);
-    eventManager.registerGameUpdaterAgent(gameUpdater);
-    eventManager.registerAgent(mouseHandler);
-    eventManager.run();
+    // Run game loop
+    gameLoop->run();
 }

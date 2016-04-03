@@ -146,16 +146,14 @@
     <ClInclude Include="..\Include\easylogging++.h" />
     <ClInclude Include="..\Source\Core.h" />
     <ClInclude Include="..\Source\Event\Agent.h" />
-    <ClInclude Include="..\Source\Event\GameUpdater.h" />
-    <ClInclude Include="..\Source\Event\Manager.h" />
+    <ClInclude Include="..\Source\Event\GameLoop.h" />
     <ClInclude Include="..\Source\Event\Mouse.h" />
     <ClInclude Include="..\Source\Render\Command.h" />
     <ClInclude Include="..\Source\Render\Renderer.h" />
     <ClInclude Include="..\Source\Render\WindowSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Event\GameUpdater.cpp" />
-    <ClCompile Include="..\Source\Event\Manager.cpp" />
+    <ClCompile Include="..\Source\Event\GameLoop.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Core.cpp" />
     <ClCompile Include="..\Source\Render\Command.cpp" />

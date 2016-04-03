@@ -1,11 +1,14 @@
 #ifndef ALPP_RENDER_RENDERER
 #define ALPP_RENDER_RENDERER
 
-#include <condition_variable>
+// alpp
 #include <Core.h>
 #include <Event/Agent.h>
-#include <queue>
 #include <Render/WindowSettings.h>
+
+// std
+#include <condition_variable>
+#include <queue>
 
 namespace alpp { namespace render {
 
