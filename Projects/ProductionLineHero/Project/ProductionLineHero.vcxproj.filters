@@ -22,6 +22,9 @@
     <ClCompile Include="..\Source\ResourceStack.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Worker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\Source\Resource.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -39,6 +42,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\ResourceStack.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Worker.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Resource.h">
