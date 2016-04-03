@@ -80,8 +80,8 @@ alpp::render::Renderer::~Renderer()
     m_StopRenderThread = true;
     m_Flip.notify_one();
 
-    // Destroy window
-    al_destroy_display(m_Window);
+    // Wait for it to exit
+    m_DrawingStarted.wait(lock);
 }
 
 void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
@@ -99,7 +99,7 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     while (!m_StopRenderThread)
     {   
         // Clear frame
-        al_clear_to_color(al_map_rgb(0, 255, 0));
+        al_clear_to_color(al_map_rgb(0, 0, 0));
 
         // Get the current draw command queue
         auto & queue = m_CmdQueues[m_CurrQueue];
@@ -117,6 +117,12 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
         // Flip backbuffer
         al_flip_display();
     }
+
+    // Destroy window
+    al_destroy_display(m_Window);
+
+    // Tell main thread that execution finished
+    m_DrawingStarted.notify_one();
 }
 
 void alpp::render::Renderer::enqueueCommand(sptr<Command> i_Cmd)

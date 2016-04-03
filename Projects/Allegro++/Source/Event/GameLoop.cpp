@@ -86,4 +86,6 @@ void alpp::event::GameLoop::run()
             doTick = false;
         }
     }
+
+    m_EventAgents.clear();
 }

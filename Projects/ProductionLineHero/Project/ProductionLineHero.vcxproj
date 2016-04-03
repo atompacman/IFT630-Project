@@ -69,7 +69,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
+    <IncludePath>..\Source;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
     <ReferencePath />
     <LibraryPath>..\..\Allegro++\Project\x64\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -90,6 +90,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>Allegro++.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,10 +120,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Factory.cpp" />
+    <ClCompile Include="..\Source\ResourceStack.cpp" />
     <ClCompile Include="..\Source\Test.cpp" />
+    <ClCompile Include="..\Source\Workshop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Factory.h" />
+    <ClInclude Include="..\Source\ResourceStack.h" />
+    <ClInclude Include="..\Source\Workshop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,6 +11,9 @@
 // el
 #include <easylogging++.h>
 
+// plh
+#include <Factory.h>
+
 // std
 #include <string>
 
@@ -47,25 +50,30 @@ class MyGameLoop : public event::GameLoop
 public:
 
     explicit MyGameLoop(render::WindowSettings i_WinSettings, double i_TargetFPS = 60.) :
-        GameLoop(i_WinSettings, i_TargetFPS)
-    {};
+        GameLoop(i_WinSettings, i_TargetFPS),
+        m_Factory()
+    {
+        m_Factory.buildWorkshop(2, 1);
+    };
 
 protected:
 
     bool tick() override
     {
-        LOG_EVERY_N(60, INFO) << "Game tick";
+         // Draw a circle at mouse position
         auto color = al_map_rgb(20, 20, 150);
-        sptr<render::Command> cmd = std::make_shared<render::DrawFilledCircle>(objPosX, objPosY, 50, color);
-
+        auto cmd = std::make_shared<render::DrawFilledCircle>(objPosX, objPosY, 10, color);
         m_Renderer->enqueueCommand(cmd);
 
-        color = al_map_rgb(170, 170, 10);
-        cmd = std::make_shared<render::DrawFilledRectangle>(0, 0, 100, 800, color);
-
-        m_Renderer->enqueueCommand(cmd);
+        // Draw factory
+        m_Factory.render(m_Renderer);
+        
         return true;
     }
+
+private:
+
+    Factory m_Factory;
 };
 
 int main()

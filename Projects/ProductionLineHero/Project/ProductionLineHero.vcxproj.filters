@@ -13,10 +13,30 @@
     <ClCompile Include="..\Source\Test.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Factory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Workshop.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ResourceStack.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
       <Filter>Project</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Factory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Workshop.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\ResourceStack.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

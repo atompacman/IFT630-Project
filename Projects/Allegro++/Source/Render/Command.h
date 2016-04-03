@@ -4,6 +4,8 @@
 // allegro
 #include <allegro5\color.h>
 
+struct ALLEGRO_DISPLAY;
+
 namespace alpp { namespace render {
 
 class Command
