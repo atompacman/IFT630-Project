@@ -13,6 +13,7 @@
 
 // plh
 #include <Factory.h>
+#include <Worker.h>
 
 // std
 #include <string>
@@ -51,7 +52,8 @@ public:
 
     explicit MyGameLoop(render::WindowSettings i_WinSettings, double i_TargetFPS = 60.) :
         GameLoop(i_WinSettings, i_TargetFPS),
-        m_Factory()
+        m_Factory(),
+        m_Worker(400, 400, 1)
     {
         m_Factory.buildWorkshop(2, 1);
     };
@@ -67,6 +69,8 @@ protected:
 
         // Draw factory
         m_Factory.render(m_Renderer);
+
+        m_Worker.render(m_Renderer);
         
         return true;
     }
@@ -74,6 +78,7 @@ protected:
 private:
 
     Factory m_Factory;
+    Worker m_Worker;
 };
 
 int main()
