@@ -1,5 +1,6 @@
 // allegro
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
 #include <allegro5/display.h>
 
 // alpp
@@ -14,6 +15,7 @@
 
 alpp::render::Renderer::Renderer(WindowSettings i_WinSettings) :
     Agent(),
+    StandardFont           (nullptr),
     m_Window               (nullptr),
     m_CurrQueue            (0),
     m_StopRenderThread     (false),
@@ -24,7 +26,19 @@ alpp::render::Renderer::Renderer(WindowSettings i_WinSettings) :
 {
     // Initialize primitive addon
     CHECK_BOOL_AL_FUNC(al_init_primitives_addon(), m_InitSuccess,
-        "Primitives add-on initialization failed");  
+        "Primitives add-on initialization failed");
+
+    // Initialize font addon
+    CHECK_BOOL_AL_FUNC(al_init_font_addon(), m_InitSuccess,
+        "Font add-on initialization failed");
+
+    // Initialize TTF font addon
+    CHECK_BOOL_AL_FUNC(al_init_ttf_addon(), m_InitSuccess,
+        "TTF font add-on initialization failed");
+
+    // Load game font
+    CHECK_AL_FUNC(al_load_ttf_font(FONT_FILE, FONT_SIZE, 0), StandardFont, m_InitSuccess,
+        "Could not load standard font");
 
     // Start the render thread
     std::unique_lock<std::mutex> lock(m_RenderThreadMutex);
@@ -151,7 +165,9 @@ bool alpp::render::Renderer::handleEvent(ALLEGRO_EVENT i_Event)
         return false;
 
     case ALLEGRO_EVENT_DISPLAY_RESIZE:
-        enqueueCommand(std::make_shared<ResizeWindow>(m_Window));
+        auto cmd = std::make_shared<ResizeWindow>();
+        cmd->Window = m_Window;
+        enqueueCommand(cmd);
         break;
     }
 

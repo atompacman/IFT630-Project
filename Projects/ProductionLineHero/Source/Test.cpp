@@ -60,8 +60,11 @@ protected:
     bool tick() override
     {
          // Draw a circle at mouse position
-        auto color = al_map_rgb(20, 20, 150);
-        auto cmd = std::make_shared<render::DrawFilledCircle>(objPosX, objPosY, 10, color);
+        auto cmd = std::make_shared<render::DrawFilledCircle>();
+        cmd->CenterPosX = objPosX;
+        cmd->CenterPosY = objPosY;
+        cmd->Radius     = 10;
+        cmd->Color      = al_map_rgb(20, 20, 150);
         m_Renderer->enqueueCommand(cmd);
 
         // Draw factory

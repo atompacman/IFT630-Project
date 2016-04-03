@@ -10,9 +10,14 @@
 #include <condition_variable>
 #include <queue>
 
+struct ALLEGRO_FONT;
+
 namespace alpp { namespace render {
 
-class Command;
+struct Command;
+
+char const * const FONT_FILE = "C:\\Windows\\Fonts\\CALIST.TTF";
+uint16_t const     FONT_SIZE = 20;
 
 class Renderer : public event::Agent
 {
@@ -25,6 +30,8 @@ public:
     void flip();
 
     bool handleEvent(ALLEGRO_EVENT i_Event) override;
+
+    ALLEGRO_FONT * StandardFont;
 
 protected:
 

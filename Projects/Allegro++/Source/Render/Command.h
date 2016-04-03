@@ -4,69 +4,58 @@
 // allegro
 #include <allegro5\color.h>
 
+// std
+#include <string>
+
 struct ALLEGRO_DISPLAY;
+struct ALLEGRO_FONT;
 
 namespace alpp { namespace render {
 
-class Command
+struct Command
 {
-public:
-
     virtual ~Command() { }
 
     virtual void execute() = 0;
 };
 
-class ResizeWindow : public Command
+struct ResizeWindow : Command
 {
-public:
-    
-    explicit ResizeWindow(ALLEGRO_DISPLAY * io_Window);
+    ALLEGRO_DISPLAY * Window;
+
     void execute() override;
-
-private:
-
-    ALLEGRO_DISPLAY * m_Window;
 };
 
-class DrawFilledCircle : public Command
+struct DrawFilledCircle : Command
 {
-public:
-
-    explicit DrawFilledCircle(float         i_CenterPosX,
-                              float         i_CenterPosY, 
-                              float         i_Radius, 
-                              ALLEGRO_COLOR i_Color);
+    float         CenterPosX;
+    float         CenterPosY;
+    float         Radius;
+    ALLEGRO_COLOR Color;
 
     void execute() override;
-
-private:
-
-    float         m_CenterPosX;
-    float         m_CenterPosY;
-    float         m_Radius;
-    ALLEGRO_COLOR m_Color;
 };
 
-class DrawFilledRectangle : public Command
+struct DrawFilledRectangle : Command
 {
-public:
-
-    explicit DrawFilledRectangle(float         i_PosLeft,
-                                 float         i_PosTop,
-                                 float         i_PosRight,
-                                 float         i_PosBottom,
-                                 ALLEGRO_COLOR i_Color);
+    float         PosLeft;
+    float         PosTop;
+    float         PosRight;
+    float         PosBottom;
+    ALLEGRO_COLOR Color;
 
     void execute() override;
+};
 
-private:
+struct DrawText : Command
+{
+    std::string    Text;
+    ALLEGRO_FONT * Font;
+    float          PosX;
+    float          PosY;
+    ALLEGRO_COLOR  Color;
 
-    float         m_PosLeft;
-    float         m_PosTop;
-    float         m_PosRight;
-    float         m_PosBottom;
-    ALLEGRO_COLOR m_Color;
+    void execute() override;
 };
 
 }}

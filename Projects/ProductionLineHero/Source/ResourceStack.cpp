@@ -6,6 +6,9 @@
 #include <ResourceStack.h>
 #include <Factory.h>
 
+// std
+#include <sstream>
+
 ResourceStack::ResourceStack(Type i_Type) :
     m_Type (i_Type),
     m_Stack()
@@ -43,8 +46,21 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer,
 
     auto const d = RESRC_STACK_SIZE_PXL * 0.5f;
 
-    auto color = m_Type == Type::INPUT ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 0, 0);
+    auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+    cmd->PosLeft   = minX - d;
+    cmd->PosRight  = minX + d;
+    cmd->PosTop    = minY - d;
+    cmd->PosBottom = minY + d;
+    cmd->Color     = m_Type == Type::INPUT ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 0, 0);
+    i_Renderer->enqueueCommand(cmd);
 
-    i_Renderer->enqueueCommand(std::make_shared<alpp::render::DrawFilledRectangle>(
-        minX - d, minY - d, minX + d, minY + d, color));
+    auto cmd2 = std::make_shared<alpp::render::DrawText>();
+    cmd2->PosX  = minX - 2 * d;
+    cmd2->PosY  = minY - 2 * d;
+    cmd2->Font  = i_Renderer->StandardFont;
+    cmd2->Color = al_map_rgb(255, 255, 255);
+    std::stringstream ss;
+    ss << m_Stack.size();
+    cmd2->Text = ss.str();
+    i_Renderer->enqueueCommand(cmd2);
 }

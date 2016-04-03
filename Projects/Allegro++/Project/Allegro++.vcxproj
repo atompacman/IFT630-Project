@@ -81,10 +81,14 @@
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -34,8 +34,13 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto minX = m_X * WORKSHOP_SIZE_PXL + (m_X + 1) * WORKSHOP_BORDER_WIDTH;
     auto minY = m_Y * WORKSHOP_SIZE_PXL + (m_Y + 1) * WORKSHOP_BORDER_WIDTH;
 
-    i_Renderer->enqueueCommand(std::make_shared<alpp::render::DrawFilledRectangle>(
-        minX, minY, minX + WORKSHOP_SIZE_PXL, minY + WORKSHOP_SIZE_PXL, al_map_rgb(10, 40, 53)));
+    auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+    cmd->PosLeft   = minX;
+    cmd->PosRight  = minX + WORKSHOP_SIZE_PXL;
+    cmd->PosTop    = minY;
+    cmd->PosBottom = minY + WORKSHOP_SIZE_PXL;
+    cmd->Color     = al_map_rgb(10, 40, 53);
+    i_Renderer->enqueueCommand(cmd);
 
     for (uint8_t i = 0; i < 4; ++i)
     {
