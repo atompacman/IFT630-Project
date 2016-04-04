@@ -18,9 +18,9 @@ Workshop::Workshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide) :
     addStack(m_OutputStackSide, ResourceStack::Type::OUTPUT);
 }
 
-void Workshop::addWorker()
+void Workshop::addWorker(double i_Speed)
 {
-    m_Workers.emplace_back(shared_from_this(), 1);
+    m_Workers.emplace_back(shared_from_this(), i_Speed);
 }
 
 void Workshop::moveOutputStack(CardinalDir i_Side)

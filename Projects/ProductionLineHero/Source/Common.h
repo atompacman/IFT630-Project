@@ -17,7 +17,9 @@ PixelCoords    const WORKSHOP_SIZE_PXL       (150, 150);
 uint16_t       const SPACE_BETWEEN_WORKSHOPS (60);
 
 // Worker
-uint16_t const WORKER_RADIUS (10);
+uint16_t const WORKER_RADIUS         (10);
+double   const PATH_WIGGLE_AMPLITUDE (0.2);
+double   const PATH_WIGGLE_FREQUENCY (0.5);
 
 // Resource stack
 PixelCoords const RESRC_STACK_SIZE_PXL (20, 20);

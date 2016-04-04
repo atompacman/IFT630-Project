@@ -51,7 +51,7 @@ public:
     {
         auto workshop = m_Factory.buildWorkshop(WorkshopCoords(2, 1), CardinalDir::EAST);
         workshop->addInputStack(CardinalDir::WEST);
-        workshop->addWorker();
+        workshop->addWorker(0.8);
     };
 
 protected:

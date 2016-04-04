@@ -20,6 +20,7 @@ public:
 private:
 
     void runWorkerThread();
+    void walk(RealCoords i_DestPos, RealCoords i_Step);
 
     RealCoords m_Pos;
     double     m_Speed;

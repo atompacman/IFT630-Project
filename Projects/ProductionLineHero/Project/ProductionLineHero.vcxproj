@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\aplib\Direction2D.h" />
+    <ClInclude Include="..\Include\aplib\Random.h" />
     <ClInclude Include="..\Include\aplib\Vector2D.h" />
     <ClInclude Include="..\Source\Factory.h" />
     <ClInclude Include="..\Source\Resource.h" />

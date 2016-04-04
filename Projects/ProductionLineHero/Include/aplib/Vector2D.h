@@ -1,8 +1,11 @@
 #ifndef APLIB_VECTOR_2D
 #define APLIB_VECTOR_2D
 
-// atomlib
+// aplib
 #include <aplib/Direction2D.h>
+
+// std
+#include <sstream>
 
 template <typename T>
 struct Vector2D
@@ -27,6 +30,12 @@ struct Vector2D
         y(i_Other.y)
     {
         
+    }
+
+    template <typename U>
+    operator Vector2D<U>() const
+    {
+        return Vector2D<U>(x, y);
     }
 
     Vector2D<T> & operator += (Vector2D<T> const & i_Other)
@@ -186,6 +195,12 @@ Vector2D<T> operator - (Vector2D<T> const & i_Vec, T i_Factor)
 }
 
 template <typename T>
+Vector2D<T> operator - (Vector2D<T> const & i_Vec)
+{
+    return Vector2D<T>(i_Vec) *= -1;
+}
+
+template <typename T>
 Vector2D<T> operator * (Vector2D<T> const & i_Vec, T i_Factor)
 {
     return Vector2D<T>(i_Vec) *= i_Factor;
@@ -244,6 +259,5 @@ Vector2D<T> normalized(Vector2D<T> const & i_Vec)
 {
     return Vector2D<T>(i_Vec).normalize();
 }
-
 
 #endif // APLIB_VECTOR_2D

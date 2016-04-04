@@ -23,7 +23,7 @@ public:
 
     explicit Workshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide);
 
-    void addWorker();
+    void addWorker(double i_Speed);
 
     void moveOutputStack (CardinalDir i_Side);
     void addInputStack   (CardinalDir i_Side);

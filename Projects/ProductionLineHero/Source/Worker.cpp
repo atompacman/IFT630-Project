@@ -1,6 +1,9 @@
 // alpp
 #include <Render/Command.h>
 
+// aplib
+#include <aplib/Random.h>
+
 // plh
 #include <Worker.h>
 #include <Workshop.h>
@@ -17,10 +20,10 @@ Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :
     m_Workshop   (i_Workshop)
 {
     // Put the worker at a random place inside the workshop
-    auto ulCorner = i_Workshop->getUpperLeftPixelPos();
-    m_Pos.x = ulCorner.x + rand() % (WORKSHOP_SIZE_PXL.x - WORKER_RADIUS) + WORKER_RADIUS;
-    m_Pos.y = ulCorner.y + rand() % (WORKSHOP_SIZE_PXL.y - WORKER_RADIUS) + WORKER_RADIUS;
-     
+    m_Pos  = RealCoords(i_Workshop->getUpperLeftPixelPos());
+    m_Pos += RealCoords(randUNorm(), randUNorm()) * RealCoords(WORKSHOP_SIZE_PXL);
+    m_Pos += WORKER_RADIUS;
+
     std::thread(&Worker::runWorkerThread, this).detach();
 }
 
@@ -31,18 +34,51 @@ Worker::~Worker()
 
 void Worker::runWorkerThread()
 {
-    auto dest = m_Workshop->getInputStacks().begin()->get()->pixelCenterPosition();
-    auto destination = RealCoords(dest.x, dest.y);
-    auto increment = (destination - m_Pos).normalize() * m_Speed;
+    // Create route (ordered list of resource stacks to visit to make his task)
+    auto route = m_Workshop->getInputStacks();
+    route.push_back(m_Workshop->getOutputStack());
 
+    // First destination
+    auto currDestination = route.begin();
+    double t = 0;
+
+    // Work for eternity
     while (true)
     {
-        if (m_Pos.distanceTo(destination) > 1)
+        // Get position of next destination
+        auto pos = currDestination->get()->pixelCenterPosition();
+        auto destPos = RealCoords(pos.x, pos.y);
+
+        // Compute the position increment at each step
+        auto step = (destPos - m_Pos).normalize() * m_Speed;
+
+        // Walk towards destination until it's reached
+        do
         {
-            m_Pos += increment;
-            std::this_thread::sleep_for(10ms);
+            walk(destPos, step);
+        } while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x);
+
+        // Set next destination
+        ++currDestination;
+        if (currDestination == route.end())
+        {
+            currDestination = route.begin();
         }
     }
+}
+
+void Worker::walk(RealCoords i_DestPos, RealCoords i_Step)
+{
+    // Randomly generate a wiggle pattern that will deviate the path a little bit
+    static double t = 0;
+    t += PATH_WIGGLE_FREQUENCY;
+    auto randWiggle    = cos(t * 0.02 + cos(t * 0.3) * sin(t * 0.5));
+    auto distFactpr    = m_Pos.distanceTo(i_DestPos) / WORKSHOP_SIZE_PXL.x;
+    auto overallWiggle = distFactpr * PATH_WIGGLE_AMPLITUDE * randWiggle;
+
+    m_Pos += i_Step + RealCoords(i_Step.y, -i_Step.x) * overallWiggle;
+    
+    std::this_thread::sleep_for(10ms);
 }
 
 void Worker::render(sptr<alpp::render::Renderer> i_Renderer) const
