@@ -58,6 +58,8 @@ protected:
 
     bool tick() override
     {
+        static long currTick = 0;
+
          // Draw a circle at mouse position
         auto cmd = std::make_shared<render::DrawFilledCircle>();
         cmd->CenterPosX = objPos.x;
@@ -69,6 +71,18 @@ protected:
         // Draw factory
         m_Factory.render(m_Renderer);
         
+        // Regularly add resource to input stack
+        if (currTick % 700 == 0)
+        {
+            auto stack = m_Factory.getWorkshop(WorkshopCoords(2, 1))->getStack(CardinalDir::WEST);
+            for (uint8_t i = 0; i < 3; ++i)
+            {
+                stack->push();
+            }
+        }
+
+        ++currTick;
+
         return true;
     }
 

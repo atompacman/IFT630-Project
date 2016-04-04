@@ -20,7 +20,7 @@ void alpp::render::DrawFilledRectangle::execute()
     al_draw_filled_rectangle(PosLeft, PosTop, PosRight, PosBottom, Color);
 }
 
-void alpp::render::DrawText::execute()
+void alpp::render::DrawCenteredText::execute()
 {
     al_draw_text(Font, Color, PosX, PosY, 0, Text.c_str());
 }

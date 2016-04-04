@@ -15,9 +15,10 @@
 using namespace std::chrono_literals;
 
 Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :
-    m_Pos        (),
-    m_Speed      (i_Speed),
-    m_Workshop   (i_Workshop)
+    m_Pos          (),
+    m_Speed        (i_Speed),
+    m_ResourcesHeld(),
+    m_Workshop     (i_Workshop)
 {
     // Put the worker at a random place inside the workshop
     m_Pos  = RealCoords(i_Workshop->getUpperLeftPixelPos());
@@ -46,7 +47,7 @@ void Worker::runWorkerThread()
     while (true)
     {
         // Get position of next destination
-        auto pos = currDestination->get()->pixelCenterPosition();
+        auto pos = currDestination->get()->centerPosition();
         auto destPos = RealCoords(pos.x, pos.y);
 
         // Compute the position increment at each step
@@ -57,6 +58,18 @@ void Worker::runWorkerThread()
         {
             walk(destPos, step);
         } while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x);
+
+        // If we arrived at an input stack
+        if (currDestination->get()->type() == ResourceStack::Type::INPUT)
+        {
+            // Get a resource (or wait for one)
+            m_ResourcesHeld.push_back(currDestination->get()->poll());
+        }
+        else
+        {
+            currDestination->get()->push();
+            m_ResourcesHeld.clear();
+        }
 
         // Set next destination
         ++currDestination;

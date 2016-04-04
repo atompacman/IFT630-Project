@@ -47,7 +47,7 @@ struct DrawFilledRectangle : Command
     void execute() override;
 };
 
-struct DrawText : Command
+struct DrawCenteredText : Command
 {
     std::string    Text;
     ALLEGRO_FONT * Font;

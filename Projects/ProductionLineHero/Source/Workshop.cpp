@@ -119,7 +119,7 @@ void Workshop::addStack(CardinalDir i_Side, ResourceStack::Type i_Type)
     LOG_IF(hasStack(i_Side), FATAL) << toString() << ": Cannot add a " 
         << nameOf(i_Side) << "stack: A stack is is already there";
 
-    auto stack = std::make_shared<ResourceStack>(i_Type, m_Pos, i_Side);
+    auto stack = std::make_shared<ResourceStack>(i_Type, m_Pos, i_Side, Resource());
     m_ResourceStacks[static_cast<uint32_t>(i_Side)] = stack;
 }
 

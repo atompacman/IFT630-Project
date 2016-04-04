@@ -6,6 +6,12 @@
 #include <Core.h>
 #include <Render/Renderer.h>
 
+// plh
+#include <Resource.h>
+
+// std
+#include <list>
+
 class Workshop;
 
 class Worker
@@ -24,6 +30,8 @@ private:
 
     RealCoords m_Pos;
     double     m_Speed;
+
+    std::list<Resource> m_ResourcesHeld;
 
     sptr<Workshop> m_Workshop;
 };

@@ -9,7 +9,7 @@
 #include <Resource.h>
 
 // std
-#include <stack>
+#include <mutex>
 
 namespace alpp { namespace render {
 
@@ -29,19 +29,29 @@ public:
         OUTPUT
     };
 
-    explicit ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Side);
+    explicit ResourceStack(Type           i_Type, 
+                           WorkshopCoords i_Pos, 
+                           CardinalDir    i_Side, 
+                           Resource       i_ResourceArchetype);
+
+    Resource poll();
+    void     push();
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
-    Type        type()                const;
-    PixelCoords pixelCenterPosition() const;
+    Type        type()           const { return m_Type;      };
+    PixelCoords centerPosition() const { return m_Pos;       };
+    uint32_t    numResources()   const { return m_StackSize; };
 
 private:
 
-    WorkshopCoords       m_Pos;
-    CardinalDir          m_Side;
-    Type                 m_Type;
-    std::stack<Resource> m_Stack;
+    Type        m_Type;
+    PixelCoords m_Pos;
+    Resource    m_ResourceArchetype;
+    uint32_t    m_StackSize;
+
+    std::mutex              m_Mutex;
+    std::condition_variable m_WaitingList;
 };
 
 #endif // PLH_RESOURCE_STACK
