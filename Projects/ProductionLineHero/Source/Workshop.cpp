@@ -20,7 +20,8 @@ Workshop::Workshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide) :
 
 void Workshop::addWorker(double i_Speed)
 {
-    m_Workers.emplace_back(shared_from_this(), i_Speed);
+    auto worker = std::make_shared<Worker>(shared_from_this(), i_Speed);
+    m_Workers.emplace_back(worker);
 }
 
 void Workshop::moveOutputStack(CardinalDir i_Side)
@@ -102,7 +103,7 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
 
     for (auto const & worker : m_Workers)
     {
-        worker.render(i_Renderer);
+        worker->render(i_Renderer);
     }
 }
 

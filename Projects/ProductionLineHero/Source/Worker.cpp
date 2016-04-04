@@ -22,7 +22,8 @@ Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :
 {
     // Put the worker at a random place inside the workshop
     m_Pos  = RealCoords(i_Workshop->getUpperLeftPixelPos());
-    m_Pos += RealCoords(randUNorm(), randUNorm()) * RealCoords(WORKSHOP_SIZE_PXL);
+    m_Pos += RealCoords(randUNorm(), randUNorm()) * 
+        (RealCoords(WORKSHOP_SIZE_PXL) - static_cast<double>(2 * WORKER_RADIUS));
     m_Pos += WORKER_RADIUS;
 
     std::thread(&Worker::runWorkerThread, this).detach();
@@ -41,7 +42,6 @@ void Worker::runWorkerThread()
 
     // First destination
     auto currDestination = route.begin();
-    double t = 0;
 
     // Work for eternity
     while (true)

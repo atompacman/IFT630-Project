@@ -49,9 +49,15 @@ public:
         GameLoop(i_WinSettings, i_TargetFPS),
         m_Factory()
     {
-        auto workshop = m_Factory.buildWorkshop(WorkshopCoords(2, 1), CardinalDir::EAST);
-        workshop->addInputStack(CardinalDir::WEST);
-        workshop->addWorker(0.8);
+        for (uint8_t i = 0; i < 3; ++i)
+        {
+            auto workshop = m_Factory.buildWorkshop(WorkshopCoords(i + 1, 1), CardinalDir::EAST);
+            workshop->addInputStack(CardinalDir::WEST);
+            for (uint8_t j = 0; j < 5; ++j)
+            {
+                workshop->addWorker(0.5 + j * 0.1);
+            }
+        }
     };
 
 protected:
@@ -72,12 +78,15 @@ protected:
         m_Factory.render(m_Renderer);
         
         // Regularly add resource to input stack
-        if (currTick % 700 == 0)
+        if (currTick % 120 == 0)
         {
-            auto stack = m_Factory.getWorkshop(WorkshopCoords(2, 1))->getStack(CardinalDir::WEST);
             for (uint8_t i = 0; i < 3; ++i)
             {
-                stack->push();
+                auto stack = m_Factory.getWorkshop(WorkshopCoords(i + 1, 1))->getStack(CardinalDir::WEST);
+                for (uint8_t j = 0; j < 3; ++j)
+                {
+                    stack->push();
+                }
             }
         }
 

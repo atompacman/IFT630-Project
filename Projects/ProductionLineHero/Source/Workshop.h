@@ -46,10 +46,10 @@ private:
     void addStack   (CardinalDir i_Side, ResourceStack::Type i_Type);
     void removeStack(CardinalDir i_Side);
 
-    WorkshopCoords      m_Pos;
-    sptr<ResourceStack> m_ResourceStacks[4];
-    CardinalDir         m_OutputStackSide;
-    std::vector<Worker> m_Workers;
+    WorkshopCoords            m_Pos;
+    sptr<ResourceStack>       m_ResourceStacks[4];
+    CardinalDir               m_OutputStackSide;
+    std::vector<sptr<Worker>> m_Workers;
 };
 
 #endif // PLH_WORKSHOP
