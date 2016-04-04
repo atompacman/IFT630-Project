@@ -5,11 +5,11 @@
 #include <Core.h>
 
 // plh
+#include <Common.h>
 #include <Workshop.h>
 
 // std
 #include <cstdint>
-#include <Settings.h>
 
 class Factory
 {
@@ -17,18 +17,17 @@ public:
 
     explicit Factory();
 
-    sptr<Workshop> buildWorkshop(uint16_t i_X, uint16_t i_Y);
-
-    bool hasWorkshopAt(uint16_t i_X, uint16_t i_Y) const;
+    sptr<Workshop> buildWorkshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide);
+    sptr<Workshop> getWorkshop  (WorkshopCoords i_Pos) const;
+    bool           hasWorkshopAt(WorkshopCoords i_Pos) const;
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
 private:
 
-    static uint16_t linearizeWorkshopPos(uint16_t i_X, uint16_t i_Y);
+    static uint16_t linearize(WorkshopCoords i_Pos);
 
-
-    sptr<Workshop> m_Workshops[MAX_NUM_WORKSHOP_Y * MAX_NUM_WORKSHOP_X];
+    sptr<Workshop> m_Workshops[MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y];
 };
 
 #endif // PLH_FACTORY

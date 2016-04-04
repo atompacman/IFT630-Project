@@ -5,6 +5,7 @@
 #include <Core.h>
 
 // plh
+#include <Common.h>
 #include <Resource.h>
 
 // std
@@ -16,7 +17,7 @@ class Renderer;
 
 }}
 
-enum class StackPosition;
+enum class CardinalDir;
 
 class ResourceStack
 {
@@ -28,15 +29,17 @@ public:
         OUTPUT
     };
 
-    explicit ResourceStack(Type i_Type);
+    explicit ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Side);
 
-    void render(sptr<alpp::render::Renderer> i_Renderer,
-                uint16_t                     i_WorkshopPosX,
-                uint16_t                     i_WorkshopPosY,
-                StackPosition                i_StackPos) const;
+    void render(sptr<alpp::render::Renderer> i_Renderer) const;
+
+    Type        type()                const;
+    PixelCoords pixelCenterPosition() const;
 
 private:
 
+    WorkshopCoords       m_Pos;
+    CardinalDir          m_Side;
     Type                 m_Type;
     std::stack<Resource> m_Stack;
 };

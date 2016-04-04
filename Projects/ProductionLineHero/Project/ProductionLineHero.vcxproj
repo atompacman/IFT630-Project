@@ -69,7 +69,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Source;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
+    <IncludePath>../Include/;../Source/;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
     <ReferencePath />
     <LibraryPath>..\..\Allegro++\Project\x64\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -81,6 +81,8 @@
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <IncludePath>../Include/;../Source/;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\Allegro++\Project\x64\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,6 +96,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Allegro++.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,6 +124,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -138,11 +144,13 @@
     <None Include="..\..\Allegro++\Project\packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\aplib\Direction2D.h" />
+    <ClInclude Include="..\Include\aplib\Vector2D.h" />
     <ClInclude Include="..\Source\Factory.h" />
     <ClInclude Include="..\Source\Resource.h" />
     <ClInclude Include="..\Source\ResourceStack.h" />
     <ClInclude Include="..\Source\Worker.h" />
-    <ClInclude Include="..\Source\Settings.h" />
+    <ClInclude Include="..\Source\Common.h" />
     <ClInclude Include="..\Source\Workshop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

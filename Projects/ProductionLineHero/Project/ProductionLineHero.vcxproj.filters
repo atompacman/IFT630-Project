@@ -8,6 +8,12 @@
     <Filter Include="Project">
       <UniqueIdentifier>{b793319e-ee3b-48cb-bff0-215884708f59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{67b31b38-8248-49e5-bc99-8758b39e2335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\aplib">
+      <UniqueIdentifier>{2b10d2fb-c503-408a-bf52-294073d30ae1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Test.cpp">
@@ -50,8 +56,14 @@
     <ClInclude Include="..\Source\Resource.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Settings.h">
+    <ClInclude Include="..\Source\Common.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\aplib\Direction2D.h">
+      <Filter>Include\aplib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\aplib\Vector2D.h">
+      <Filter>Include\aplib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,37 +11,46 @@ Factory::Factory() :
 
 }
 
-uint16_t Factory::linearizeWorkshopPos(uint16_t i_X, uint16_t i_Y)
+sptr<Workshop> Factory::buildWorkshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide)
 {
-    LOG_IF(i_X >= MAX_NUM_WORKSHOP_X || i_Y >= MAX_NUM_WORKSHOP_Y, FATAL) 
-        << "Invalid workshop position (" << i_X << ", " << i_Y << ")";
-    return i_X + i_Y * MAX_NUM_WORKSHOP_X;
-}
+    LOG_IF(hasWorkshopAt(i_Pos), FATAL) << "Cannot build a workshop at ("
+        << i_Pos.x << ", " << i_Pos .y << "): there's already one there";
 
-sptr<Workshop> Factory::buildWorkshop(uint16_t i_X, uint16_t i_Y)
-{
-    LOG_IF(hasWorkshopAt(i_X, i_Y), FATAL) << "Cannot build a workshop at (" 
-        << i_X << ", " << i_Y << "): there's already one there";
-
-    auto workshop = std::make_shared<Workshop>(i_X, i_Y);
-    m_Workshops[linearizeWorkshopPos(i_X, i_Y)] = workshop;
+    auto workshop = std::make_shared<Workshop>(i_Pos, i_OutputStackSide);
+    m_Workshops[linearize(i_Pos)] = workshop;
 
     return workshop;
 }
 
-bool Factory::hasWorkshopAt(uint16_t i_X, uint16_t i_Y) const
+sptr<Workshop> Factory::getWorkshop(WorkshopCoords i_Pos) const
 {
-    return m_Workshops[linearizeWorkshopPos(i_X, i_Y)] != nullptr;
+    return m_Workshops[linearize(i_Pos)];
+}
+
+bool Factory::hasWorkshopAt(WorkshopCoords i_Pos) const
+{
+    return m_Workshops[linearize(i_Pos)] != nullptr;
 }
 
 void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
-    for (uint16_t i = 0; i < MAX_NUM_WORKSHOP_Y * MAX_NUM_WORKSHOP_X; ++i)
+    WorkshopCoords coord;
+    for (coord.y = 0; coord.y < MAX_NUM_WORKSHOPS_Y; ++coord.y)
     {
-        auto workshop = m_Workshops[i];
-        if (workshop)
+        for (coord.x = 0; coord.x < MAX_NUM_WORKSHOPS_X; ++coord.x)
         {
-            workshop->render(i_Renderer);
+            auto workshop = getWorkshop(coord);
+            if (workshop)
+            {
+                workshop->render(i_Renderer);
+            }
         }
     }
+}
+
+uint16_t Factory::linearize(WorkshopCoords i_Pos)
+{
+    LOG_IF(!(i_Pos <= MAX_NUM_WORKSHOPS), FATAL)
+        << "Invalid workshop position (" << i_Pos.x << ", " << i_Pos.y << ")";
+    return i_Pos.x + i_Pos.y * MAX_NUM_WORKSHOPS_X;
 }

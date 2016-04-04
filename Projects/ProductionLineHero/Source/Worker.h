@@ -2,30 +2,29 @@
 #define PLH_WORKER
 
 // alpp
+#include <Common.h>
 #include <Core.h>
 #include <Render/Renderer.h>
+
+class Workshop;
 
 class Worker
 {
 public:
 
-    explicit Worker(uint16_t i_PosX, uint16_t i_PosY, float i_Speed);
+    explicit Worker(sptr<Workshop> i_Workshop, double i_Speed);
     ~Worker();
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
 private:
 
-    static uint16_t const RADIUS = 10;
-
     void runWorkerThread();
-    void work();
 
-    uint16_t m_PosX;
-    uint16_t m_PosY;
-    float    m_Speed;
+    RealCoords m_Pos;
+    double     m_Speed;
 
-    // possible additions : color, texture
+    sptr<Workshop> m_Workshop;
 };
 
 #endif // PLH_WORKER

@@ -3,7 +3,13 @@
 
 // alpp
 #include <Core.h>
+
+// plh
 #include <ResourceStack.h>
+#include <Worker.h>
+
+// std
+#include <list>
 
 namespace alpp { namespace render {
 
@@ -11,30 +17,39 @@ class Renderer;
 
 }}
 
-enum class StackPosition
-{
-    NORTH = 0,
-    EAST  = 1,
-    SOUTH = 2,
-    WEST  = 3,
-};
-
-class Workshop
+class Workshop : public std::enable_shared_from_this<Workshop>
 {
 public:
 
-    explicit Workshop(uint16_t i_X, uint16_t i_Y);
+    explicit Workshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide);
 
-    void addResourceStack(StackPosition i_Position, ResourceStack::Type i_Type);
+    void addWorker();
+
+    void moveOutputStack (CardinalDir i_Side);
+    void addInputStack   (CardinalDir i_Side);
+    void removeInputStack(CardinalDir i_Side);
+    bool hasStack        (CardinalDir i_Side) const;
+
+    std::list<sptr<ResourceStack>> getInputStacks() const;
+    sptr<ResourceStack>            getOutputStack() const;
+
+    sptr<ResourceStack>            getStack(CardinalDir i_Side) const;
+
+    PixelCoords getUpperLeftPixelPos() const;
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
+    std::string toString() const;
+
 private:
 
-    uint16_t m_X;
-    uint16_t m_Y;
+    void addStack   (CardinalDir i_Side, ResourceStack::Type i_Type);
+    void removeStack(CardinalDir i_Side);
 
+    WorkshopCoords      m_Pos;
     sptr<ResourceStack> m_ResourceStacks[4];
+    CardinalDir         m_OutputStackSide;
+    std::vector<Worker> m_Workers;
 };
 
 #endif // PLH_WORKSHOP

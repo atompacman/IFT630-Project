@@ -10,7 +10,6 @@
 
 // plh
 #include <Factory.h>
-#include <Worker.h>
 
 // std
 #include <string>
@@ -19,8 +18,7 @@ using namespace alpp;
 
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
 
-uint16_t objPosX;
-uint16_t objPosY;
+PixelCoords objPos;
 
 class MyMouse : public event::Mouse
 {
@@ -28,8 +26,8 @@ protected:
 
     void onMouseMoved() override
     {
-        objPosX = m_PosX;
-        objPosY = m_PosY;
+        objPos.x = m_PosX;
+        objPos.y = m_PosY;
     }
 
     void onButtonPressed(uint8_t i_Button) override
@@ -49,12 +47,11 @@ public:
 
     explicit MyGameLoop(render::WindowSettings i_WinSettings, double i_TargetFPS = 60.) :
         GameLoop(i_WinSettings, i_TargetFPS),
-        m_Factory(),
-        m_Worker(400, 400, 1)
+        m_Factory()
     {
-        auto workshop = m_Factory.buildWorkshop(2, 1);
-        workshop->addResourceStack(StackPosition::WEST, ResourceStack::Type::INPUT);
-        workshop->addResourceStack(StackPosition::EAST, ResourceStack::Type::OUTPUT);
+        auto workshop = m_Factory.buildWorkshop(WorkshopCoords(2, 1), CardinalDir::EAST);
+        workshop->addInputStack(CardinalDir::WEST);
+        workshop->addWorker();
     };
 
 protected:
@@ -63,16 +60,14 @@ protected:
     {
          // Draw a circle at mouse position
         auto cmd = std::make_shared<render::DrawFilledCircle>();
-        cmd->CenterPosX = objPosX;
-        cmd->CenterPosY = objPosY;
+        cmd->CenterPosX = objPos.x;
+        cmd->CenterPosY = objPos.y;
         cmd->Radius     = 10;
         cmd->Color      = al_map_rgb(20, 20, 150);
         m_Renderer->enqueueCommand(cmd);
 
         // Draw factory
         m_Factory.render(m_Renderer);
-
-        m_Worker.render(m_Renderer);
         
         return true;
     }
@@ -80,7 +75,6 @@ protected:
 private:
 
     Factory m_Factory;
-    Worker m_Worker;
 };
 
 int main()
