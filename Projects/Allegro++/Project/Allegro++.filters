@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="inc">
+      <UniqueIdentifier>{9ddcc1a9-d8d4-4896-a497-d234e0ea9f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="prj">
+      <UniqueIdentifier>{b352b9cc-40cb-4c5c-8585-ee6079786299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\allegro">
+      <UniqueIdentifier>{d05f439a-79ed-4eca-86df-8bc5c48e4ca6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\inc\easylogging++.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\allegro\Engine.h">
+      <Filter>src\allegro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\allegro\Renderer.h">
+      <Filter>src\allegro</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>prj</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\allegro\Engine.cpp">
+      <Filter>src\allegro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\allegro\Renderer.cpp">
+      <Filter>src\allegro</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
