@@ -34,6 +34,9 @@
     <ClCompile Include="..\Source\Resource.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Threadmill.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\aplib\Random.h">
       <Filter>Include\aplib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Threadmill.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

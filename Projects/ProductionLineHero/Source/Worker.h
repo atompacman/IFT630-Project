@@ -2,11 +2,11 @@
 #define PLH_WORKER
 
 // alpp
-#include <Common.h>
 #include <Core.h>
 #include <Render/Renderer.h>
 
 // plh
+#include <Common.h>
 #include <Resource.h>
 
 // std

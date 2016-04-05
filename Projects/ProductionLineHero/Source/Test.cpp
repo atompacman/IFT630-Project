@@ -55,7 +55,7 @@ public:
             workshop->addInputStack(CardinalDir::WEST);
             for (uint8_t j = 0; j < 5; ++j)
             {
-                workshop->addWorker(0.5 + j * 0.1);
+                workshop->addWorker(0.7 + j * 0.1);
             }
         }
     };
@@ -85,7 +85,7 @@ protected:
                 auto stack = m_Factory.getWorkshop(WorkshopCoords(i + 1, 1))->getStack(CardinalDir::WEST);
                 for (uint8_t j = 0; j < 3; ++j)
                 {
-                    stack->push();
+                    stack->push(Resource());
                 }
             }
         }

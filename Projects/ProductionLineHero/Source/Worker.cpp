@@ -9,10 +9,7 @@
 #include <Workshop.h>
 
 // std
-#include <chrono>
 #include <thread>
-
-using namespace std::chrono_literals;
 
 Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :
     m_Pos          (),
@@ -67,8 +64,8 @@ void Worker::runWorkerThread()
         }
         else
         {
-            currDestination->get()->push();
-            m_ResourcesHeld.clear();
+            currDestination->get()->push(m_ResourcesHeld.back());
+            m_ResourcesHeld.pop_back();
         }
 
         // Set next destination
@@ -91,7 +88,7 @@ void Worker::walk(RealCoords i_DestPos, RealCoords i_Step)
 
     m_Pos += i_Step + RealCoords(i_Step.y, -i_Step.x) * overallWiggle;
     
-    std::this_thread::sleep_for(10ms);
+    std::this_thread::sleep_for(WORKER_SLEEP_TIME);
 }
 
 void Worker::render(sptr<alpp::render::Renderer> i_Renderer) const

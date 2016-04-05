@@ -2,25 +2,18 @@
 #include <Render/Command.h>
 #include <Render/Renderer.h>
 
-// el
-#include <easylogging++.h>
-
 // plh
 #include <ResourceStack.h>
 
 // std
 #include <sstream>
 
-ResourceStack::ResourceStack(Type           i_Type, 
-                             WorkshopCoords i_Pos, 
-                             CardinalDir    i_Side, 
-                             Resource       i_ResourceArchetype) :
-    m_Type             (i_Type),
-    m_Pos              (),
-    m_ResourceArchetype(i_ResourceArchetype),
-    m_StackSize        (0),
-    m_Mutex            (),
-    m_WaitingList      ()
+ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Side) :
+    m_Type       (i_Type),
+    m_Pos        (),
+    m_Resources  (),
+    m_Mutex      (),
+    m_WaitingList()
 {
     // Compute center position in pixel
     m_Pos = i_Pos * WORKSHOP_SIZE_PXL + (i_Pos + PixelCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
@@ -52,20 +45,26 @@ Resource ResourceStack::poll()
     std::unique_lock<std::mutex> lock(m_Mutex);
 
     // Check if stack is empty
-    while (m_StackSize == 0)
+    while (m_Resources.empty())
     {
         // Wait for a push notification
         m_WaitingList.wait(lock);
     }
 
     // Get the resource
-    --m_StackSize;
-    return Resource(m_ResourceArchetype);
+    auto resource = m_Resources.top();
+    m_Resources.pop();
+    return resource;
 }
 
-void ResourceStack::push()
+void ResourceStack::push(Resource const & i_Resource)
 {
-    ++m_StackSize;
+    // Get mutex
+    std::unique_lock<std::mutex> lock(m_Mutex);
+
+    // Push element
+    m_Resources.push(i_Resource);
+
     // Notify a worker in the waiting list
     m_WaitingList.notify_one();
 }
@@ -88,7 +87,7 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
     cmd2->Font  = i_Renderer->StandardFont;
     cmd2->Color = al_map_rgb(255, 255, 255);
     std::stringstream ss;
-    ss << m_StackSize;
+    ss << numResources();
     cmd2->Text = ss.str();
     i_Renderer->enqueueCommand(cmd2);
 }
