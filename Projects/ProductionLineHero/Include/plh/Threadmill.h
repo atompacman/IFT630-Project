@@ -1,13 +1,11 @@
 #ifndef PLH_THREADMILL
 #define PLH_THREADMILL
 
-// alpp
-#include <Core.h>
-#include <Render/Renderer.h>
+#include <alpp/Core.h>
+#include <alpp/Render/Renderer.h>
 
-// plh
-#include <Common.h>
-#include <ResourceStack.h>
+#include <plh/Common.h>
+#include <plh/ResourceStack.h>
 
 class Workshop;
 

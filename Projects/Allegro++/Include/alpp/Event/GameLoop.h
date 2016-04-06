@@ -1,13 +1,10 @@
 #ifndef ALPP_EVENT_GAME_LOOP
 #define ALPP_EVENT_GAME_LOOP
 
-// allegro
 #include <allegro5/events.h>
 
-// alpp
-#include <Render/Renderer.h>
+#include <alpp/Render/Renderer.h>
 
-// std
 #include <unordered_map>
 
 struct ALLEGRO_TIMER;

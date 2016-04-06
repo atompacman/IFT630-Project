@@ -1,7 +1,6 @@
 #ifndef ALPP_RENDER_WINDOW_SETTINGS
 #define ALPP_RENDER_WINDOW_SETTINGS
 
-// allegro
 #include <allegro5/display.h>
 
 namespace alpp { namespace render {

@@ -1,11 +1,9 @@
 #ifndef ALPP_EVENT_AGENT
 #define ALPP_EVENT_AGENT
 
-// allegro
 #include <allegro5/events.h>
 
-// alpp
-#include <Core.h>
+#include <alpp/Core.h>
 
 namespace alpp { namespace event {
 

@@ -1,43 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\Include\easylogging++.h">
-      <Filter>Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Event\Agent.h">
-      <Filter>Source\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Event\Mouse.h">
-      <Filter>Source\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Core.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Render\Renderer.h">
-      <Filter>Source\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Render\Command.h">
-      <Filter>Source\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Render\WindowSettings.h">
-      <Filter>Source\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Event\GameLoop.h">
-      <Filter>Source\Event</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Source">
       <UniqueIdentifier>{8138ceef-58be-44f2-8d70-e5cb0a2fdb6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Include">
-      <UniqueIdentifier>{ad0aba8e-72b2-4679-8009-bc79f5d19bf0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Event">
       <UniqueIdentifier>{3d6f919a-a6a9-4e32-9cee-92fb6e25d12e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Render">
       <UniqueIdentifier>{d109bb04-8ffe-4003-8df7-a2ad5855d6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Third-party">
+      <UniqueIdentifier>{ad0aba8e-72b2-4679-8009-bc79f5d19bf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{aec30306-c1be-48f3-92e0-15814856295d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Event">
+      <UniqueIdentifier>{4fb5aafb-74ce-4dc5-a44b-5b0567c44d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Render">
+      <UniqueIdentifier>{5d6d5832-cc1d-474f-b56e-16c5a80364dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,5 +39,31 @@
     <ClCompile Include="..\Source\Event\GameLoop.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Third-party\Include\easylogging++.h">
+      <Filter>Third-party</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Event\Agent.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Event\GameLoop.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Event\Mouse.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Core.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Render\Command.h">
+      <Filter>Include\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Render\Renderer.h">
+      <Filter>Include\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Render\WindowSettings.h">
+      <Filter>Include\Render</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

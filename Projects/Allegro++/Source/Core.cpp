@@ -1,10 +1,7 @@
-// allegro
 #include <allegro5/system.h>
 
-// alpp
-#include <Core.h>
+#include <alpp/Core.h>
 
-// el
 #include <easylogging++.h>
 
 INITIALIZE_EASYLOGGINGPP

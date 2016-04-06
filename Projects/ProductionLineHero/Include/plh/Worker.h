@@ -1,15 +1,12 @@
 #ifndef PLH_WORKER
 #define PLH_WORKER
 
-// alpp
-#include <Core.h>
-#include <Render/Renderer.h>
+#include <alpp/Core.h>
+#include <alpp/Render/Renderer.h>
 
-// plh
-#include <Common.h>
-#include <Resource.h>
+#include <plh/Common.h>
+#include <plh/Resource.h>
 
-// std
 #include <list>
 
 class Workshop;

@@ -1,14 +1,10 @@
-// alpp
-#include <Render/Command.h>
+#include <alpp/Render/Command.h>
 
-// aplib
 #include <aplib/Random.h>
 
-// plh
-#include <Worker.h>
-#include <Workshop.h>
+#include <plh/Worker.h>
+#include <plh/Workshop.h>
 
-// std
 #include <thread>
 
 Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :

@@ -1,13 +1,9 @@
-// alpp
-#include <Render/Command.h>
+#include <alpp/Render/Command.h>
 
-// el
 #include <easylogging++.h>
 
-// plh
-#include <Threadmill.h>
+#include <plh/Threadmill.h>
 
-// std
 #include <thread>
 
 Threadmill::Threadmill(sptr<ResourceStack> i_Source, 

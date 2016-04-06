@@ -1,11 +1,8 @@
-// alpp
-#include <Render/Command.h>
-#include <Render/Renderer.h>
+#include <alpp/Render/Command.h>
+#include <alpp/Render/Renderer.h>
 
-// plh
-#include <ResourceStack.h>
+#include <plh/ResourceStack.h>
 
-// std
 #include <sstream>
 
 ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Side) :

@@ -1,10 +1,8 @@
 #ifndef PLH_COMMON
 #define PLH_COMMON
 
-// aplib
 #include <aplib/Vector2D.h>
 
-// std
 #include <chrono>
 
 using namespace std::chrono_literals;

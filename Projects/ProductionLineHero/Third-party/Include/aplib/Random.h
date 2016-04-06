@@ -1,7 +1,6 @@
 #ifndef APLIB_RANDOM
 #define APLIB_RANDOM
 
-// std
 #include <cassert>
 #include <chrono>
 #include <random>

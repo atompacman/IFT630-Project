@@ -1,13 +1,10 @@
-// alpp
-#include <Render/Command.h>
-#include <Render/Renderer.h>
+#include <alpp/Render/Command.h>
+#include <alpp/Render/Renderer.h>
 
-//el
 #include <easylogging++.h>
 
-// plh
-#include <Factory.h>
-#include <Workshop.h>
+#include <plh/Factory.h>
+#include <plh/Workshop.h>
 
 Workshop::Workshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide) :
     m_Pos            (i_Pos),

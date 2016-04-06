@@ -1,7 +1,6 @@
 #ifndef ALPP_CORE
 #define ALPP_CORE
 
-// std
 #include <memory>
 #include <string>
 

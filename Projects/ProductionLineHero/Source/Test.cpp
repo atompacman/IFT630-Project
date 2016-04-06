@@ -1,18 +1,14 @@
-// allegro
 #include <allegro5/bitmap.h>
 
-// alpp
-#include <Event/Mouse.h>
-#include <Event/GameLoop.h>
-#include <Render/Command.h>
-#include <Render/Renderer.h>
-#include <Render/WindowSettings.h>
+#include <alpp/Event/Mouse.h>
+#include <alpp/Event/GameLoop.h>
+#include <alpp/Render/Command.h>
+#include <alpp/Render/Renderer.h>
+#include <alpp/Render/WindowSettings.h>
 
-// plh
-#include <Factory.h>
-#include <Threadmill.h>
+#include <plh/Factory.h>
+#include <plh/Threadmill.h>
 
-// std
 #include <string>
 
 using namespace alpp;

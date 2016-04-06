@@ -1,14 +1,11 @@
 #ifndef PLH_FACTORY
 #define PLH_FACTORY
 
-// alpp
-#include <Core.h>
+#include <alpp/Core.h>
 
-// plh
-#include <Common.h>
-#include <Workshop.h>
+#include <plh/Common.h>
+#include <plh/Workshop.h>
 
-// std
 #include <cstdint>
 
 class Factory

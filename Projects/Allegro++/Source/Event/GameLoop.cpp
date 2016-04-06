@@ -1,12 +1,9 @@
-// allegro
 #include <allegro5/events.h>
 #include <allegro5/timer.h>
 
-// alpp
-#include <Core.h>
-#include <Event/GameLoop.h>
+#include <alpp/Core.h>
+#include <alpp/Event/GameLoop.h>
 
-// el
 #include <easylogging++.h>
 
 alpp::event::GameLoop::GameLoop(render::WindowSettings i_WinSettings,

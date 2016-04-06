@@ -1,14 +1,11 @@
 #ifndef PLH_WORKSHOP
 #define PLH_WORKSHOP
 
-// alpp
-#include <Core.h>
+#include <alpp/Core.h>
 
-// plh
-#include <ResourceStack.h>
-#include <Worker.h>
+#include <plh/ResourceStack.h>
+#include <plh/Worker.h>
 
-// std
 #include <list>
 
 namespace alpp { namespace render {

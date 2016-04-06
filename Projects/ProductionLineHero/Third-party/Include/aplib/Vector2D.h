@@ -1,10 +1,8 @@
 #ifndef APLIB_VECTOR_2D
 #define APLIB_VECTOR_2D
 
-// aplib
 #include <aplib/Direction2D.h>
 
-// std
 #include <sstream>
 
 template <typename T>

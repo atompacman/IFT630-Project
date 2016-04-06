@@ -1,10 +1,8 @@
 #ifndef ALPP_RENDER_COMMAND
 #define ALPP_RENDER_COMMAND
 
-// allegro
 #include <allegro5\color.h>
 
-// std
 #include <string>
 
 struct ALLEGRO_DISPLAY;
@@ -19,6 +17,11 @@ struct Command
     virtual void execute() = 0;
 };
 
+struct DrawCommand : Command
+{
+    virtual ~DrawCommand() { }
+};
+
 struct ResizeWindow : Command
 {
     ALLEGRO_DISPLAY * Window;
@@ -26,7 +29,7 @@ struct ResizeWindow : Command
     void execute() override;
 };
 
-struct DrawFilledCircle : Command
+struct DrawFilledCircle : DrawCommand
 {
     float         CenterPosX;
     float         CenterPosY;
@@ -36,7 +39,7 @@ struct DrawFilledCircle : Command
     void execute() override;
 };
 
-struct DrawFilledRectangle : Command
+struct DrawFilledRectangle : DrawCommand
 {
     float         PosLeft;
     float         PosTop;
@@ -47,7 +50,7 @@ struct DrawFilledRectangle : Command
     void execute() override;
 };
 
-struct DrawCenteredText : Command
+struct DrawCenteredText : DrawCommand
 {
     std::string    Text;
     ALLEGRO_FONT * Font;

@@ -8,11 +8,14 @@
     <Filter Include="Project">
       <UniqueIdentifier>{b793319e-ee3b-48cb-bff0-215884708f59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include">
+    <Filter Include="Third-party">
       <UniqueIdentifier>{67b31b38-8248-49e5-bc99-8758b39e2335}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include\aplib">
+    <Filter Include="Third-party\aplib">
       <UniqueIdentifier>{2b10d2fb-c503-408a-bf52-294073d30ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{27fa72f8-4087-44c5-98c7-8d44eb37be9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,35 +47,35 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Factory.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Third-party\Include\aplib\Random.h">
+      <Filter>Third-party\aplib</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Workshop.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Third-party\Include\aplib\Vector2D.h">
+      <Filter>Third-party\aplib</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\ResourceStack.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Third-party\Include\aplib\Direction2D.h">
+      <Filter>Third-party\aplib</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Worker.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Resource.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Resource.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\ResourceStack.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Common.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Threadmill.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Direction2D.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Worker.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Vector2D.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Workshop.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Random.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Common.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Threadmill.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Factory.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

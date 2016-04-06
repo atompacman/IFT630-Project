@@ -1,14 +1,11 @@
 #ifndef PLH_RESOURCE_STACK
 #define PLH_RESOURCE_STACK
 
-// alpp
-#include <Core.h>
+#include <alpp/Core.h>
 
-// plh
-#include <Common.h>
-#include <Resource.h>
+#include <plh/Common.h>
+#include <plh/Resource.h>
 
-// std
 #include <mutex>
 #include <stack>
 

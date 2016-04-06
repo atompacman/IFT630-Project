@@ -1,9 +1,7 @@
-// allegro
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 
-// alpp
-#include <Render/Command.h>
+#include <alpp/Render/Command.h>
 
 void alpp::render::ResizeWindow::execute()
 {

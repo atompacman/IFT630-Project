@@ -1,8 +1,7 @@
 #ifndef ALPP_EVENT_MOUSE
 #define ALPP_EVENT_MOUSE
 
-// alpp
-#include <Event/Agent.h>
+#include <alpp/Event/Agent.h>
 
 namespace alpp { namespace event {
 

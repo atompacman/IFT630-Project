@@ -1,9 +1,7 @@
-// el
 #include <easylogging++.h>
 
-// plh
-#include <Factory.h>
-#include <Workshop.h>
+#include <plh/Factory.h>
+#include <plh/Workshop.h>
 
 Factory::Factory() :
     m_Workshops()

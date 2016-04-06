@@ -78,14 +78,14 @@
     <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Third-party\Include;..\Source;..\Include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\Source;..\Include;$(IncludePath)</IncludePath>
+    <IncludePath>..\Third-party\Include;..\Source;..\Include;$(IncludePath)</IncludePath>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
@@ -147,21 +147,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Include\easylogging++.h" />
-    <ClInclude Include="..\Source\Core.h" />
-    <ClInclude Include="..\Source\Event\Agent.h" />
-    <ClInclude Include="..\Source\Event\GameLoop.h" />
-    <ClInclude Include="..\Source\Event\Mouse.h" />
-    <ClInclude Include="..\Source\Render\Command.h" />
-    <ClInclude Include="..\Source\Render\Renderer.h" />
-    <ClInclude Include="..\Source\Render\WindowSettings.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\Source\Event\GameLoop.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Core.cpp" />
     <ClCompile Include="..\Source\Render\Command.cpp" />
     <ClCompile Include="..\Source\Render\Renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Include\alpp\Core.h" />
+    <ClInclude Include="..\Include\alpp\Event\Agent.h" />
+    <ClInclude Include="..\Include\alpp\Event\GameLoop.h" />
+    <ClInclude Include="..\Include\alpp\Event\Mouse.h" />
+    <ClInclude Include="..\Include\alpp\Render\Command.h" />
+    <ClInclude Include="..\Include\alpp\Render\Renderer.h" />
+    <ClInclude Include="..\Include\alpp\Render\WindowSettings.h" />
+    <ClInclude Include="..\Third-party\Include\easylogging++.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

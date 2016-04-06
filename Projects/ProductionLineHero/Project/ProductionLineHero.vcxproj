@@ -69,9 +69,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>../Include/;../Source/;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
+    <IncludePath>../Include;../Source;../Third-party/Include;../../Allegro++/Include;../../Allegro++/Third-party/Include;$(IncludePath)</IncludePath>
     <ReferencePath />
-    <LibraryPath>..\..\Allegro++\Project\x64\Debug\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../Allegro++/Project/x64/Debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonFont>true</Allegro_AddonFont>
@@ -81,8 +81,8 @@
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
-    <IncludePath>../Include/;../Source/;../../Allegro++/Source/;../../Allegro++/Include;../../../Solution/packages/Allegro.5.2.0.0/build/native/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\Allegro++\Project\x64\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>../Include;../Source;../Third-party/Include;../../Allegro++/Include;../../Allegro++/Third-party/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../Allegro++/Project/x64/Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,16 +145,16 @@
     <None Include="..\..\Allegro++\Project\packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Include\aplib\Direction2D.h" />
-    <ClInclude Include="..\Include\aplib\Random.h" />
-    <ClInclude Include="..\Include\aplib\Vector2D.h" />
-    <ClInclude Include="..\Source\Factory.h" />
-    <ClInclude Include="..\Source\Resource.h" />
-    <ClInclude Include="..\Source\ResourceStack.h" />
-    <ClInclude Include="..\Source\Threadmill.h" />
-    <ClInclude Include="..\Source\Worker.h" />
-    <ClInclude Include="..\Source\Common.h" />
-    <ClInclude Include="..\Source\Workshop.h" />
+    <ClInclude Include="..\Include\plh\Common.h" />
+    <ClInclude Include="..\Include\plh\Factory.h" />
+    <ClInclude Include="..\Include\plh\Resource.h" />
+    <ClInclude Include="..\Include\plh\ResourceStack.h" />
+    <ClInclude Include="..\Include\plh\Threadmill.h" />
+    <ClInclude Include="..\Include\plh\Worker.h" />
+    <ClInclude Include="..\Include\plh\Workshop.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Direction2D.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Random.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
