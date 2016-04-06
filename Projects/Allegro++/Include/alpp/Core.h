@@ -1,8 +1,9 @@
 #ifndef ALPP_CORE
 #define ALPP_CORE
 
+#include <aplib/Vector2D.h>
+
 #include <memory>
-#include <string>
 
 #define CHECK_BOOL_AL_FUNC(funcCall, successFlag, errorMsg) \
     if (!funcCall) \
@@ -24,6 +25,10 @@ using sptr = std::shared_ptr<T>;
 
 template <typename T>
 using sptrc = std::shared_ptr<T const>;
+
+typedef Vector2D<uint16_t> PixelCoords;
+typedef Vector2D<uint16_t> PixelDimensions;
+typedef Vector2D<float>    WorldCoords;
 
 namespace alpp {
 

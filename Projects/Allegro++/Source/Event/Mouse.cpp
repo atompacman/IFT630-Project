@@ -8,10 +8,8 @@
 alpp::event::Mouse::Mouse() :
     Agent(),
     m_PressedButtons(),
-    m_PosX          (0),
-    m_PosY          (0),
-    m_DeltaX        (0),
-    m_DeltaY        (0),
+    m_Pos           (),
+    m_DeltaPos      (),
     m_DeltaScroll   (0)
 {
     CHECK_BOOL_AL_FUNC(al_install_mouse(), m_InitSuccess, "Could not initialize mouse");
@@ -46,10 +44,8 @@ bool alpp::event::Mouse::handleEvent(ALLEGRO_EVENT i_Event)
         break;
 
     case ALLEGRO_EVENT_MOUSE_AXES:
-        m_PosX        = i_Event.mouse.x;
-        m_PosY        = i_Event.mouse.y;
-        m_DeltaX      = i_Event.mouse.dx;
-        m_DeltaY      = i_Event.mouse.dy;
+        m_Pos         = PixelCoords(i_Event.mouse.x,  i_Event.mouse.y);
+        m_DeltaPos    = PixelCoords(i_Event.mouse.dx, i_Event.mouse.dy);
         m_DeltaScroll = i_Event.mouse.dy;
         onMouseMoved();
         break;

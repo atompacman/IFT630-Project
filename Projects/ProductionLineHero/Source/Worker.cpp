@@ -90,9 +90,8 @@ void Worker::walk(RealCoords i_DestPos, RealCoords i_Step)
 void Worker::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
-    cmd->CenterPosX = m_Pos.x;
-    cmd->CenterPosY = m_Pos.y;
-    cmd->Radius     = WORKER_RADIUS;
-    cmd->Color      = al_map_rgb(200, 200, 30);
+    cmd->CenterPos = m_Pos;
+    cmd->Radius    = WORKER_RADIUS;
+    cmd->Color     = al_map_rgb(200, 200, 30);
     i_Renderer->enqueueCommand(cmd);
 }

@@ -71,18 +71,15 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto const d = RESRC_STACK_SIZE_PXL / PixelCoords(2, 2);
 
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->PosLeft   = m_Pos.x - d.x;
-    cmd->PosRight  = m_Pos.x + d.x;
-    cmd->PosTop    = m_Pos.y - d.y;
-    cmd->PosBottom = m_Pos.y + d.y;
-    cmd->Color     = m_Type == Type::INPUT ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 0, 0);
+    cmd->UpperLeftPos  = m_Pos - d;
+    cmd->LowerRightPos = m_Pos + d;
+    cmd->Color         = m_Type == Type::INPUT ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 0, 0);
     i_Renderer->enqueueCommand(cmd);
 
     auto cmd2 = std::make_shared<alpp::render::DrawCenteredText>();
-    cmd2->PosX  = m_Pos.x - 2 * d.x;
-    cmd2->PosY  = m_Pos.y - 2 * d.y;
-    cmd2->Font  = i_Renderer->StandardFont;
-    cmd2->Color = al_map_rgb(255, 255, 255);
+    cmd2->CenterPos = m_Pos - d * static_cast<uint16_t>(2);
+    cmd2->Font      = i_Renderer->StandardFont;
+    cmd2->Color     = al_map_rgb(255, 255, 255);
     std::stringstream ss;
     ss << numResources();
     cmd2->Text = ss.str();

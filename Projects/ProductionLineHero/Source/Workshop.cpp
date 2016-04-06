@@ -79,15 +79,10 @@ PixelCoords Workshop::getUpperLeftPixelPos() const
 
 void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
-    auto ulPos = getUpperLeftPixelPos();
-    auto lrPos = ulPos + WORKSHOP_SIZE_PXL;
-
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->PosLeft   = ulPos.x;
-    cmd->PosRight  = lrPos.x;
-    cmd->PosTop    = ulPos.y;
-    cmd->PosBottom = lrPos.y;
-    cmd->Color     = al_map_rgb(10, 40, 53);
+    cmd->UpperLeftPos  = getUpperLeftPixelPos();
+    cmd->LowerRightPos = cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE_PXL);
+    cmd->Color         = al_map_rgb(10, 40, 53);
     i_Renderer->enqueueCommand(cmd);
 
     for (uint8_t i = 0; i < 4; ++i)

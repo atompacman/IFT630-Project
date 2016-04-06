@@ -18,11 +18,9 @@ public:
 
     bool m_PressedButtons[MAX_NUM_BUTTONS];
 
-    uint16_t m_PosX;
-    uint16_t m_PosY;
-    uint16_t m_DeltaX;
-    uint16_t m_DeltaY;
-    uint16_t m_DeltaScroll;
+    PixelCoords m_Pos;
+    PixelCoords m_DeltaPos;
+    uint16_t    m_DeltaScroll;
 
 protected:
 

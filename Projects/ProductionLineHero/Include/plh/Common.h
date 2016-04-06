@@ -12,7 +12,6 @@ double const TARGET_FPS        (60);
 auto   const THREAD_SLEEP_TIME (16ms);
 
 // Vector types
-typedef Vector2D<uint16_t> PixelCoords;
 typedef Vector2D<uint16_t> WorkshopCoords;
 typedef Vector2D<double>   RealCoords;
 

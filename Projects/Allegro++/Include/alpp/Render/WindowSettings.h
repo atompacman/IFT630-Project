@@ -22,8 +22,7 @@ struct WindowSettings
 {
     DisplayMode     displayMode = DisplayMode::WINDOWED;
     GraphicsLibrary library     = GraphicsLibrary::OPEN_GL;
-    uint32_t        width       = 800;
-    uint32_t        height      = 600;
+    PixelDimensions dimensions  = PixelDimensions(800, 600);
     bool            isResizable = true;
     std::string     title       = "No title";
 };

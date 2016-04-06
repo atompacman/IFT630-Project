@@ -150,7 +150,6 @@
     <ClCompile Include="..\Source\Event\GameLoop.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Core.cpp" />
-    <ClCompile Include="..\Source\Render\Command.cpp" />
     <ClCompile Include="..\Source\Render\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>

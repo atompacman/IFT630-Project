@@ -9,13 +9,11 @@
 #include <plh/Factory.h>
 #include <plh/Threadmill.h>
 
-#include <string>
-
 using namespace alpp;
 
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
 
-PixelCoords objPos;
+WorldCoords objPos;
 
 class MyMouse : public event::Mouse
 {
@@ -23,8 +21,7 @@ protected:
 
     void onMouseMoved() override
     {
-        objPos.x = m_PosX;
-        objPos.y = m_PosY;
+        objPos = m_Pos;
     }
 
     void onButtonPressed(uint8_t i_Button) override
@@ -74,10 +71,9 @@ protected:
 
          // Draw a circle at mouse position
         auto cmd = std::make_shared<render::DrawFilledCircle>();
-        cmd->CenterPosX = objPos.x;
-        cmd->CenterPosY = objPos.y;
-        cmd->Radius     = 10;
-        cmd->Color      = al_map_rgb(20, 20, 150);
+        cmd->CenterPos = objPos;
+        cmd->Radius    = 10;
+        cmd->Color     = al_map_rgb(20, 20, 150);
         m_Renderer->enqueueCommand(cmd);
 
         // Draw factory
@@ -121,8 +117,7 @@ int main()
     render::WindowSettings winSettings;
     winSettings.displayMode = render::DisplayMode::WINDOWED;
     winSettings.library     = render::GraphicsLibrary::OPEN_GL;
-    winSettings.width       = 1200;
-    winSettings.height      = 800;
+    winSettings.dimensions  = PixelDimensions(1200, 800);
     winSettings.isResizable = true;
     winSettings.title       = "Test";
 

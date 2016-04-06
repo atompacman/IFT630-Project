@@ -54,9 +54,8 @@ void Threadmill::runThreadmillThread()
 void Threadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
-    cmd->CenterPosX = m_ResourcePos.x;
-    cmd->CenterPosY = m_ResourcePos.y;
-    cmd->Radius     = 5;
-    cmd->Color      = al_map_rgb(150, 40, 140);
+    cmd->CenterPos = m_ResourcePos;
+    cmd->Radius    = 5;
+    cmd->Color     = al_map_rgb(150, 40, 140);
     i_Renderer->enqueueCommand(cmd);
 }

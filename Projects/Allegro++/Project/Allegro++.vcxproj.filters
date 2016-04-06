@@ -36,9 +36,6 @@
     <ClCompile Include="..\Source\Render\Renderer.cpp">
       <Filter>Source\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Render\Command.cpp">
-      <Filter>Source\Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Event\GameLoop.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>

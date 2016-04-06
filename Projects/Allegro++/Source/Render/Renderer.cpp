@@ -69,11 +69,10 @@ void alpp::render::Renderer::createWindow(WindowSettings i_WinSettings)
     {
         struct ALLEGRO_DISPLAY_MODE bestRes;
         al_get_display_mode(al_get_num_display_modes() - 1, &bestRes);
-        i_WinSettings.width = bestRes.width;
-        i_WinSettings.height = bestRes.height;
+        i_WinSettings.dimensions = PixelDimensions(bestRes.width, bestRes.height);
     }
 
-    CHECK_AL_FUNC(al_create_display(i_WinSettings.width, i_WinSettings.height),
+    CHECK_AL_FUNC(al_create_display(i_WinSettings.dimensions.x, i_WinSettings.dimensions.y),
         m_Window, m_InitSuccess, "Could not create Window");
 
     // Set default cursor
