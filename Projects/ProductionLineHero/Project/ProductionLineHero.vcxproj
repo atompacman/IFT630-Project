@@ -152,9 +152,6 @@
     <ClInclude Include="..\Include\plh\Threadmill.h" />
     <ClInclude Include="..\Include\plh\Worker.h" />
     <ClInclude Include="..\Include\plh\Workshop.h" />
-    <ClInclude Include="..\Third-party\Include\aplib\Direction2D.h" />
-    <ClInclude Include="..\Third-party\Include\aplib\Random.h" />
-    <ClInclude Include="..\Third-party\Include\aplib\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

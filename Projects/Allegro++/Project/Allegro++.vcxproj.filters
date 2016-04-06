@@ -22,6 +22,9 @@
     <Filter Include="Include\Render">
       <UniqueIdentifier>{5d6d5832-cc1d-474f-b56e-16c5a80364dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Third-party\aplib">
+      <UniqueIdentifier>{7748b0d1-be00-4eb7-95c7-fff271ecd416}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Event\Mouse.cpp">
@@ -64,6 +67,18 @@
     </ClInclude>
     <ClInclude Include="..\Include\alpp\Render\WindowSettings.h">
       <Filter>Include\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Third-party\Include\aplib\Random.h">
+      <Filter>Third-party\aplib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Third-party\Include\aplib\Vector2D.h">
+      <Filter>Third-party\aplib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Third-party\Include\aplib\Direction2D.h">
+      <Filter>Third-party\aplib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Third-party\Include\aplib\Bounds.h">
+      <Filter>Third-party\aplib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

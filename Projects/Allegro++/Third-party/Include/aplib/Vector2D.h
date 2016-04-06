@@ -11,24 +11,20 @@ struct Vector2D
     T x;
     T y;
 
-    Vector2D<T>() 
-    {
+    Vector2D<T>() :
+        x(),
+        y()
+    {}
 
-    }
-
-    Vector2D<T>(T i_X, T i_Y) : 
+    Vector2D<T>(T const & i_X, T const & i_Y) : 
         x(i_X), 
         y(i_Y)
-    {
-        
-    }
+    {}
 
     Vector2D<T>(Vector2D<T> const & i_Other) : 
         x(i_Other.x), 
         y(i_Other.y)
-    {
-        
-    }
+    {}
 
     template <typename U>
     operator Vector2D<U>() const

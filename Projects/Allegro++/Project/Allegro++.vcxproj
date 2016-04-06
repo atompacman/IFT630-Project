@@ -161,6 +161,10 @@
     <ClInclude Include="..\Include\alpp\Render\Command.h" />
     <ClInclude Include="..\Include\alpp\Render\Renderer.h" />
     <ClInclude Include="..\Include\alpp\Render\WindowSettings.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Bounds.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Direction2D.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Random.h" />
+    <ClInclude Include="..\Third-party\Include\aplib\Vector2D.h" />
     <ClInclude Include="..\Third-party\Include\easylogging++.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
