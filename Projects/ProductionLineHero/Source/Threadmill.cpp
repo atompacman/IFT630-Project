@@ -36,8 +36,22 @@ void Threadmill::runThreadmillThread()
         // Get a resource from the input stack
         m_MovingResource = m_SrcStack->poll();
 
+        // Set initial resource position
+        m_ResourcePos = m_SrcStack->centerPosition();
 
+        // Compute distance increment
+        auto destPos = RealCoords(m_DestStack->centerPosition());
+        auto step = (destPos - m_ResourcePos) / 60.;
 
+        // Move object towards destination until it's reached
+        while (m_ResourcePos.distanceTo(destPos) > 1e-2)
+        {
+            std::this_thread::sleep_for(THREAD_SLEEP_TIME);
+            m_ResourcePos += step;
+        }
+
+        // Push resource to destination stack
+        m_DestStack->push(m_MovingResource);
     }
 }
 

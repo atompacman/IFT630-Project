@@ -51,10 +51,10 @@ void Worker::runWorkerThread()
         auto step = (destPos - m_Pos).normalize() * m_Speed;
 
         // Walk towards destination until it's reached
-        do
+        while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x)
         {
             walk(destPos, step);
-        } while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x);
+        }
 
         // If we arrived at an input stack
         if (currDestination->get()->type() == ResourceStack::Type::INPUT)
@@ -88,7 +88,7 @@ void Worker::walk(RealCoords i_DestPos, RealCoords i_Step)
 
     m_Pos += i_Step + RealCoords(i_Step.y, -i_Step.x) * overallWiggle;
     
-    std::this_thread::sleep_for(WORKER_SLEEP_TIME);
+    std::this_thread::sleep_for(THREAD_SLEEP_TIME);
 }
 
 void Worker::render(sptr<alpp::render::Renderer> i_Renderer) const

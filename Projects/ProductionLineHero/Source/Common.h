@@ -9,6 +9,10 @@
 
 using namespace std::chrono_literals;
 
+// Timing
+double const TARGET_FPS        (60);
+auto   const THREAD_SLEEP_TIME (16ms);
+
 // Vector types
 typedef Vector2D<uint16_t> PixelCoords;
 typedef Vector2D<uint16_t> WorkshopCoords;
@@ -25,9 +29,11 @@ uint16_t       const SPACE_BETWEEN_WORKSHOPS (60);
 uint16_t const WORKER_RADIUS         (10);
 double   const PATH_WIGGLE_AMPLITUDE (0.2);
 double   const PATH_WIGGLE_FREQUENCY (0.5);
-auto     const WORKER_SLEEP_TIME     (16ms);
 
 // Resource stack
 PixelCoords const RESRC_STACK_SIZE_PXL (20, 20);
+
+// Threadmill
+auto const THREADMILL_SPEED = .001;
 
 #endif // PLH_COMMON

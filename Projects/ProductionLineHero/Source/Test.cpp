@@ -10,6 +10,7 @@
 
 // plh
 #include <Factory.h>
+#include <Threadmill.h>
 
 // std
 #include <string>
@@ -45,8 +46,8 @@ class MyGameLoop : public event::GameLoop
 {
 public:
 
-    explicit MyGameLoop(render::WindowSettings i_WinSettings, double i_TargetFPS = 60.) :
-        GameLoop(i_WinSettings, i_TargetFPS),
+    explicit MyGameLoop(render::WindowSettings i_WinSettings) :
+        GameLoop(i_WinSettings, TARGET_FPS),
         m_Factory()
     {
         for (uint8_t i = 0; i < 3; ++i)
@@ -57,6 +58,15 @@ public:
             {
                 workshop->addWorker(0.7 + j * 0.1);
             }
+        }
+
+        for (uint8_t i = 0; i < 2; ++i)
+        {
+            auto src  = m_Factory.getWorkshop(WorkshopCoords(i + 1, 1));
+            auto dest = m_Factory.getWorkshop(WorkshopCoords(i + 2, 1));
+            auto threadmill = std::make_shared<Threadmill>(src->getStack(CardinalDir::EAST),
+                                                           dest->getStack(CardinalDir::WEST));
+            m_Threadmills.push_back(threadmill);
         }
     };
 
@@ -90,6 +100,11 @@ protected:
             }
         }
 
+        for (auto threadmill : m_Threadmills)
+        {
+            threadmill->render(m_Renderer);
+        }
+
         ++currTick;
 
         return true;
@@ -98,6 +113,7 @@ protected:
 private:
 
     Factory m_Factory;
+    std::list<sptr<Threadmill>> m_Threadmills;
 };
 
 int main()
