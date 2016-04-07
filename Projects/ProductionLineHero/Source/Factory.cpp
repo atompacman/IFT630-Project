@@ -1,4 +1,4 @@
-#include <easylogging++.h>
+#include <alpp/Render/Command.h>
 
 #include <plh/Factory.h>
 #include <plh/Workshop.h>
@@ -32,6 +32,16 @@ bool Factory::hasWorkshopAt(WorkshopCoords i_Pos) const
 
 void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
+    // Render factory floor
+    WorldCoords factoryBorders(SPACE_BETWEEN_WORKSHOPS, SPACE_BETWEEN_WORKSHOPS);
+    auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+    cmd->UpperLeftPos  = workshopCoordsToWorldCoordsULCorner(WorkshopCoords(0, 0)) - factoryBorders;
+    cmd->LowerRightPos = workshopCoordsToWorldCoordsULCorner(MAX_NUM_WORKSHOPS - 
+        WorkshopCoords(1, 1)) + WORKSHOP_SIZE_PXL + SPACE_BETWEEN_WORKSHOPS;
+    cmd->Color = al_map_rgb(30, 30, 30);
+    i_Renderer->enqueueCommand(cmd);
+
+    // Render workshops
     WorkshopCoords coord;
     for (coord.y = 0; coord.y < MAX_NUM_WORKSHOPS_Y; ++coord.y)
     {
@@ -48,7 +58,6 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
 
 uint16_t Factory::linearize(WorkshopCoords i_Pos)
 {
-    LOG_IF(!(i_Pos <= MAX_NUM_WORKSHOPS), FATAL)
-        << "Invalid workshop position (" << i_Pos.x << ", " << i_Pos.y << ")";
+    checkWorkshopCoords(i_Pos);
     return i_Pos.x + i_Pos.y * MAX_NUM_WORKSHOPS_X;
 }

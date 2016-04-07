@@ -13,7 +13,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     m_WaitingList()
 {
     // Compute center position in pixel
-    m_Pos = i_Pos * WORKSHOP_SIZE_PXL + (i_Pos + PixelCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
+    m_Pos = workshopCoordsToWorldCoordsULCorner(i_Pos);
 
     switch (i_Side)
     {

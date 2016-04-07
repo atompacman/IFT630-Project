@@ -1,7 +1,5 @@
 #include <alpp/Render/Command.h>
 
-#include <easylogging++.h>
-
 #include <plh/Threadmill.h>
 
 #include <thread>

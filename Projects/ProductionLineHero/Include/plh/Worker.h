@@ -4,7 +4,6 @@
 #include <alpp/Core.h>
 #include <alpp/Render/Renderer.h>
 
-#include <plh/Common.h>
 #include <plh/Resource.h>
 
 #include <list>

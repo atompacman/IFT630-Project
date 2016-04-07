@@ -5,6 +5,8 @@
 
 #include <chrono>
 
+#include <easylogging++.h>
+
 using namespace std::chrono_literals;
 
 // Timing
@@ -16,10 +18,22 @@ typedef Vector2D<uint16_t> WorkshopCoords;
 
 // Workshop
 uint16_t       const MAX_NUM_WORKSHOPS_X     (6);
-uint16_t       const MAX_NUM_WORKSHOPS_Y     (4);
+uint16_t       const MAX_NUM_WORKSHOPS_Y     (6);
 WorkshopCoords const MAX_NUM_WORKSHOPS       (MAX_NUM_WORKSHOPS_X, MAX_NUM_WORKSHOPS_Y);
-PixelCoords    const WORKSHOP_SIZE_PXL       (150, 150);
-uint16_t       const SPACE_BETWEEN_WORKSHOPS (60);
+WorldCoords    const WORKSHOP_SIZE_PXL       (150, 150);
+float          const SPACE_BETWEEN_WORKSHOPS (60);
+
+inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
+{
+    LOG_IF(!(i_WSCoords <= MAX_NUM_WORKSHOPS), FATAL)
+        << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
+}
+
+inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords)
+{
+    auto p = WorldCoords(i_WSCoords);
+    return p * WORKSHOP_SIZE_PXL + (p + WorldCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
+}
 
 // Worker
 uint16_t const WORKER_RADIUS         (10);

@@ -1,8 +1,6 @@
 #include <alpp/Render/Command.h>
 #include <alpp/Render/Renderer.h>
 
-#include <easylogging++.h>
-
 #include <plh/Factory.h>
 #include <plh/Workshop.h>
 
@@ -74,7 +72,7 @@ sptr<ResourceStack> Workshop::getStack(CardinalDir i_Side) const
 
 PixelCoords Workshop::getUpperLeftPixelPos() const
 {
-    return m_Pos * WORKSHOP_SIZE_PXL + (m_Pos + PixelCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
+    return workshopCoordsToWorldCoordsULCorner(m_Pos);
 }
 
 void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
