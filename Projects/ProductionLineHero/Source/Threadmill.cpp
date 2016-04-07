@@ -30,7 +30,7 @@ void Threadmill::runThreadmillThread()
     while (true)
     {
         // Get a resource from the input stack
-        m_MovingResource = m_SrcStack->poll();
+        m_MovingResource = m_SrcStack->pop();
 
         // Set initial resource position
         m_ResourcePos = m_SrcStack->centerPosition();
@@ -48,11 +48,20 @@ void Threadmill::runThreadmillThread()
 
         // Push resource to destination stack
         m_DestStack->push(m_MovingResource);
+
+        // Reset resource position to tell the render method to not render the resource
+        m_ResourcePos = WorldCoords();
     }
 }
 
 void Threadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
+    // Skip drawing if there is not resource on the threadmill
+    if (m_ResourcePos == WorldCoords(0, 0))
+    {
+        return;
+    }
+
     auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
     cmd->CenterPos = m_ResourcePos;
     cmd->Radius    = 5;

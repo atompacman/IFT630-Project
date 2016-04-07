@@ -9,9 +9,11 @@
 #include <queue>
 
 struct ALLEGRO_FONT;
+struct ALLEGRO_TRANSFORM;
 
 namespace alpp { namespace render {
 
+class  Camera;
 struct Command;
 
 char const * const FONT_FILE = "C:\\Windows\\Fonts\\CALIST.TTF";
@@ -29,6 +31,9 @@ public:
 
     bool handleEvent(ALLEGRO_EVENT i_Event) override;
 
+    PixelDimensions windowSize() const;
+
+    sptr<Camera>   Camera;
     ALLEGRO_FONT * StandardFont;
 
 protected:

@@ -29,7 +29,7 @@ public:
 
     explicit ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Side);
 
-    Resource poll();
+    Resource pop();
     void     push(Resource const & i_Resource);
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;

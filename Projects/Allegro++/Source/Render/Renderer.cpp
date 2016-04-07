@@ -2,6 +2,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/display.h>
 
+#include <alpp/Render/Camera.h>
 #include <alpp/Render/Command.h>
 #include <alpp/Render/Renderer.h>
 
@@ -11,14 +12,15 @@
 
 alpp::render::Renderer::Renderer(WindowSettings i_WinSettings) :
     Agent(),
-    StandardFont           (nullptr),
-    m_Window               (nullptr),
-    m_CurrQueue            (0),
-    m_StopRenderThread     (false),
-    m_CmdQueues            (),
-    m_RenderThreadMutex    (),
-    m_Flip                 (),
-    m_DrawingStarted()
+    Camera             (std::make_shared<render::Camera>()),
+    StandardFont       (nullptr),
+    m_Window           (nullptr),
+    m_CurrQueue        (0),
+    m_StopRenderThread (false),
+    m_CmdQueues        (),
+    m_RenderThreadMutex(),
+    m_Flip             (),
+    m_DrawingStarted   ()
 {
     // Initialize primitive addon
     CHECK_BOOL_AL_FUNC(al_init_primitives_addon(), m_InitSuccess,
@@ -110,6 +112,9 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
         // Clear frame
         al_clear_to_color(al_map_rgb(0, 0, 0));
 
+        // Apply camera transform
+        Camera->applyTransform(windowSize());
+
         // Get the current draw command queue
         auto & queue = m_CmdQueues[m_CurrQueue];
 
@@ -167,6 +172,11 @@ bool alpp::render::Renderer::handleEvent(ALLEGRO_EVENT i_Event)
     }
 
     return true;
+}
+
+PixelDimensions alpp::render::Renderer::windowSize() const
+{
+    return PixelDimensions(al_get_display_width(m_Window), al_get_display_height(m_Window));
 }
 
 ALLEGRO_EVENT_SOURCE* alpp::render::Renderer::getEventSource() const

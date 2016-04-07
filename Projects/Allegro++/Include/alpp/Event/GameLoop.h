@@ -24,13 +24,13 @@ public:
 
     void run();
 
+    sptr<render::Renderer> Renderer;
+
 protected:
 
     virtual bool tick() = 0;
 
     ALLEGRO_EVENT_SOURCE * getEventSource() const override;
-
-    sptr<render::Renderer> m_Renderer;
 
 private:
 

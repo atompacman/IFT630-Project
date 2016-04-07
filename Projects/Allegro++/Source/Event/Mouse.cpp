@@ -45,7 +45,7 @@ bool alpp::event::Mouse::handleEvent(ALLEGRO_EVENT i_Event)
 
     case ALLEGRO_EVENT_MOUSE_AXES:
         m_Pos         = PixelCoords(i_Event.mouse.x,  i_Event.mouse.y);
-        m_DeltaPos    = PixelCoords(i_Event.mouse.dx, i_Event.mouse.dy);
+        m_DeltaPos    = Vector2D<int16_t>(i_Event.mouse.dx, i_Event.mouse.dy);
         m_DeltaScroll = i_Event.mouse.dy;
         onMouseMoved();
         break;

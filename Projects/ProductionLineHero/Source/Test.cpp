@@ -2,8 +2,7 @@
 
 #include <alpp/Event/Mouse.h>
 #include <alpp/Event/GameLoop.h>
-#include <alpp/Render/Command.h>
-#include <alpp/Render/Renderer.h>
+#include <alpp/Render/Camera.h>
 #include <alpp/Render/WindowSettings.h>
 
 #include <plh/Factory.h>
@@ -12,28 +11,6 @@
 using namespace alpp;
 
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
-
-WorldCoords objPos;
-
-class MyMouse : public event::Mouse
-{
-protected:
-
-    void onMouseMoved() override
-    {
-        objPos = m_Pos;
-    }
-
-    void onButtonPressed(uint8_t i_Button) override
-    {
-
-    }
-
-    void onButtonReleased(uint8_t i_Button) override
-    {
-
-    }
-};
 
 class MyGameLoop : public event::GameLoop
 {
@@ -69,15 +46,8 @@ protected:
     {
         static long currTick = 0;
 
-         // Draw a circle at mouse position
-        auto cmd = std::make_shared<render::DrawFilledCircle>();
-        cmd->CenterPos = objPos;
-        cmd->Radius    = 10;
-        cmd->Color     = al_map_rgb(20, 20, 150);
-        m_Renderer->enqueueCommand(cmd);
-
         // Draw factory
-        m_Factory.render(m_Renderer);
+        m_Factory.render(Renderer);
         
         // Regularly add resource to input stack
         if (currTick % 120 == 0)
@@ -94,7 +64,7 @@ protected:
 
         for (auto threadmill : m_Threadmills)
         {
-            threadmill->render(m_Renderer);
+            threadmill->render(Renderer);
         }
 
         ++currTick;
@@ -106,6 +76,34 @@ private:
 
     Factory m_Factory;
     std::list<sptr<Threadmill>> m_Threadmills;
+};
+
+class MyMouse : public event::Mouse
+{
+public:
+
+    explicit MyMouse(sptr<render::Camera> io_Camera) : m_Camera(io_Camera) {}
+
+protected:
+
+    void onMouseMoved() override
+    {
+        m_Camera->translate(m_DeltaPos);
+    }
+
+    void onButtonPressed(uint8_t i_Button) override
+    {
+
+    }
+
+    void onButtonReleased(uint8_t i_Button) override
+    {
+
+    }
+
+private:
+
+    sptr<render::Camera> m_Camera;
 };
 
 int main()
@@ -122,11 +120,11 @@ int main()
     winSettings.title       = "Test";
 
     // Create game loop
-    auto gameLoop = std::make_shared<MyGameLoop>(winSettings);
+    auto gameloop = std::make_shared<MyGameLoop>(winSettings);
 
     // Register custom mouse handler
-    gameLoop->registerAgent(std::make_shared<MyMouse>());
+    gameloop->registerAgent(std::make_shared<MyMouse>(gameloop->Renderer->Camera));
 
     // Run game loop
-    gameLoop->run();
+    gameloop->run();
 }

@@ -36,7 +36,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     }
 }
 
-Resource ResourceStack::poll()
+Resource ResourceStack::pop()
 {
     // Get mutex
     std::unique_lock<std::mutex> lock(m_Mutex);

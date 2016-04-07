@@ -18,9 +18,9 @@ public:
 
     bool m_PressedButtons[MAX_NUM_BUTTONS];
 
-    PixelCoords m_Pos;
-    PixelCoords m_DeltaPos;
-    uint16_t    m_DeltaScroll;
+    PixelCoords       m_Pos;
+    Vector2D<int16_t> m_DeltaPos;
+    uint16_t          m_DeltaScroll;
 
 protected:
 

@@ -56,7 +56,7 @@ void Worker::runWorkerThread()
         if (currDestination->get()->type() == ResourceStack::Type::INPUT)
         {
             // Get a resource (or wait for one)
-            m_ResourcesHeld.push_back(currDestination->get()->poll());
+            m_ResourcesHeld.push_back(currDestination->get()->pop());
         }
         else
         {

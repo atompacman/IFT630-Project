@@ -77,5 +77,8 @@
     <ClInclude Include="..\Third-party\Include\aplib\Bounds.h">
       <Filter>Third-party\aplib</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\alpp\Render\Camera.h">
+      <Filter>Include\Render</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

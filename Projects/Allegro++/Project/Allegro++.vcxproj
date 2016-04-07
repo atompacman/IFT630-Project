@@ -157,6 +157,7 @@
     <ClInclude Include="..\Include\alpp\Event\Agent.h" />
     <ClInclude Include="..\Include\alpp\Event\GameLoop.h" />
     <ClInclude Include="..\Include\alpp\Event\Mouse.h" />
+    <ClInclude Include="..\Include\alpp\Render\Camera.h" />
     <ClInclude Include="..\Include\alpp\Render\Command.h" />
     <ClInclude Include="..\Include\alpp\Render\Renderer.h" />
     <ClInclude Include="..\Include\alpp\Render\WindowSettings.h" />
