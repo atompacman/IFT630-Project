@@ -2,6 +2,7 @@
 
 #include <alpp/Event/Mouse.h>
 #include <alpp/Event/GameLoop.h>
+#include <alpp/Event/Keyboard.h>
 #include <alpp/Render/Camera.h>
 #include <alpp/Render/WindowSettings.h>
 
@@ -85,13 +86,11 @@ class MyMouse : public event::Mouse
 public:
 
     explicit MyMouse(sptr<render::Camera> io_Camera) : 
-        Mouse(0.5),
+        Mouse(500),
         m_Camera(io_Camera) 
     {}
 
 protected:
-
-    void onMouseMoved() override { LOG(INFO) << "onMouseMoved"; };
 
     void onScroll() override { LOG(INFO) << "onScroll"; };
 
@@ -115,6 +114,40 @@ private:
     sptr<render::Camera> m_Camera;
 };
 
+class MyKeyboard : public event::Keyboard
+{
+public:
+
+    explicit MyKeyboard(sptr<render::Camera> io_Camera, float i_ScrollSpeed) :
+        Keyboard(),
+        m_ScrollSpeed(i_ScrollSpeed),
+        m_Camera     (io_Camera)
+    {}
+
+protected:
+
+    void onCharacterTyped(uint8_t i_Key) override
+    {
+        WorldCoords translation;
+
+        switch (i_Key)
+        {
+        case ALLEGRO_KEY_LEFT : translation.x -= m_ScrollSpeed; break;
+        case ALLEGRO_KEY_RIGHT: translation.x += m_ScrollSpeed; break;
+        case ALLEGRO_KEY_UP   : translation.y -= m_ScrollSpeed; break;
+        case ALLEGRO_KEY_DOWN : translation.y += m_ScrollSpeed; break;
+        default:                                                break;
+        }
+
+        m_Camera->translate(translation);
+    }
+
+private:
+
+    float                m_ScrollSpeed;
+    sptr<render::Camera> m_Camera;
+};
+
 int main()
 {
     // Initialize Allegro++ wrapper
@@ -133,6 +166,9 @@ int main()
 
     // Register custom mouse handler
     gameloop->registerAgent(std::make_shared<MyMouse>(gameloop->Renderer->Camera));
+
+    // Register custom keyboard handler
+    gameloop->registerAgent(std::make_shared<MyKeyboard>(gameloop->Renderer->Camera, 10));
 
     // Run game loop
     gameloop->run();

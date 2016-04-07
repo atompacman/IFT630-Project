@@ -23,7 +23,7 @@ public:
 
     static uint32_t const NUM_BUTTONS = static_cast<uint32_t>(Button::Other5);
 
-    explicit Mouse(float i_MaxDurationForClickSec);
+    explicit Mouse(float i_MaxDurationForClickMS);
     virtual ~Mouse() { };
     
     bool handleEvent(ALLEGRO_EVENT i_Event) override;

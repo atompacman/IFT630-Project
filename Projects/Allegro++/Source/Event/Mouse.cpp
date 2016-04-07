@@ -5,13 +5,13 @@
 
 #include <easylogging++.h>
 
-alpp::event::Mouse::Mouse(float i_MaxDurationForClickSec) :
+alpp::event::Mouse::Mouse(float i_MaxDurationForClickMS) :
     Agent(),
     PressedButtons          (),
     Position                (),
     DeltaPos                (),
     DeltaScroll             (0),
-    m_MaxDurationForClickSec(i_MaxDurationForClickSec),
+    m_MaxDurationForClickSec(i_MaxDurationForClickMS / 1000.),
     m_PressedTimestamps     ()
 {
     CHECK_BOOL_AL_FUNC(al_install_mouse(), m_InitSuccess, "Could not initialize mouse");

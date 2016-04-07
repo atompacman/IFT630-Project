@@ -39,6 +39,9 @@
     <ClCompile Include="..\Source\Event\GameLoop.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Event\Keyboard.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Third-party\Include\easylogging++.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\alpp\Render\Camera.h">
       <Filter>Include\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\alpp\Event\Keyboard.h">
+      <Filter>Include\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

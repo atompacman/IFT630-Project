@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Event\GameLoop.cpp" />
+    <ClCompile Include="..\Source\Event\Keyboard.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Core.cpp" />
     <ClCompile Include="..\Source\Render\Renderer.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="..\Include\alpp\Core.h" />
     <ClInclude Include="..\Include\alpp\Event\Agent.h" />
     <ClInclude Include="..\Include\alpp\Event\GameLoop.h" />
+    <ClInclude Include="..\Include\alpp\Event\Keyboard.h" />
     <ClInclude Include="..\Include\alpp\Event\Mouse.h" />
     <ClInclude Include="..\Include\alpp\Render\Camera.h" />
     <ClInclude Include="..\Include\alpp\Render\Command.h" />
