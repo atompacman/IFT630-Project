@@ -25,7 +25,7 @@ private:
     sptr<ResourceStack> m_SrcStack;
     sptr<ResourceStack> m_DestStack;
     Resource            m_MovingResource;
-    RealCoords          m_ResourcePos;
+    WorldCoords          m_ResourcePos;
 };
 
 #endif // PLH_THREADMILL

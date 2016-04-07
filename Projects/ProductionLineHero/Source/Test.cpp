@@ -85,33 +85,13 @@ class MyMouse : public event::Mouse
 {
 public:
 
-    explicit MyMouse(sptr<render::Camera> io_Camera) : 
-        Mouse(500),
-        m_Camera(io_Camera) 
+    explicit MyMouse() : 
+        Mouse(500) 
     {}
 
 protected:
 
     void onScroll() override { LOG(INFO) << "onScroll"; };
-
-    void onLeftClick() override { LOG(INFO) << "onLeftClick"; };
-    void onRightClick() override { LOG(INFO) << "onRightClick"; };
-    void onMiddleClick() override { LOG(INFO) << "onMiddleClick"; };
-    void onOtherButtonClick(Button i_Button) override { LOG(INFO) << "onOtherButtonClick"; };
-
-    void onLeftPressed() override { LOG(INFO) << "onLeftPressed"; };
-    void onRightPressed() override { LOG(INFO) << "onRightPressed"; };
-    void onMiddlePressed() override { LOG(INFO) << "onMiddlePressed"; };
-    void onOtherButtonPressed(Button i_Button) override { LOG(INFO) << "onOtherButtonPressed"; };
-
-    void onLeftReleased() override { LOG(INFO) << "onLeftReleased"; };
-    void onRightReleased() override { LOG(INFO) << "onRightReleased"; };
-    void onMiddleReleased() override { LOG(INFO) << "onMiddleReleased"; };
-    void onOtherButtonReleased(Button i_Button) override { LOG(INFO) << "onOtherButtonReleased"; };
-
-private:
-
-    sptr<render::Camera> m_Camera;
 };
 
 class MyKeyboard : public event::Keyboard
@@ -126,20 +106,21 @@ public:
 
 protected:
 
-    void onCharacterTyped(uint8_t i_Key) override
+    bool onCharacterTyped(uint8_t i_Key) override
     {
         WorldCoords translation;
 
         switch (i_Key)
         {
-        case ALLEGRO_KEY_LEFT : translation.x -= m_ScrollSpeed; break;
-        case ALLEGRO_KEY_RIGHT: translation.x += m_ScrollSpeed; break;
-        case ALLEGRO_KEY_UP   : translation.y -= m_ScrollSpeed; break;
-        case ALLEGRO_KEY_DOWN : translation.y += m_ScrollSpeed; break;
-        default:                                                break;
+        case ALLEGRO_KEY_LEFT   : translation.x -= m_ScrollSpeed; break;
+        case ALLEGRO_KEY_RIGHT  : translation.x += m_ScrollSpeed; break;
+        case ALLEGRO_KEY_UP     : translation.y -= m_ScrollSpeed; break;
+        case ALLEGRO_KEY_DOWN   : translation.y += m_ScrollSpeed; break;
+        case ALLEGRO_KEY_ESCAPE : return false;
         }
 
         m_Camera->translate(translation);
+        return true;
     }
 
 private:
@@ -154,18 +135,22 @@ int main()
     init(LOGGER_CONFIG_FILE);
 
     // Set window settings
+    PixelDimensions initialWinDim(1200, 800);
     render::WindowSettings winSettings;
     winSettings.displayMode = render::DisplayMode::WINDOWED;
     winSettings.library     = render::GraphicsLibrary::OPEN_GL;
-    winSettings.dimensions  = PixelDimensions(1200, 800);
+    winSettings.dimensions  = initialWinDim;
     winSettings.isResizable = true;
     winSettings.title       = "Test";
 
     // Create game loop
     auto gameloop = std::make_shared<MyGameLoop>(winSettings);
 
+    // Center camera (temporary)
+    gameloop->Renderer->Camera->translate(WorldCoords(initialWinDim) / 2.f);
+
     // Register custom mouse handler
-    gameloop->registerAgent(std::make_shared<MyMouse>(gameloop->Renderer->Camera));
+    gameloop->registerAgent(std::make_shared<MyMouse>());
 
     // Register custom keyboard handler
     gameloop->registerAgent(std::make_shared<MyKeyboard>(gameloop->Renderer->Camera, 10));

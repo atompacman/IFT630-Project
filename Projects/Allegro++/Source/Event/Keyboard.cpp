@@ -14,24 +14,26 @@ alpp::event::Keyboard::Keyboard() :
 
 bool alpp::event::Keyboard::handleEvent(ALLEGRO_EVENT i_Event)
 {
+    auto result = true;
+
     switch (i_Event.type)
     {
     case ALLEGRO_EVENT_KEY_DOWN:
         PressedKeys[i_Event.keyboard.keycode] = true;
-        onKeyPressed(i_Event.keyboard.keycode);
+        result &= onKeyPressed(i_Event.keyboard.keycode);
         break;
 
     case ALLEGRO_EVENT_KEY_UP:
         PressedKeys[i_Event.keyboard.keycode] = false;
-        onKeyReleased(i_Event.keyboard.keycode);
+        result &= onKeyReleased(i_Event.keyboard.keycode);
         break;
 
     case ALLEGRO_EVENT_KEY_CHAR:
-        onCharacterTyped(i_Event.keyboard.keycode);
+        result &= onCharacterTyped(i_Event.keyboard.keycode);
         break;
     }
 
-    return true;
+    return result;
 }
 
 ALLEGRO_EVENT_SOURCE * alpp::event::Keyboard::getEventSource() const

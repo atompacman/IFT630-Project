@@ -7,16 +7,16 @@
 
 #include <thread>
 
-Worker::Worker(sptr<Workshop> i_Workshop, double i_Speed) :
+Worker::Worker(sptr<Workshop> i_Workshop, float i_Speed) :
     m_Pos          (),
     m_Speed        (i_Speed),
     m_ResourcesHeld(),
     m_Workshop     (i_Workshop)
 {
     // Put the worker at a random place inside the workshop
-    m_Pos  = RealCoords(i_Workshop->getUpperLeftPixelPos());
-    m_Pos += RealCoords(randUNorm(), randUNorm()) * 
-        (RealCoords(WORKSHOP_SIZE_PXL) - static_cast<double>(2 * WORKER_RADIUS));
+    m_Pos  = WorldCoords(i_Workshop->getUpperLeftPixelPos());
+    m_Pos += WorldCoords(randUNorm(), randUNorm()) * 
+        (WorldCoords(WORKSHOP_SIZE_PXL) - static_cast<float>(2 * WORKER_RADIUS));
     m_Pos += WORKER_RADIUS;
 
     std::thread(&Worker::runWorkerThread, this).detach();
@@ -41,7 +41,7 @@ void Worker::runWorkerThread()
     {
         // Get position of next destination
         auto pos = currDestination->get()->centerPosition();
-        auto destPos = RealCoords(pos.x, pos.y);
+        auto destPos = WorldCoords(pos.x, pos.y);
 
         // Compute the position increment at each step
         auto step = (destPos - m_Pos).normalize() * m_Speed;
@@ -73,16 +73,16 @@ void Worker::runWorkerThread()
     }
 }
 
-void Worker::walk(RealCoords i_DestPos, RealCoords i_Step)
+void Worker::walk(WorldCoords i_DestPos, WorldCoords i_Step)
 {
     // Randomly generate a wiggle pattern that will deviate the path a little bit
-    static double t = 0;
+    static float t = 0;
     t += PATH_WIGGLE_FREQUENCY;
-    auto randWiggle    = cos(t * 0.02 + cos(t * 0.3) * sin(t * 0.5));
+    auto randWiggle    = cos(t * 0.02f + cos(t * 0.3f) * sin(t * 0.5f));
     auto distFactpr    = m_Pos.distanceTo(i_DestPos) / WORKSHOP_SIZE_PXL.x;
     auto overallWiggle = distFactpr * PATH_WIGGLE_AMPLITUDE * randWiggle;
 
-    m_Pos += i_Step + RealCoords(i_Step.y, -i_Step.x) * overallWiggle;
+    m_Pos += i_Step + WorldCoords(i_Step.y, -i_Step.x) * overallWiggle;
     
     std::this_thread::sleep_for(THREAD_SLEEP_TIME);
 }

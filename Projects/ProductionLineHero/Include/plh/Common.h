@@ -8,12 +8,11 @@
 using namespace std::chrono_literals;
 
 // Timing
-double const TARGET_FPS        (60);
-auto   const THREAD_SLEEP_TIME (16ms);
+float const TARGET_FPS        (60);
+auto  const THREAD_SLEEP_TIME (16ms);
 
 // Vector types
 typedef Vector2D<uint16_t> WorkshopCoords;
-typedef Vector2D<double>   RealCoords;
 
 // Workshop
 uint16_t       const MAX_NUM_WORKSHOPS_X     (6);
@@ -24,8 +23,8 @@ uint16_t       const SPACE_BETWEEN_WORKSHOPS (60);
 
 // Worker
 uint16_t const WORKER_RADIUS         (10);
-double   const PATH_WIGGLE_AMPLITUDE (0.2);
-double   const PATH_WIGGLE_FREQUENCY (0.5);
+float    const PATH_WIGGLE_AMPLITUDE (0.2f);
+float    const PATH_WIGGLE_FREQUENCY (0.5f);
 
 // Resource stack
 PixelCoords const RESRC_STACK_SIZE_PXL (20, 20);

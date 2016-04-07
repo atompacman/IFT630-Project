@@ -15,7 +15,7 @@ class Worker
 {
 public:
 
-    explicit Worker(sptr<Workshop> i_Workshop, double i_Speed);
+    explicit Worker(sptr<Workshop> i_Workshop, float i_Speed);
     ~Worker();
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
@@ -23,10 +23,10 @@ public:
 private:
 
     void runWorkerThread();
-    void walk(RealCoords i_DestPos, RealCoords i_Step);
+    void walk(WorldCoords i_DestPos, WorldCoords i_Step);
 
-    RealCoords m_Pos;
-    double     m_Speed;
+    WorldCoords m_Pos;
+    float       m_Speed;
 
     std::list<Resource> m_ResourcesHeld;
 

@@ -36,8 +36,8 @@ void Threadmill::runThreadmillThread()
         m_ResourcePos = m_SrcStack->centerPosition();
 
         // Compute distance increment
-        auto destPos = RealCoords(m_DestStack->centerPosition());
-        auto step = (destPos - m_ResourcePos) / 60.;
+        auto destPos = WorldCoords(m_DestStack->centerPosition());
+        auto step = (destPos - m_ResourcePos) / 60.f;
 
         // Move object towards destination until it's reached
         while (m_ResourcePos.distanceTo(destPos) > 1e-2)

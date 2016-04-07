@@ -6,8 +6,6 @@
 #include <plh/Common.h>
 #include <plh/Workshop.h>
 
-#include <cstdint>
-
 class Factory
 {
 public:
