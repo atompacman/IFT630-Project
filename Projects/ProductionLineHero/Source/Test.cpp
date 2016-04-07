@@ -5,6 +5,8 @@
 #include <alpp/Render/Camera.h>
 #include <alpp/Render/WindowSettings.h>
 
+#include <easylogging++.h>
+
 #include <plh/Factory.h>
 #include <plh/Threadmill.h>
 
@@ -82,24 +84,31 @@ class MyMouse : public event::Mouse
 {
 public:
 
-    explicit MyMouse(sptr<render::Camera> io_Camera) : m_Camera(io_Camera) {}
+    explicit MyMouse(sptr<render::Camera> io_Camera) : 
+        Mouse(0.5),
+        m_Camera(io_Camera) 
+    {}
 
 protected:
 
-    void onMouseMoved() override
-    {
-        m_Camera->translate(m_DeltaPos);
-    }
+    void onMouseMoved() override { LOG(INFO) << "onMouseMoved"; };
 
-    void onButtonPressed(uint8_t i_Button) override
-    {
+    void onScroll() override { LOG(INFO) << "onScroll"; };
 
-    }
+    void onLeftClick() override { LOG(INFO) << "onLeftClick"; };
+    void onRightClick() override { LOG(INFO) << "onRightClick"; };
+    void onMiddleClick() override { LOG(INFO) << "onMiddleClick"; };
+    void onOtherButtonClick(Button i_Button) override { LOG(INFO) << "onOtherButtonClick"; };
 
-    void onButtonReleased(uint8_t i_Button) override
-    {
+    void onLeftPressed() override { LOG(INFO) << "onLeftPressed"; };
+    void onRightPressed() override { LOG(INFO) << "onRightPressed"; };
+    void onMiddlePressed() override { LOG(INFO) << "onMiddlePressed"; };
+    void onOtherButtonPressed(Button i_Button) override { LOG(INFO) << "onOtherButtonPressed"; };
 
-    }
+    void onLeftReleased() override { LOG(INFO) << "onLeftReleased"; };
+    void onRightReleased() override { LOG(INFO) << "onRightReleased"; };
+    void onMiddleReleased() override { LOG(INFO) << "onMiddleReleased"; };
+    void onOtherButtonReleased(Button i_Button) override { LOG(INFO) << "onOtherButtonReleased"; };
 
 private:
 

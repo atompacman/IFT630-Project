@@ -9,26 +9,58 @@ class Mouse : public Agent
 {
 public:
 
-    explicit Mouse();
-    virtual ~Mouse() { };
+    enum class Button
+    {
+        Left   = 1,
+        Right  = 2,
+        Middle = 3,
+        Other1 = 4,
+        Other2 = 5,
+        Other3 = 6,
+        Other4 = 7,
+        Other5 = 8
+    };
 
+    static uint32_t const NUM_BUTTONS = static_cast<uint32_t>(Button::Other5);
+
+    explicit Mouse(float i_MaxDurationForClickSec);
+    virtual ~Mouse() { };
+    
     bool handleEvent(ALLEGRO_EVENT i_Event) override;
 
-    static uint8_t const MAX_NUM_BUTTONS = 16;
+    bool PressedButtons[NUM_BUTTONS];
 
-    bool m_PressedButtons[MAX_NUM_BUTTONS];
-
-    PixelCoords       m_Pos;
-    Vector2D<int16_t> m_DeltaPos;
-    uint16_t          m_DeltaScroll;
+    PixelCoords       Position;
+    Vector2D<int16_t> DeltaPos;
+    uint16_t          DeltaScroll;
 
 protected:
 
     ALLEGRO_EVENT_SOURCE * getEventSource() const override;
 
-    virtual void onMouseMoved() = 0;
-    virtual void onButtonPressed(uint8_t i_Button) = 0;
-    virtual void onButtonReleased(uint8_t i_Button) = 0;
+    virtual void onMouseMoved()                         { };
+
+    virtual void onScroll()                             { };
+
+    virtual void onLeftClick()                          { };
+    virtual void onRightClick()                         { };
+    virtual void onMiddleClick()                        { };
+    virtual void onOtherButtonClick(Button i_Button)    { };
+
+    virtual void onLeftPressed()                        { };
+    virtual void onRightPressed()                       { };
+    virtual void onMiddlePressed()                      { };
+    virtual void onOtherButtonPressed(Button i_Button)  { };
+
+    virtual void onLeftReleased()                       { };
+    virtual void onRightReleased()                      { };
+    virtual void onMiddleReleased()                     { };
+    virtual void onOtherButtonReleased(Button i_Button) { };
+
+private:
+
+    float  m_MaxDurationForClickSec;
+    double m_PressedTimestamps[NUM_BUTTONS];
 };
 
 }}
