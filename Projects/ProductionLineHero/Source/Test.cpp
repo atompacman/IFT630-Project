@@ -9,7 +9,6 @@
 #include <easylogging++.h>
 
 #include <plh/Factory.h>
-#include <plh/Threadmill.h>
 
 using namespace alpp;
 
@@ -31,15 +30,6 @@ public:
             {
                 workshop->addWorker(0.7 + j * 0.1);
             }
-        }
-
-        for (uint8_t i = 0; i < 2; ++i)
-        {
-            auto src  = m_Factory.getWorkshop(WorkshopCoords(i + 1, 1));
-            auto dest = m_Factory.getWorkshop(WorkshopCoords(i + 2, 1));
-            auto threadmill = std::make_shared<Threadmill>(src->getStack(CardinalDir::EAST),
-                                                           dest->getStack(CardinalDir::WEST));
-            m_Threadmills.push_back(threadmill);
         }
     };
 
@@ -65,11 +55,6 @@ protected:
             }
         }
 
-        for (auto threadmill : m_Threadmills)
-        {
-            threadmill->render(Renderer);
-        }
-
         ++currTick;
 
         return true;
@@ -78,7 +63,6 @@ protected:
 private:
 
     Factory m_Factory;
-    std::list<sptr<Threadmill>> m_Threadmills;
 };
 
 class MyMouse : public event::Mouse

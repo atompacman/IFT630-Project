@@ -1,9 +1,6 @@
 #ifndef PLH_THREADMILL
 #define PLH_THREADMILL
 
-#include <alpp/Core.h>
-#include <alpp/Render/Renderer.h>
-
 #include <plh/ResourceStack.h>
 
 class Workshop;
@@ -24,7 +21,7 @@ private:
     sptr<ResourceStack> m_SrcStack;
     sptr<ResourceStack> m_DestStack;
     Resource            m_MovingResource;
-    WorldCoords          m_ResourcePos;
+    WorldCoords         m_ResourcePos;
 };
 
 #endif // PLH_THREADMILL

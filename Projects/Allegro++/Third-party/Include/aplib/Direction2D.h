@@ -31,19 +31,19 @@ enum class Dir2DWithDiag
     UPPER_LEFT  = 7
 };
 
-static std::map<std::string, CardinalDir> const CARDINAL_DIR_STR_2_VAL =
+std::map<std::string, CardinalDir> const CARDINAL_DIR_STR_2_VAL =
    {{ "NORTH", CardinalDir::NORTH },
     { "EAST",  CardinalDir::EAST  },
     { "SOUTH", CardinalDir::SOUTH },
     { "WEST",  CardinalDir::WEST  }};
 
-static std::map<std::string, Dir2D> const DIR_2D_STR_2_VAL =
+std::map<std::string, Dir2D> const DIR_2D_STR_2_VAL =
    {{ "UP",           Dir2D::UP          },
     { "RIGHT",        Dir2D::RIGHT       },
     { "DOWN",         Dir2D::DOWN        },
     { "LEFT",         Dir2D::LEFT        }};
 
-static std::map<std::string, Dir2DWithDiag> const DIR_2D_WTIH_DIAG_STR_2_VAL =
+std::map<std::string, Dir2DWithDiag> const DIR_2D_WTIH_DIAG_STR_2_VAL =
    {{ "UP",           Dir2DWithDiag::UP          },
     { "RIGHT",        Dir2DWithDiag::RIGHT       },
     { "DOWN",         Dir2DWithDiag::DOWN        },
@@ -53,13 +53,13 @@ static std::map<std::string, Dir2DWithDiag> const DIR_2D_WTIH_DIAG_STR_2_VAL =
     { "LOWER_LEFT",   Dir2DWithDiag::LOWER_LEFT  },
     { "UPPER_LEFT",   Dir2DWithDiag::UPPER_LEFT  }};
 
-static char const * const CARDINAL_DIR_NAMES[] =
+char const * const CARDINAL_DIR_NAMES[] =
     { "NORTH", 
       "EAST", 
       "SOUTH", 
       "WEST", };
 
-static char const * const DIR_2D_NAME[] =
+char const * const DIR_2D_NAME[] =
     { "UP",
       "RIGHT",
       "DOWN",
@@ -69,19 +69,35 @@ static char const * const DIR_2D_NAME[] =
       "LOWER_LEFT",
       "UPPER_LEFT"  };
 
-static char const * nameOf(CardinalDir i_Dir)
+inline char const * nameOf(CardinalDir i_Dir)
 {
     return CARDINAL_DIR_NAMES[static_cast<uint8_t>(i_Dir)];
 }
 
-static char const * nameOf(Dir2D i_Dir)
+inline char const * nameOf(Dir2D i_Dir)
 {
     return DIR_2D_NAME[static_cast<uint8_t>(i_Dir)];
 }
 
-static char const * nameOf(Dir2DWithDiag i_Dir)
+inline char const * nameOf(Dir2DWithDiag i_Dir)
 {
     return DIR_2D_NAME[static_cast<uint8_t>(i_Dir)];
+}
+
+inline Dir2DWithDiag oppositeOf(Dir2DWithDiag i_Dir)
+{
+    switch (i_Dir)
+    {
+    case Dir2DWithDiag::UP          : return Dir2DWithDiag::DOWN;
+    case Dir2DWithDiag::RIGHT       : return Dir2DWithDiag::LEFT;
+    case Dir2DWithDiag::DOWN        : return Dir2DWithDiag::UP;
+    case Dir2DWithDiag::LEFT        : return Dir2DWithDiag::RIGHT;
+    case Dir2DWithDiag::UPPER_RIGHT : return Dir2DWithDiag::LOWER_LEFT;
+    case Dir2DWithDiag::LOWER_RIGHT : return Dir2DWithDiag::UPPER_LEFT;
+    case Dir2DWithDiag::LOWER_LEFT  : return Dir2DWithDiag::UPPER_RIGHT;
+    case Dir2DWithDiag::UPPER_LEFT  : return Dir2DWithDiag::LOWER_RIGHT;
+    default:                          return Dir2DWithDiag(-1);
+    }
 }
 
 #endif // APLIB_DIRECTION_2D

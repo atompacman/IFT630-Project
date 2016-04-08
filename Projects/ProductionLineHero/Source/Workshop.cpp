@@ -26,9 +26,9 @@ void Workshop::moveOutputStack(CardinalDir i_Side)
     m_OutputStackSide = i_Side;
 }
 
-void Workshop::addInputStack(CardinalDir i_Side)
+sptr<ResourceStack> Workshop::addInputStack(CardinalDir i_Side)
 {
-    addStack(i_Side, ResourceStack::Type::INPUT);
+    return addStack(i_Side, ResourceStack::Type::INPUT);
 }
 
 void Workshop::removeInputStack(CardinalDir i_Side)
@@ -105,13 +105,14 @@ std::string Workshop::toString() const
 
 }
 
-void Workshop::addStack(CardinalDir i_Side, ResourceStack::Type i_Type)
+sptr<ResourceStack> Workshop::addStack(CardinalDir i_Side, ResourceStack::Type i_Type)
 {
     LOG_IF(hasStack(i_Side), FATAL) << toString() << ": Cannot add a " 
         << nameOf(i_Side) << "stack: A stack is is already there";
 
     auto stack = std::make_shared<ResourceStack>(i_Type, m_Pos, i_Side);
     m_ResourceStacks[static_cast<uint32_t>(i_Side)] = stack;
+    return stack;
 }
 
 void Workshop::removeStack(CardinalDir i_Side)

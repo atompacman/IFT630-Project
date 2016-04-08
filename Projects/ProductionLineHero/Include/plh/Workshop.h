@@ -22,10 +22,10 @@ public:
 
     void addWorker(double i_Speed);
 
-    void moveOutputStack (CardinalDir i_Side);
-    void addInputStack   (CardinalDir i_Side);
-    void removeInputStack(CardinalDir i_Side);
-    bool hasStack        (CardinalDir i_Side) const;
+    void                moveOutputStack (CardinalDir i_Side);
+    sptr<ResourceStack> addInputStack   (CardinalDir i_Side);
+    void                removeInputStack(CardinalDir i_Side);
+    bool                hasStack        (CardinalDir i_Side) const;
 
     std::list<sptr<ResourceStack>> getInputStacks() const;
     sptr<ResourceStack>            getOutputStack() const;
@@ -34,13 +34,16 @@ public:
 
     PixelCoords getUpperLeftPixelPos() const;
 
+    CardinalDir outputStackSide() const { return m_OutputStackSide; };
+
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
     std::string toString() const;
 
 private:
 
-    void addStack   (CardinalDir i_Side, ResourceStack::Type i_Type);
+    sptr<ResourceStack> addStack(CardinalDir i_Side, ResourceStack::Type i_Type);
+
     void removeStack(CardinalDir i_Side);
 
     WorkshopCoords            m_Pos;
