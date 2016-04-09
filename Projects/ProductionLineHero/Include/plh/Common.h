@@ -34,7 +34,7 @@ float          const SPACE_BETWEEN_WORKSHOPS (60);
 
 inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
 {
-    LOG_IF(!(i_WSCoords <= MAX_NUM_WORKSHOPS), FATAL)
+    LOG_IF(!(i_WSCoords < MAX_NUM_WORKSHOPS), FATAL)
         << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
 }
 

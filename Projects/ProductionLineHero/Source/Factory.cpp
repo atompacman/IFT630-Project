@@ -33,7 +33,7 @@ void Factory::connectToAdjacentWorkshopIfPossible(WorkshopCoords i_Pos, Cardinal
     auto adjPos = incremented(i_Pos, Dir2DWithDiag(i_Dir));
 
     // Exit if it is outside the factory
-    if (!(adjPos <= MAX_NUM_WORKSHOPS))
+    if (!(adjPos < MAX_NUM_WORKSHOPS))
     {
         return;
     }

@@ -22,7 +22,7 @@ int main()
     // Create game loop
     auto gameloop = std::make_shared<GameLoop>(winSettings);
 
-    // Center camera (temporary)
+    // Center camera
     gameloop->Renderer->Camera->translate(WorldCoords(INIT_WIN_DIM) / 2.f);
 
     // Register custom mouse handler

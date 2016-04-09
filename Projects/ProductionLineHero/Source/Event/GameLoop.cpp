@@ -1,3 +1,5 @@
+#include <aplib/Random.h>
+
 #include <plh/Common.h>
 #include <plh/Resource.h>
 #include <plh/Event/Gameloop.h>
@@ -6,15 +8,7 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
     m_Factory()
 {
-    //for (uint8_t i = 0; i < 3; ++i)
-    //{
-    //    auto workshop = m_Factory.buildWorkshop(WorkshopCoords(i + 1, 1), CardinalDir::EAST);
-    //    workshop->addInputStack(CardinalDir::WEST);
-    //    for (uint8_t j = 0; j < 5; ++j)
-    //    {
-    //        workshop->addWorker(0.7 + j * 0.1);
-    //    }
-    //}
+
 };
 
 bool GameLoop::tick()
@@ -24,18 +18,17 @@ bool GameLoop::tick()
     // Draw factory
     m_Factory.render(Renderer);
 
-    //// Regularly add resource to input stack
-    //if (currTick % 120 == 0)
-    //{
-    //    for (uint8_t i = 0; i < 3; ++i)
-    //    {
-    //        auto stack = m_Factory.getWorkshop(WorkshopCoords(i + 1, 1))->getStack(CardinalDir::WEST);
-    //        for (uint8_t j = 0; j < 3; ++j)
-    //        {
-    //            stack->push(Resource());
-    //        }
-    //    }
-    //}
+    if (currTick % 30 == 0)
+    {
+        WorkshopCoords pos;
+        do
+        {
+            pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
+            pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
+        } while (m_Factory.hasWorkshopAt(pos));
+        
+        m_Factory.buildWorkshop(pos, CardinalDir(randValue(0, 3)));
+    }
 
     ++currTick;
 
