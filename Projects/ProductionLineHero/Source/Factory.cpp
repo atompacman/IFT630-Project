@@ -1,10 +1,15 @@
 #include <alpp/Render/Command.h>
+#include <alpp/Render/Renderer.h>
 
 #include <plh/Factory.h>
+#include <plh/ResourceSupplier.h>
+#include <plh/Treadmill.h>
 #include <plh/Workshop.h>
 
 Factory::Factory() :
-    m_Workshops()
+    m_Suppliers (),
+    m_Treadmills(),
+    m_Workshops ()
 {
 
 }
@@ -80,6 +85,17 @@ sptr<Workshop> Factory::getWorkshop(WorkshopCoords i_Pos) const
 bool Factory::hasWorkshopAt(WorkshopCoords i_Pos) const
 {
     return m_Workshops[linearize(i_Pos)] != nullptr;
+}
+
+sptr<ResourceSupplier> Factory::addResourceSupplier(WorkshopCoords   i_Pos, 
+                                                    Resource const & i_RsrcArchetype, 
+                                                    float            i_SpeedSec, 
+                                                    CardinalDir      i_Side)
+{
+    auto newStack = getWorkshop(i_Pos)->addInputStack(i_Side);
+    auto supplier = std::make_shared<ResourceSupplier>(i_RsrcArchetype, newStack, i_SpeedSec);
+    m_Suppliers.push_back(supplier);
+    return supplier;
 }
 
 void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const

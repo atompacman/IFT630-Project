@@ -49,6 +49,9 @@
     <ClCompile Include="..\Source\Event\Keyboard.cpp">
       <Filter>Source\Event</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\ResourceSupplier.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\plh\Event\GameLoop.h">
       <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\ResourceSupplier.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

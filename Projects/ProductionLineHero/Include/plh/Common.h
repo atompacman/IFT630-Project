@@ -46,8 +46,8 @@ inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords
 
 // Worker
 uint16_t const WORKER_RADIUS         (10);
-float    const PATH_WIGGLE_AMPLITUDE (0.2f);
-float    const PATH_WIGGLE_FREQUENCY (0.5f);
+float    const PATH_WIGGLE_AMPLITUDE (0.3f);
+float    const PATH_WIGGLE_FREQUENCY (0.8f);
 
 // Resource stack
 WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);

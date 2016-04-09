@@ -1,8 +1,8 @@
 #include <aplib/Random.h>
 
-#include <plh/Common.h>
-#include <plh/Resource.h>
 #include <plh/Event/Gameloop.h>
+#include <plh/ResourceSupplier.h>
+#include <plh/Workshop.h>
 
 GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
@@ -33,23 +33,28 @@ bool GameLoop::tick()
         ++numWorkshops;
     }
 
-    if (currTick % 5 == 0)
+    if (currTick >= 500 && currTick % 500 == 0)
     {
+        auto i = 0;
         WorkshopCoords pos;
+
         do
         {
-            pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
-            pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
-        } while (!m_Factory.hasWorkshopAt(pos));
+            i = 0;
 
-        for (auto stack : m_Factory.getWorkshop(pos)->getInputStacks())
-        {
-            for (auto i = 0; i < 3; ++i)
+            do
             {
-                resources.emplace_back();
-                stack->push(resources.back());
+                pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
+                pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
+            } while (!m_Factory.hasWorkshopAt(pos));
+
+            while (m_Factory.getWorkshop(pos)->hasStack(CardinalDir(i)) && i < 4)
+            {
+                ++i;
             }
-        }
+        } while (i == 4);
+
+        registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
     }
 
     ++currTick;

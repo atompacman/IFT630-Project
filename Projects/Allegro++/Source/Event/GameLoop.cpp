@@ -52,7 +52,7 @@ bool alpp::event::GameLoop::handleEvent(ALLEGRO_EVENT /* i_Event */)
 
 ALLEGRO_EVENT_SOURCE * alpp::event::GameLoop::getEventSource() const
 {
-    return al_get_timer_event_source(m_Ticker);
+    return m_TickerEventSource;
 }
 
 void alpp::event::GameLoop::run()
