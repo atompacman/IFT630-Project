@@ -11,6 +11,12 @@
     <Filter Include="Include">
       <UniqueIdentifier>{27fa72f8-4087-44c5-98c7-8d44eb37be9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Event">
+      <UniqueIdentifier>{8e2e4e05-64e0-4388-9a69-09a127eece45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Event">
+      <UniqueIdentifier>{be06d6fe-fa1c-472a-a5ea-b64e0e016ebc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Test.cpp">
@@ -33,6 +39,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Treadmill.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\Mouse.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\GameLoop.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\Keyboard.cpp">
+      <Filter>Source\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="..\Include\plh\Treadmill.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Event\Keyboard.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Event\Mouse.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Event\GameLoop.h">
+      <Filter>Include\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

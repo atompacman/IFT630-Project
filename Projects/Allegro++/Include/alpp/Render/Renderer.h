@@ -16,7 +16,7 @@ namespace alpp { namespace render {
 class  Camera;
 struct Command;
 
-char const * const FONT_FILE = "C:\\Windows\\Fonts\\CALIST.TTF";
+char const * const FONT_FILE = "C:\\Windows\\Fonts\\ARIAL.TTF";
 uint16_t const     FONT_SIZE = 20;
 
 class Renderer : public event::Agent

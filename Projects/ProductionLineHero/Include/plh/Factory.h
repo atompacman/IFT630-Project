@@ -22,7 +22,7 @@ private:
                                                 (MAX_NUM_WORKSHOPS_X + MAX_NUM_WORKSHOPS_Y);
 
     static uint16_t linearize(WorkshopCoords i_Pos);
-    static uint16_t linearizeTreadmill(WorkshopCoords i_Pos, bool i_IsDown);
+    static uint16_t linearizeTreadmill(WorkshopCoords i_Pos, CardinalDir i_Dir);
 
     void connectToAdjacentWorkshopIfPossible(WorkshopCoords i_Pos, CardinalDir i_Dir);
 

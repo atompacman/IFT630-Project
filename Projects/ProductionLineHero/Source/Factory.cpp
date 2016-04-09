@@ -58,13 +58,17 @@ void Factory::connectToAdjacentWorkshopIfPossible(WorkshopCoords i_Pos, Cardinal
         // If adjacent workshop also has an output stack, then don't connect two output stacks
         if (!adjStack)
         {
-
+            auto newStack = adjWS->addInputStack(oppDir);
+            auto treadmill = std::make_shared<Treadmill>(newWS->getOutputStack(), newStack);
+            m_Treadmills[linearizeTreadmill(i_Pos, i_Dir)] = treadmill;
         }
     }
     // If adjacent workshop has an output stack that needs to be connected to the new workshop
-    else if (adjStack)
+    else if (adjStack && adjStack->type() == ResourceStack::Type::OUTPUT)
     {
-        
+        auto newStack = newWS->addInputStack(i_Dir);
+        auto treadmill = std::make_shared<Treadmill>(adjStack, newStack);
+        m_Treadmills[linearizeTreadmill(i_Pos, i_Dir)] = treadmill;
     }
 }
 
@@ -85,7 +89,7 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos  = workshopCoordsToWorldCoordsULCorner(WorkshopCoords(0, 0)) - factoryBorders;
     cmd->LowerRightPos = workshopCoordsToWorldCoordsULCorner(MAX_NUM_WORKSHOPS - 
-        WorkshopCoords(1, 1)) + WORKSHOP_SIZE_PXL + SPACE_BETWEEN_WORKSHOPS;
+                            WorkshopCoords(1, 1)) + WORKSHOP_SIZE_PXL + SPACE_BETWEEN_WORKSHOPS;
     cmd->Color = al_map_rgb(30, 30, 30);
     i_Renderer->enqueueCommand(cmd);
 
@@ -114,15 +118,21 @@ uint16_t Factory::linearize(WorkshopCoords i_Pos)
     return i_Pos.x + i_Pos.y * MAX_NUM_WORKSHOPS_X;
 }
 
-uint16_t Factory::linearizeTreadmill(WorkshopCoords i_Pos, bool i_IsDown)
+uint16_t Factory::linearizeTreadmill(WorkshopCoords i_Pos, CardinalDir i_Dir)
 {
-    LOG_IF(i_IsDown  && i_Pos.y == MAX_NUM_WORKSHOPS_Y, FATAL) << "There is no treadmill down";
-    LOG_IF(!i_IsDown && i_Pos.x == MAX_NUM_WORKSHOPS_X, FATAL) << "There is no treadmill right";
-
-    if (i_IsDown)
+    if (i_Dir == CardinalDir::NORTH)
     {
-        return MAX_NUM_WORKSHOPS.area() - MAX_NUM_WORKSHOPS_Y + linearize(i_Pos) - i_Pos.y;
+        --i_Pos.y;
+    }
+    else if (i_Dir == CardinalDir::WEST)
+    {
+        --i_Pos.x;
     }
 
-    return linearize(i_Pos) - i_Pos.y;
+    bool isVertical = i_Dir == CardinalDir::NORTH || i_Dir == CardinalDir::SOUTH;
+
+    LOG_IF( isVertical && i_Pos.y >= MAX_NUM_WORKSHOPS_Y - 1, FATAL) << "There is no treadmill down";
+    LOG_IF(!isVertical && i_Pos.x >= MAX_NUM_WORKSHOPS_X - 1, FATAL) << "There is no treadmill right";
+
+    return isVertical ? MAX_NUM_WORKSHOPS.area() - MAX_NUM_WORKSHOPS_Y + linearize(i_Pos) : linearize(i_Pos) - i_Pos.y;
 }

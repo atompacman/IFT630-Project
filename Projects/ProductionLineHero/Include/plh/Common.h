@@ -1,13 +1,22 @@
 #ifndef PLH_COMMON
 #define PLH_COMMON
 
-#include <aplib/Vector2D.h>
+#include <alpp/Core.h>
 
 #include <chrono>
 
 #include <easylogging++.h>
 
 using namespace std::chrono_literals;
+
+// Log
+std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
+
+// Initial window size
+PixelDimensions const INIT_WIN_DIM (1200, 800);
+
+// Keyboard scroll speed
+float const KEYBOARD_SCROLL_SPEED (10);
 
 // Timing
 float const TARGET_FPS        (60);

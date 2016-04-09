@@ -133,6 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Event\GameLoop.cpp" />
+    <ClCompile Include="..\Source\Event\Keyboard.cpp" />
+    <ClCompile Include="..\Source\Event\Mouse.cpp" />
     <ClCompile Include="..\Source\Factory.cpp" />
     <ClCompile Include="..\Source\Resource.cpp" />
     <ClCompile Include="..\Source\ResourceStack.cpp" />
@@ -146,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\plh\Common.h" />
+    <ClInclude Include="..\Include\plh\Event\GameLoop.h" />
+    <ClInclude Include="..\Include\plh\Event\Keyboard.h" />
+    <ClInclude Include="..\Include\plh\Event\Mouse.h" />
     <ClInclude Include="..\Include\plh\Factory.h" />
     <ClInclude Include="..\Include\plh\Resource.h" />
     <ClInclude Include="..\Include\plh\ResourceStack.h" />
