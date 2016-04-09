@@ -93,21 +93,21 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
     cmd->Color = al_map_rgb(30, 30, 30);
     i_Renderer->enqueueCommand(cmd);
 
-    // Render workshops
-    for (auto workshop : m_Workshops)
-    {
-        if (workshop)
-        {
-            workshop->render(i_Renderer);
-        }
-    }
-
     // Render treadmills
     for (auto threadmill : m_Treadmills)
     {
         if (threadmill)
         {
             threadmill->render(i_Renderer);
+        }
+    }
+
+    // Render workshops
+    for (auto workshop : m_Workshops)
+    {
+        if (workshop)
+        {
+            workshop->render(i_Renderer);
         }
     }
 }

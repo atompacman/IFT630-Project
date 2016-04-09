@@ -57,15 +57,24 @@ void Treadmill::runThreadmillThread()
 
 void Treadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
+    // Draw treadmill
+    auto cmd = std::make_shared<alpp::render::DrawLine>();
+    cmd->BegPos    = m_SrcStack->centerPosition();
+    cmd->EndPos    = m_DestStack->centerPosition();
+    cmd->Thickness = 15;
+    cmd->Color     = al_map_rgb(120, 70, 10);
+    i_Renderer->enqueueCommand(cmd);
+
     // Skip drawing if there is not resource on the threadmill
     if (m_ResourcePos == WorldCoords(0, 0))
     {
         return;
     }
 
-    auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
-    cmd->CenterPos = m_ResourcePos;
-    cmd->Radius    = 5;
-    cmd->Color     = al_map_rgb(150, 40, 140);
-    i_Renderer->enqueueCommand(cmd);
+    // Draw moving resource
+    auto cmd2 = std::make_shared<alpp::render::DrawFilledCircle>();
+    cmd2->CenterPos = m_ResourcePos;
+    cmd2->Radius = 5;
+    cmd2->Color = al_map_rgb(150, 40, 140);
+    i_Renderer->enqueueCommand(cmd2);
 }

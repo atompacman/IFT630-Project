@@ -68,7 +68,7 @@ void ResourceStack::push(Resource const & i_Resource)
 
 void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
-    auto const d = RESRC_STACK_SIZE_PXL / PixelCoords(2, 2);
+    auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
 
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos  = m_Pos - d;
@@ -77,7 +77,7 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
     i_Renderer->enqueueCommand(cmd);
 
     auto cmd2 = std::make_shared<alpp::render::DrawCenteredText>();
-    cmd2->CenterPos = m_Pos - d * static_cast<uint16_t>(2);
+    cmd2->CenterPos = m_Pos - d * 2.f;
     cmd2->Font      = i_Renderer->StandardFont;
     cmd2->Color     = al_map_rgb(255, 255, 255);
     std::stringstream ss;

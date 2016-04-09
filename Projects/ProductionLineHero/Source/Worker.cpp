@@ -29,46 +29,51 @@ Worker::~Worker()
 
 void Worker::runWorkerThread()
 {
-    // Create route (ordered list of resource stacks to visit to make his task)
-    auto route = m_Workshop->getInputStacks();
-    route.push_back(m_Workshop->getOutputStack());
-
-    // First destination
-    auto currDestination = route.begin();
-
     // Work for eternity
     while (true)
     {
-        // Get position of next destination
-        auto pos = currDestination->get()->centerPosition();
-        auto destPos = WorldCoords(pos.x, pos.y);
-
-        // Compute the position increment at each step
-        auto step = (destPos - m_Pos).normalize() * m_Speed;
-
-        // Walk towards destination until it's reached
-        while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x)
+        // Create route (ordered list of resource stacks to visit to make his task)
+        // If workshop has no input stack yet, simply wait
+        auto route = m_Workshop->getInputStacks();
+        while (route.empty())
         {
-            walk(destPos, step);
+            route = m_Workshop->getInputStacks();
+            std::this_thread::sleep_for(THREAD_SLEEP_TIME);
         }
+        route.push_back(m_Workshop->getOutputStack());
 
-        // If we arrived at an input stack
-        if (currDestination->get()->type() == ResourceStack::Type::INPUT)
-        {
-            // Get a resource (or wait for one)
-            m_ResourcesHeld.push_back(currDestination->get()->pop());
-        }
-        else
-        {
-            currDestination->get()->push(m_ResourcesHeld.back());
-            m_ResourcesHeld.pop_back();
-        }
+        // First destination
+        auto currDestination = route.begin();
 
-        // Set next destination
-        ++currDestination;
-        if (currDestination == route.end())
+        while (currDestination != route.end())
         {
-            currDestination = route.begin();
+            // Get position of next destination
+            auto pos = currDestination->get()->centerPosition();
+            auto destPos = WorldCoords(pos.x, pos.y);
+
+            // Compute the position increment at each step
+            auto step = (destPos - m_Pos).normalize() * m_Speed;
+
+            // Walk towards destination until it's reached
+            while (m_Pos.distanceTo(destPos) > RESRC_STACK_SIZE_PXL.x)
+            {
+                walk(destPos, step);
+            }
+
+            // If we arrived at an input stack
+            if (currDestination->get()->type() == ResourceStack::Type::INPUT)
+            {
+                // Get a resource (or wait for one)
+                m_ResourcesHeld.push_back(currDestination->get()->pop());
+            }
+            else
+            {
+                currDestination->get()->push(m_ResourcesHeld.back());
+                m_ResourcesHeld.pop_back();
+            }
+
+            // Set next destination
+            ++currDestination;
         }
     }
 }

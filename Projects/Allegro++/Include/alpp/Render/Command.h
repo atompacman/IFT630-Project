@@ -37,6 +37,19 @@ struct ResizeWindow : Command
     }
 };
 
+struct DrawLine : Command
+{
+    WorldCoords   BegPos;
+    WorldCoords   EndPos;
+    float         Thickness;
+    ALLEGRO_COLOR Color;
+
+    void execute() override
+    {
+        al_draw_line(BegPos.x + 0.5, BegPos.y + 0.5, EndPos.x + 0.5, EndPos.y + 0.5, Color, Thickness);
+    }
+};
+
 struct DrawFilledCircle : Command
 {
     WorldCoords   CenterPos;

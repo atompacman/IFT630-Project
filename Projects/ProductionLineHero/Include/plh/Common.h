@@ -50,7 +50,7 @@ float    const PATH_WIGGLE_AMPLITUDE (0.2f);
 float    const PATH_WIGGLE_FREQUENCY (0.5f);
 
 // Resource stack
-PixelCoords const RESRC_STACK_SIZE_PXL (20, 20);
+WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 
 // Treadmill
 auto const THREADMILL_SPEED = .001;
