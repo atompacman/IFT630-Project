@@ -2,7 +2,7 @@
 #define PLH_FACTORY
 
 #include <plh/Workshop.h>
-#include <plh/Threadmill.h>
+#include <plh/Treadmill.h>
 
 class Factory
 {
@@ -18,16 +18,16 @@ public:
 
 private:
 
-    static uint16_t const MAX_NUM_THREADMILLS = 2 * MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y -
+    static uint16_t const MAX_NUM_TREADMILLS = 2 * MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y -
                                                 (MAX_NUM_WORKSHOPS_X + MAX_NUM_WORKSHOPS_Y);
 
     static uint16_t linearize(WorkshopCoords i_Pos);
-    static uint16_t linearizeThreadmill(WorkshopCoords i_Pos, bool i_IsDown);
+    static uint16_t linearizeTreadmill(WorkshopCoords i_Pos, bool i_IsDown);
 
     void connectToAdjacentWorkshopIfPossible(WorkshopCoords i_Pos, CardinalDir i_Dir);
 
-    sptr<Workshop>   m_Workshops  [MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y];
-    sptr<Threadmill> m_Threadmills[MAX_NUM_THREADMILLS];
+    sptr<Workshop>  m_Workshops [MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y];
+    sptr<Treadmill> m_Treadmills[MAX_NUM_TREADMILLS];
 };
 
 #endif // PLH_FACTORY

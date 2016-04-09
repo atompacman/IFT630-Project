@@ -18,40 +18,11 @@ sptr<Workshop> Factory::buildWorkshop(WorkshopCoords i_Pos, CardinalDir i_Output
     auto workshop = std::make_shared<Workshop>(i_Pos, i_OutputStackSide);
     m_Workshops[linearize(i_Pos)] = workshop;
     
-    // Place threadmills and resource stacks where possible
-
-    // Up
-    auto up = incremented(i_Pos, Dir2DWithDiag::UP);
-    if (i_Pos.y > 0 && hasWorkshopAt(up))
-    {
-        auto otherWorkshop = getWorkshop(up);
-        if (i_OutputStackSide == CardinalDir::NORTH)
-        {
-            if (!otherWorkshop->hasStack(CardinalDir::SOUTH))
-            {
-                auto stack = otherWorkshop->addInputStack(CardinalDir::SOUTH);
-                auto threadmill = std::make_shared<Threadmill>(workshop->getOutputStack(), stack);
-                m_Threadmills[linearizeThreadmill(up, true)] = threadmill;
-            }
-        }
-        else if (otherWorkshop->hasStack(CardinalDir::SOUTH))
-        {
-            auto stack = workshop->addInputStack(CardinalDir::NORTH);
-            auto threadmill = std::make_shared<Threadmill>(otherWorkshop->getOutputStack(), stack);
-            m_Threadmills[linearizeThreadmill(up, true)] = threadmill;
-        }
-
-
-
-        auto newStack = workshop->addInputStack(CardinalDir::NORTH);
-        auto threadmill = std::make_shared<Threadmill>(otherWorkshop->getOutputStack(), newStack);
-        m_Threadmills[linearizeThreadmill(up, true)] = threadmill;
-
-
-
-    }
-
-
+    // Place treadmills and resource stacks where possible
+    connectToAdjacentWorkshopIfPossible(i_Pos, CardinalDir::NORTH);
+    connectToAdjacentWorkshopIfPossible(i_Pos, CardinalDir::EAST);
+    connectToAdjacentWorkshopIfPossible(i_Pos, CardinalDir::SOUTH);
+    connectToAdjacentWorkshopIfPossible(i_Pos, CardinalDir::WEST);
 
     return workshop;
 }
@@ -127,8 +98,8 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
         }
     }
 
-    // Render threadmills
-    for (auto threadmill : m_Threadmills)
+    // Render treadmills
+    for (auto threadmill : m_Treadmills)
     {
         if (threadmill)
         {
@@ -143,10 +114,10 @@ uint16_t Factory::linearize(WorkshopCoords i_Pos)
     return i_Pos.x + i_Pos.y * MAX_NUM_WORKSHOPS_X;
 }
 
-uint16_t Factory::linearizeThreadmill(WorkshopCoords i_Pos, bool i_IsDown)
+uint16_t Factory::linearizeTreadmill(WorkshopCoords i_Pos, bool i_IsDown)
 {
-    LOG_IF(i_IsDown  && i_Pos.y == MAX_NUM_WORKSHOPS_Y, FATAL) << "There is no threadmill down";
-    LOG_IF(!i_IsDown && i_Pos.x == MAX_NUM_WORKSHOPS_X, FATAL) << "There is no threadmill right";
+    LOG_IF(i_IsDown  && i_Pos.y == MAX_NUM_WORKSHOPS_Y, FATAL) << "There is no treadmill down";
+    LOG_IF(!i_IsDown && i_Pos.x == MAX_NUM_WORKSHOPS_X, FATAL) << "There is no treadmill right";
 
     if (i_IsDown)
     {

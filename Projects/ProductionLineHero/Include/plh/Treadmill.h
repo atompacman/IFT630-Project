@@ -1,16 +1,16 @@
-#ifndef PLH_THREADMILL
-#define PLH_THREADMILL
+#ifndef PLH_TREADMILL
+#define PLH_TREADMILL
 
 #include <plh/ResourceStack.h>
 
 class Workshop;
 
-class Threadmill
+class Treadmill
 {
 public:
 
-    explicit Threadmill(sptr<ResourceStack> i_Source, sptr<ResourceStack> i_Destination);
-    ~Threadmill();
+    explicit Treadmill(sptr<ResourceStack> i_Source, sptr<ResourceStack> i_Destination);
+    ~Treadmill();
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
@@ -24,4 +24,4 @@ private:
     WorldCoords         m_ResourcePos;
 };
 
-#endif // PLH_THREADMILL
+#endif // PLH_TREADMILL

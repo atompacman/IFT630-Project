@@ -31,7 +31,7 @@
     <ClCompile Include="..\Source\Resource.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Threadmill.cpp">
+    <ClCompile Include="..\Source\Treadmill.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,9 +47,6 @@
     <ClInclude Include="..\Include\plh\ResourceStack.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\plh\Threadmill.h">
-      <Filter>Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\plh\Worker.h">
       <Filter>Include</Filter>
     </ClInclude>
@@ -60,6 +57,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\plh\Factory.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Treadmill.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

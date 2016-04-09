@@ -1,10 +1,13 @@
-#include <alpp/Render/Command.h>
+#include <allegro5/display.h>
 
-#include <plh/Threadmill.h>
+#include <alpp/Render/Command.h>
+#include <alpp/Render/Renderer.h>
+
+#include <plh/Treadmill.h>
 
 #include <thread>
 
-Threadmill::Threadmill(sptr<ResourceStack> i_Source, 
+Treadmill::Treadmill(sptr<ResourceStack> i_Source, 
                        sptr<ResourceStack> i_Destination) :
     m_SrcStack      (i_Source),
     m_DestStack     (i_Destination),
@@ -15,15 +18,15 @@ Threadmill::Threadmill(sptr<ResourceStack> i_Source,
         << "A threadmill source stack cannot be a stack of type input";
     LOG_IF(m_DestStack->type() == ResourceStack::Type::OUTPUT, FATAL)
         << "A threadmill destination stack cannot be a stack of type output";
-    std::thread(&Threadmill::runThreadmillThread, this).detach();
+    std::thread(&Treadmill::runThreadmillThread, this).detach();
 }
 
-Threadmill::~Threadmill()
+Treadmill::~Treadmill()
 {
 
 }
 
-void Threadmill::runThreadmillThread()
+void Treadmill::runThreadmillThread()
 {
     while (true)
     {
@@ -52,7 +55,7 @@ void Threadmill::runThreadmillThread()
     }
 }
 
-void Threadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
+void Treadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     // Skip drawing if there is not resource on the threadmill
     if (m_ResourcePos == WorldCoords(0, 0))

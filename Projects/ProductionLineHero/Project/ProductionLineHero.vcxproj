@@ -137,7 +137,7 @@
     <ClCompile Include="..\Source\Resource.cpp" />
     <ClCompile Include="..\Source\ResourceStack.cpp" />
     <ClCompile Include="..\Source\Test.cpp" />
-    <ClCompile Include="..\Source\Threadmill.cpp" />
+    <ClCompile Include="..\Source\Treadmill.cpp" />
     <ClCompile Include="..\Source\Worker.cpp" />
     <ClCompile Include="..\Source\Workshop.cpp" />
   </ItemGroup>
@@ -149,7 +149,7 @@
     <ClInclude Include="..\Include\plh\Factory.h" />
     <ClInclude Include="..\Include\plh\Resource.h" />
     <ClInclude Include="..\Include\plh\ResourceStack.h" />
-    <ClInclude Include="..\Include\plh\Threadmill.h" />
+    <ClInclude Include="..\Include\plh\Treadmill.h" />
     <ClInclude Include="..\Include\plh\Worker.h" />
     <ClInclude Include="..\Include\plh\Workshop.h" />
   </ItemGroup>

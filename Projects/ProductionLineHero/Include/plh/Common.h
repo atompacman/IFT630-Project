@@ -43,7 +43,7 @@ float    const PATH_WIGGLE_FREQUENCY (0.5f);
 // Resource stack
 PixelCoords const RESRC_STACK_SIZE_PXL (20, 20);
 
-// Threadmill
+// Treadmill
 auto const THREADMILL_SPEED = .001;
 
 #endif // PLH_COMMON
