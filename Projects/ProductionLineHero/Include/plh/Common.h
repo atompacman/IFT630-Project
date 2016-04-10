@@ -18,6 +18,9 @@ PixelDimensions const INIT_WIN_DIM (1200, 800);
 // Keyboard scroll speed
 float const KEYBOARD_SCROLL_SPEED (10);
 
+// Mouse scroll factor
+float const MOUSE_SCROLL_ZOOM_FACTOR(0.05);
+
 // Timing
 float const TARGET_FPS        (60);
 auto  const THREAD_SLEEP_TIME (16ms);

@@ -32,7 +32,7 @@ public:
 
     PixelCoords       Position;
     Vector2D<int16_t> DeltaPos;
-    uint16_t          DeltaScroll;
+    int16_t          DeltaScroll;
 
 protected:
 

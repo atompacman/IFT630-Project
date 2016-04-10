@@ -16,6 +16,11 @@ void CreationMenu::addButton(CreationButton * button)
     m_Buttons.push_back(button);
 }
 
+std::vector<CreationButton*> CreationMenu::getButtons()
+{
+    return m_Buttons;
+}
+
 void CreationMenu::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();

@@ -13,12 +13,14 @@ class GameLoop : public alpp::event::GameLoop
 public:
 
     explicit GameLoop(alpp::render::WindowSettings i_WinSettings);
+    std::vector<UIElement*> getUI();
 
 protected:
 
     bool tick() override;
     void InitUI(alpp::render::WindowSettings i_WinSettings);
     void RenderUI();
+    void ResizeUI(PixelDimensions windowSize);
 
 private:
 

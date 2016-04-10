@@ -26,7 +26,7 @@ int main()
     gameloop->Renderer->Camera->translate(WorldCoords(INIT_WIN_DIM) / 2.f);
 
     // Register custom mouse handler
-    gameloop->registerAgent(std::make_shared<Mouse>());
+    gameloop->registerAgent(std::make_shared<Mouse>(gameloop));
 
     // Register custom keyboard handler
     gameloop->registerAgent(std::make_shared<Keyboard>(gameloop->Renderer->Camera));

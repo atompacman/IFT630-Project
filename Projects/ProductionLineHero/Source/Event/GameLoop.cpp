@@ -16,18 +16,41 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
 
 };
 
+void GameLoop::ResizeUI(PixelDimensions windowSize)
+{
+    WorldCoords creationMenuSize(windowSize.x / 4, windowSize.y / 8);
+    WorldCoords creationMenuPos(0, windowSize.y - creationMenuSize.y);
+
+    float buttonSide = creationMenuSize.y - 20;
+    WorldCoords newSize = WorldCoords(buttonSide, buttonSide);
+
+    CreationMenu * createMenu = dynamic_cast<CreationMenu*>(m_UI[0]);
+    createMenu->setPositionAndSize(creationMenuPos, creationMenuSize);
+
+    WorldCoords firstButtonPos = WorldCoords(creationMenuPos.x + 10, creationMenuPos.y + 10);
+
+    for (int i = 0; i < createMenu->getButtons().size(); ++i)
+    {
+        WorldCoords newPos = WorldCoords(firstButtonPos.x + i * (newSize.x + 10), firstButtonPos.y);
+        createMenu->getButtons().at(i)->setPositionAndSize(newPos, newSize);
+    }
+}
+
 void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
 {
-    WorldCoords creationMenuSize(i_WinSettings.dimensions.x, 180);
+    WorldCoords creationMenuSize(i_WinSettings.dimensions.x, 100);
     WorldCoords creationMenuPos(0, i_WinSettings.dimensions.y - creationMenuSize.y);
     CreationMenu * creationMenu = new CreationMenu(creationMenuPos, creationMenuSize);
 
+    float buttonSide = creationMenuSize.y - 20;
+    WorldCoords buttonSize = WorldCoords(buttonSide, buttonSide);
+
     CreationButton * workshopButton = new CreationButton(WorldCoords(creationMenuPos.x + 10,
-        creationMenuPos.y + 10), WorldCoords(160, 160), creationMenu, al_map_rgb(0, 255, 0));
+        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(0, 255, 0));
 
     CreationButton * supplierButton = new CreationButton(
         WorldCoords(workshopButton->getPosition().x + workshopButton->getSize().x + 10,
-        creationMenuPos.y + 10), WorldCoords(160, 160), creationMenu, al_map_rgb(255, 255, 0));
+        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(255, 255, 0));
 
     creationMenu->addButton(workshopButton);
     creationMenu->addButton(supplierButton);
@@ -41,6 +64,11 @@ void GameLoop::RenderUI()
     {
         element->render(Renderer);
     }
+}
+
+std::vector<UIElement*> GameLoop::getUI()
+{
+    return m_UI;
 }
 
 bool GameLoop::tick()
@@ -89,6 +117,8 @@ bool GameLoop::tick()
         registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
     }
 
+    // Resize the UI in case the window size changed
+    ResizeUI(Renderer->windowSize());
 
     // Draw UI
     RenderUI();

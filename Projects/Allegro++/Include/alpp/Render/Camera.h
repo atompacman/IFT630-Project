@@ -19,7 +19,14 @@ public:
 
     void translate (WorldCoords i_Delta) { m_Position += i_Delta; }
     void rotate    (float i_Delta)       { m_Rotation += i_Delta; }
-    void adjustZoom(float i_Delta)       { m_Zoom     += i_Delta; }
+    void adjustZoom(float i_Delta)       
+    { 
+        float newZoom = m_Zoom + i_Delta;
+        if (newZoom >= 0.1 && newZoom <= 2)
+            m_Zoom += i_Delta;
+    }
+
+    float getZoom() { return m_Zoom; }
 
     ALLEGRO_TRANSFORM * getTransform(PixelDimensions i_WindowSize)
     {

@@ -15,6 +15,7 @@ public:
     CreationMenu(WorldCoords position, WorldCoords size);
     virtual void render(sptr<alpp::render::Renderer> i_Renderer) const;
     void addButton(CreationButton * button);
+    std::vector<CreationButton *> getButtons();
 
 private:
     std::vector<CreationButton *> m_Buttons;
