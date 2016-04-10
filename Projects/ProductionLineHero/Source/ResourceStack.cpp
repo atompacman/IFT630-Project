@@ -36,7 +36,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     }
 }
 
-Resource ResourceStack::pop()
+sptr<Resource> ResourceStack::pop()
 {
     // Get mutex
     std::unique_lock<std::mutex> lock(m_Mutex);
@@ -54,7 +54,7 @@ Resource ResourceStack::pop()
     return resource;
 }
 
-void ResourceStack::push(Resource const & i_Resource)
+void ResourceStack::push(sptr<Resource> i_Resource)
 {
     // Get mutex
     std::unique_lock<std::mutex> lock(m_Mutex);

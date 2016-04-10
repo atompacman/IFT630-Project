@@ -20,7 +20,7 @@ private:
 
     sptr<ResourceStack> m_SrcStack;
     sptr<ResourceStack> m_DestStack;
-    Resource            m_MovingResource;
+    sptr<Resource>      m_MovingResource;
     WorldCoords         m_ResourcePos;
 };
 

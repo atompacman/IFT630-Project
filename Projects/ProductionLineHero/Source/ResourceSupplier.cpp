@@ -3,7 +3,7 @@
 
 #include <plh/ResourceSupplier.h>
 
-ResourceSupplier::ResourceSupplier(Resource const &    i_RsrcArchetype,
+ResourceSupplier::ResourceSupplier(sptr<Resource>      i_RsrcArchetype,
                                    sptr<ResourceStack> i_StackToSupply,
                                    float               i_SpeedSec) :
     m_Ticker(nullptr),

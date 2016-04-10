@@ -9,7 +9,7 @@ class ResourceSupplier : public alpp::event::Agent
 {
 public:
 
-    explicit ResourceSupplier(Resource const &    i_RsrcArchetype,
+    explicit ResourceSupplier(sptr<Resource>      i_RsrcArchetype,
                               sptr<ResourceStack> i_StackToSupply,
                               float               i_SpeedSec);
     ~ResourceSupplier();
@@ -24,7 +24,7 @@ private:
 
     ALLEGRO_TIMER *     m_Ticker;
     sptr<ResourceStack> m_StackToSupply;
-    Resource            m_RsrcArchetype;
+    sptr<Resource>      m_RsrcArchetype;
 };
 
 #endif // PLH_RESOURCE_SUPPLIER

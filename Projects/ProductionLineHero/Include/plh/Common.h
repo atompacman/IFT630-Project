@@ -1,6 +1,8 @@
 #ifndef PLH_COMMON
 #define PLH_COMMON
 
+#include <allegro5/color.h>
+
 #include <alpp/Core.h>
 
 #include <chrono>
@@ -54,5 +56,10 @@ WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 
 // Treadmill
 auto const THREADMILL_SPEED = .001;
+
+// Resources
+std::vector<uint16_t> const RAFFINEMENT_COLORS = { 224, 200, 143,
+                                                    50, 150, 246,
+                                                   142,  40,  46 };
 
 #endif // PLH_COMMON
