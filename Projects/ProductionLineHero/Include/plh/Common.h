@@ -44,6 +44,12 @@ inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords
     return p * WORKSHOP_SIZE_PXL + (p + WorldCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
 }
 
+inline WorkshopCoords worldCoordsToWorkshopCoordsULCorner(WorldCoords i_WCoords)
+{
+    auto p = WorkshopCoords(i_WCoords);
+    return (p - (WorkshopCoords(1, 1) * uint16_t(SPACE_BETWEEN_WORKSHOPS))) / (WorkshopCoords(WORKSHOP_SIZE_PXL) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
+}
+
 // Worker
 uint16_t const WORKER_RADIUS         (10);
 float    const PATH_WIGGLE_AMPLITUDE (0.3f);

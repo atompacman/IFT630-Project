@@ -20,20 +20,20 @@ bool GameLoop::tick()
     // Draw factory
     m_Factory.render(Renderer);
 
-    if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
-    {
-        WorkshopCoords pos;
-        do
-        {
-            pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
-            pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
-        } while (m_Factory.hasWorkshopAt(pos));
-        
-        m_Factory.buildWorkshop(pos, CardinalDir(randValue(0, 3)))->addWorker(1.);
-        ++numWorkshops;
-    }
+    //if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
+    //{
+    //    WorkshopCoords pos;
+    //    do
+    //    {
+    //        pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
+    //        pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
+    //    } while (m_Factory.hasWorkshopAt(pos));
+    //    
+    //    m_Factory.buildWorkshop(pos, CardinalDir(randValue(0, 3)))->addWorker(1.);
+    //    ++numWorkshops;
+    //}
 
-    if (currTick >= 500 && currTick % 500 == 0)
+    /*if (currTick >= 500 && currTick % 500 == 0)
     {
         auto i = 0;
         WorkshopCoords pos;
@@ -55,7 +55,7 @@ bool GameLoop::tick()
         } while (i == 4);
 
         registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
-    }
+    }*/
 
     ++currTick;
 
