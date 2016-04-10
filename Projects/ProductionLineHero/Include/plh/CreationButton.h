@@ -3,16 +3,17 @@
 
 #include <plh\UIElement.h>
 
-class CreationButton : UIElement
+class CreationButton : public UIElement
 {
 
 public:
     CreationButton();
-    CreationButton(PixelCoords position, PixelCoords size, sptr<UIElement> parent);
-    void render(sptr<alpp::render::Renderer> i_Renderer);
+    CreationButton(WorldCoords position, WorldCoords size, UIElement * parent, ALLEGRO_COLOR color);
+    void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
 private:
-    sptr<UIElement> m_ParentUI;
+    UIElement * m_ParentUI;
+    ALLEGRO_COLOR m_Color;
 
 
 };

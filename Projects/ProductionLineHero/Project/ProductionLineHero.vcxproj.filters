@@ -52,6 +52,12 @@
     <ClCompile Include="..\Source\ResourceSupplier.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\CreationMenu.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CreationButton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -90,6 +96,15 @@
       <Filter>Include\Event</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\plh\ResourceSupplier.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\UIElement.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\CreationMenu.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\CreationButton.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

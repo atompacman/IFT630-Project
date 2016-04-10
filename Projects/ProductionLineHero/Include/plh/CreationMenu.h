@@ -2,21 +2,22 @@
 #define PLH_CREATION_MENU
 
 #include <plh\UIElement.h>
-#include <plh\CreationButton.h>
 
 #include <vector>
 
+class CreationButton;
 
-class CreationMenu : UIElement 
+class CreationMenu : public UIElement 
 {
 
 public:
     CreationMenu();
-    CreationMenu(PixelCoords position, PixelCoords size);
-    virtual void render(sptr<alpp::render::Renderer> i_Renderer);
+    CreationMenu(WorldCoords position, WorldCoords size);
+    virtual void render(sptr<alpp::render::Renderer> i_Renderer) const;
+    void addButton(CreationButton * button);
 
 private:
-    std::vector<sptr<CreationButton>> m_Buttons;
+    std::vector<CreationButton *> m_Buttons;
 
 };
 

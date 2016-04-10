@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\CreationButton.cpp" />
+    <ClCompile Include="..\Source\CreationMenu.cpp" />
     <ClCompile Include="..\Source\Event\GameLoop.cpp" />
     <ClCompile Include="..\Source\Event\Keyboard.cpp" />
     <ClCompile Include="..\Source\Event\Mouse.cpp" />
@@ -150,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\plh\Common.h" />
+    <ClInclude Include="..\Include\plh\CreationButton.h" />
+    <ClInclude Include="..\Include\plh\CreationMenu.h" />
     <ClInclude Include="..\Include\plh\Event\GameLoop.h" />
     <ClInclude Include="..\Include\plh\Event\Keyboard.h" />
     <ClInclude Include="..\Include\plh\Event\Mouse.h" />
@@ -158,6 +162,7 @@
     <ClInclude Include="..\Include\plh\ResourceStack.h" />
     <ClInclude Include="..\Include\plh\ResourceSupplier.h" />
     <ClInclude Include="..\Include\plh\Treadmill.h" />
+    <ClInclude Include="..\Include\plh\UIElement.h" />
     <ClInclude Include="..\Include\plh\Worker.h" />
     <ClInclude Include="..\Include\plh\Workshop.h" />
   </ItemGroup>
