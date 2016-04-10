@@ -15,7 +15,8 @@ namespace alpp { namespace render {
 enum class Layer
 {
     WORLD,
-    UI
+    UI,
+    MAX
 };
 
 struct Command

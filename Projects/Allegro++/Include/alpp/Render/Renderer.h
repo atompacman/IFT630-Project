@@ -3,6 +3,7 @@
 
 #include <alpp/Core.h>
 #include <alpp/Event/Agent.h>
+#include <alpp/Render/Command.h>
 #include <alpp/Render/WindowSettings.h>
 
 #include <condition_variable>
@@ -14,7 +15,6 @@ struct ALLEGRO_TRANSFORM;
 namespace alpp { namespace render {
 
 class  Camera;
-struct Command;
 
 char const * const FONT_FILE = "C:\\Windows\\Fonts\\ARIAL.TTF";
 uint16_t const     FONT_SIZE = 20;
@@ -43,12 +43,14 @@ protected:
 private:
 
     void createWindow(WindowSettings i_WinSettings);
+    
     void runRenderThread(WindowSettings i_WinSettings);
+    void executeCommands(ALLEGRO_TRANSFORM * i_Transform, std::queue<sptr<Command>> & i_Queue);
 
     ALLEGRO_DISPLAY *         m_Window;
     bool                      m_CurrQueue;
     bool                      m_StopRenderThread;
-    std::queue<sptr<Command>> m_CmdQueues[2];
+    std::queue<sptr<Command>> m_CmdQueues[2 * static_cast<int>(Layer::MAX)];
     std::mutex                m_RenderThreadMutex;
     std::condition_variable   m_Flip;
     std::condition_variable   m_DrawingStarted;

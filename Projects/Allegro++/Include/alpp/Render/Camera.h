@@ -21,14 +21,14 @@ public:
     void rotate    (float i_Delta)       { m_Rotation += i_Delta; }
     void adjustZoom(float i_Delta)       { m_Zoom     += i_Delta; }
 
-    void applyTransform(PixelDimensions i_WindowSize)
+    ALLEGRO_TRANSFORM * getTransform(PixelDimensions i_WindowSize)
     {
         al_identity_transform (&m_Transform);
         al_translate_transform(&m_Transform, -m_Position.x, -m_Position.y);
         al_rotate_transform   (&m_Transform, m_Rotation);
         al_scale_transform    (&m_Transform, m_Zoom, m_Zoom);
         al_translate_transform(&m_Transform, i_WindowSize.x * 0.5, i_WindowSize.y * 0.5);
-        al_use_transform      (&m_Transform);
+        return &m_Transform;
     }
 
 private:

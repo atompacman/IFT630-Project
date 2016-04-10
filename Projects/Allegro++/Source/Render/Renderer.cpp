@@ -3,7 +3,6 @@
 #include <allegro5/display.h>
 
 #include <alpp/Render/Camera.h>
-#include <alpp/Render/Command.h>
 #include <alpp/Render/Renderer.h>
 
 #include <easylogging++.h>
@@ -106,24 +105,21 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     // Notify main thread that drawing started
     m_DrawingStarted.notify_one();
 
+    // Identity transform (for UI layer)
+    ALLEGRO_TRANSFORM identityTranform;
+    al_identity_transform(&identityTranform);
+
     // Until thread is asked to stop (by main thread destructor)
     while (!m_StopRenderThread)
     {   
         // Clear frame
         al_clear_to_color(al_map_rgb(0, 0, 0));
 
-        // Apply camera transform
-        Camera->applyTransform(windowSize());
+        // Execute World commands with camera transform
+        executeCommands(Camera->getTransform(windowSize()), m_CmdQueues[2 * int(Layer::WORLD) + m_CurrQueue]);
 
-        // Get the current draw command queue
-        auto & queue = m_CmdQueues[m_CurrQueue];
-
-        // Execute all commands
-        while (!queue.empty())
-        {
-            queue.front()->execute();
-            queue.pop();
-        }
+        // Execute UI commands with identity transform
+        executeCommands(&identityTranform, m_CmdQueues[2 * int(Layer::UI) + m_CurrQueue]);
 
         // Wait for main thread to flip display
         m_Flip.wait(lock);
@@ -139,10 +135,23 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     m_DrawingStarted.notify_one();
 }
 
+void alpp::render::Renderer::executeCommands(ALLEGRO_TRANSFORM * i_Transform, std::queue<sptr<Command>> & i_Queue)
+{
+    // Apply transform
+    al_use_transform(i_Transform);
+
+    // Execute commands
+    while (!i_Queue.empty())
+    {
+        i_Queue.front()->execute();
+        i_Queue.pop();
+    }
+}
+
 void alpp::render::Renderer::enqueueCommand(sptr<Command> i_Cmd)
 {
     // Enqueue command in a the queue that will be used to draw the next frame
-    m_CmdQueues[!m_CurrQueue].push(i_Cmd);
+    m_CmdQueues[2 * int(i_Cmd->Layer) + !m_CurrQueue].push(i_Cmd);
 }
 
 void alpp::render::Renderer::flip()
