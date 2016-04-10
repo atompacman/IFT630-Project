@@ -22,6 +22,7 @@ void CreationMenu::render(sptr<alpp::render::Renderer> i_Renderer) const
     cmd->UpperLeftPos = m_Pos;
     cmd->LowerRightPos = cmd->UpperLeftPos + m_Size;
     cmd->Color = al_map_rgb(200, 200, 200);
+    cmd->Layer = alpp::render::Layer::UI;
     i_Renderer->enqueueCommand(cmd);
 
     for (auto const & button : m_Buttons)

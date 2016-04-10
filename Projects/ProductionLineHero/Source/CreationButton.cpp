@@ -17,5 +17,6 @@ void CreationButton::render(sptr<alpp::render::Renderer> i_Renderer) const
     cmd->UpperLeftPos = m_Pos;
     cmd->LowerRightPos = cmd->UpperLeftPos + m_Size;
     cmd->Color = m_Color;
+    cmd->Layer = alpp::render::Layer::UI;
     i_Renderer->enqueueCommand(cmd);
 }

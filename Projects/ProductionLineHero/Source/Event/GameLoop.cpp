@@ -49,9 +49,6 @@ bool GameLoop::tick()
     static std::list<Resource> resources;
     static uint16_t numWorkshops = 0;
 
-    // Draw UI
-    RenderUI();
-
     // Draw factory
     m_Factory.render(Renderer);
 
@@ -91,6 +88,10 @@ bool GameLoop::tick()
 
         registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
     }
+
+
+    // Draw UI
+    RenderUI();
 
     ++currTick;
 
