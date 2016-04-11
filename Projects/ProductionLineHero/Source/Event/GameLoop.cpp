@@ -8,18 +8,25 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
     m_Factory()
 {
-
+    m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST)->addWorker(1);
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
+    m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST)->addWorker(1);
 };
 
 bool GameLoop::tick()
 {
+    /*
     static long currTick = 0;
     static std::list<sptr<Resource>> resources;
     static uint16_t numWorkshops = 0;
+    */
 
     // Draw factory
     m_Factory.render(Renderer);
 
+    /*
     if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
     {
         WorkshopCoords pos;
@@ -58,6 +65,6 @@ bool GameLoop::tick()
     }
 
     ++currTick;
-
+    */
     return true;
 }
