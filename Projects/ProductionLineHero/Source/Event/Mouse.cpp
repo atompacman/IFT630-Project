@@ -46,7 +46,7 @@ void Mouse::onLeftClick()
         /*WorldCoords camPos = m_GameObject->Renderer->Camera->getPosition();
         camPos /= 2.0;*/
         
-        WorldCoords roomPos = worldCoordsToWorkshopCoordsULCorner(WorldCoords(Position)/* + camPos*/);
+        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(WorldCoords(Position)/* + camPos*/);
         CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();   // Might be redundant...
 
         m_GameObject->CreateFactoryRoom(roomType, roomPos); // Same ...

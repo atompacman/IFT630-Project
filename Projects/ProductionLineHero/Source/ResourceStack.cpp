@@ -9,6 +9,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     m_Type       (i_Type),
     m_Pos        (),
     m_Resources  (),
+    m_LastPushed (),
     m_Mutex      (),
     m_WaitingList()
 {
@@ -36,7 +37,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     }
 }
 
-Resource ResourceStack::pop()
+sptr<Resource> ResourceStack::pop()
 {
     // Get mutex
     std::unique_lock<std::mutex> lock(m_Mutex);
@@ -54,10 +55,13 @@ Resource ResourceStack::pop()
     return resource;
 }
 
-void ResourceStack::push(Resource const & i_Resource)
+void ResourceStack::push(sptr<Resource> i_Resource)
 {
     // Get mutex
     std::unique_lock<std::mutex> lock(m_Mutex);
+
+    // Save last pushed resource
+    m_LastPushed = i_Resource->copy();
 
     // Push element
     m_Resources.push(i_Resource);

@@ -27,7 +27,7 @@ private:
     WorldCoords m_Pos;
     float       m_Speed;
 
-    std::list<Resource> m_ResourcesHeld;
+    std::list<sptr<Resource>> m_ResourcesHeld;
 
     sptr<Workshop> m_Workshop;
 };

@@ -8,7 +8,7 @@
 #include <thread>
 
 Treadmill::Treadmill(sptr<ResourceStack> i_Source, 
-                       sptr<ResourceStack> i_Destination) :
+                     sptr<ResourceStack> i_Destination) :
     m_SrcStack      (i_Source),
     m_DestStack     (i_Destination),
     m_MovingResource(),

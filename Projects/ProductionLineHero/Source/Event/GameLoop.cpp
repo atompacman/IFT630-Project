@@ -16,6 +16,12 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     // Create game UI
     InitUI(i_WinSettings);
 
+    // Test workshop
+    m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST)->addWorker(1);
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
+    m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST)->addWorker(1);
 };
 
 void GameLoop::ResizeUI(PixelDimensions windowSize)
@@ -94,57 +100,14 @@ void GameLoop::CreateFactoryRoom(CreatableRoomType roomType, WorkshopCoords room
 
 bool GameLoop::tick()
 {
-    static long currTick = 0;
-    static std::list<Resource> resources;
-    static uint16_t numWorkshops = 0;
-
     // Draw factory
     m_Factory.render(Renderer);
-
-    /*if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
-    {
-        WorkshopCoords pos;
-        do
-        {
-            pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
-            pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
-        } while (m_Factory.hasWorkshopAt(pos));
-        
-        m_Factory.buildWorkshop(pos, CardinalDir(randValue(0, 3)))->addWorker(1.);
-        ++numWorkshops;
-    }
-
-    if (currTick >= 500 && currTick % 500 == 0)
-    {
-        auto i = 0;
-        WorkshopCoords pos;
-
-        do
-        {
-            i = 0;
-
-            do
-            {
-                pos.x = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_X);
-                pos.y = randValue(static_cast<uint16_t>(0), MAX_NUM_WORKSHOPS_Y);
-            } while (!m_Factory.hasWorkshopAt(pos));
-
-            while (m_Factory.getWorkshop(pos)->hasStack(CardinalDir(i)) && i < 4)
-            {
-                ++i;
-            }
-        } while (i == 4);
-
-        registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
-    }*/
 
     // Resize the UI in case the window size changed
     ResizeUI(Renderer->windowSize());
 
     // Draw UI
     RenderUI();
-
-    ++currTick;
 
     return true;
 }
