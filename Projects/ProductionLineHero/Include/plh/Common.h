@@ -50,8 +50,17 @@ inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords
 inline WorkshopCoords worldCoordsToWorkshopCoordsULCorner(WorldCoords i_WCoords)
 {
     auto p = WorkshopCoords(i_WCoords);
-    return (p - (WorkshopCoords(1, 1) * uint16_t(SPACE_BETWEEN_WORKSHOPS))) / (WorkshopCoords(WORKSHOP_SIZE_PXL) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
+    return (p - (WorkshopCoords(1, 1) * uint16_t(SPACE_BETWEEN_WORKSHOPS))) / 
+        (WorkshopCoords(WORKSHOP_SIZE_PXL) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
 }
+
+// Placeable factory rooms
+// #TODO: rename enum...
+enum class CreatableRoomType {
+    WORKSHOP,
+    SUPPLIER,
+    NONE
+};
 
 // Worker
 uint16_t const WORKER_RADIUS         (10);

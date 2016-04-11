@@ -8,12 +8,23 @@
 
 class UIElement;
 
+enum class GameState
+{
+    IDLE_MODE,
+    CREATION_MODE
+};
+
 class GameLoop : public alpp::event::GameLoop
 {
 public:
 
     explicit GameLoop(alpp::render::WindowSettings i_WinSettings);
     std::vector<UIElement*> getUI();
+    void CreateFactoryRoom(CreatableRoomType roomType, WorkshopCoords roomPos);
+    GameState getState() { return m_State; }
+    void setState(GameState newState) { m_State = newState; }
+    CreatableRoomType getRoomTypeToCreate() { return m_RoomToCreate; }
+    void setRoomTypeToCreate(CreatableRoomType roomType) { m_RoomToCreate = roomType; }
 
 protected:
 
@@ -26,6 +37,8 @@ private:
 
     Factory m_Factory;
     std::vector<UIElement*> m_UI;
+    GameState m_State;
+    CreatableRoomType m_RoomToCreate;
 };
 
 #endif // PLH_EVENT_GAME_LOOP

@@ -25,15 +25,35 @@ void Mouse::onLeftClick()
 
     CreationMenu * createMenu = dynamic_cast<CreationMenu*>(ui[0]);
 
-    for (CreationButton * button : createMenu->getButtons())
-    {
-        if (button->isMouseInArea(Position))
+    if (createMenu->isMouseInArea(Position)) {
+        for (CreationButton * button : createMenu->getButtons())
         {
-            LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")";
+            if (button->isMouseInArea(Position))
+            {
+                m_GameObject->setState(GameState::CREATION_MODE);
+                m_GameObject->setRoomTypeToCreate(button->getRoomType());
+                LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")" << " : " << (int)button->getRoomType();
+            }
         }
     }
 
-    // Check if the click is <insert something here>
+    // Check if click is for creating room in factory
+
+    else if (m_GameObject->getState() == GameState::CREATION_MODE) 
+    {
+
+        // In progress
+        /*WorldCoords camPos = m_GameObject->Renderer->Camera->getPosition();
+        camPos /= 2.0;*/
+        
+        WorldCoords roomPos = worldCoordsToWorkshopCoordsULCorner(WorldCoords(Position)/* + camPos*/);
+        CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();   // Might be redundant...
+
+        m_GameObject->CreateFactoryRoom(roomType, roomPos); // Same ...
+    }
+    
+
+    // Check if the click is <insert something else here>
     
 
 };

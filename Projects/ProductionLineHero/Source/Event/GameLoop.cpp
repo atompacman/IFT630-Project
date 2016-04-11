@@ -9,7 +9,9 @@
 
 GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
-    m_Factory()
+    m_Factory(),
+    m_RoomToCreate(CreatableRoomType::NONE),
+    m_State(GameState::IDLE_MODE)
 {
     // Create game UI
     InitUI(i_WinSettings);
@@ -46,11 +48,11 @@ void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
     WorldCoords buttonSize = WorldCoords(buttonSide, buttonSide);
 
     CreationButton * workshopButton = new CreationButton(WorldCoords(creationMenuPos.x + 10,
-        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(0, 255, 0));
+        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(0, 255, 0), CreatableRoomType::WORKSHOP);
 
     CreationButton * supplierButton = new CreationButton(
         WorldCoords(workshopButton->getPosition().x + workshopButton->getSize().x + 10,
-        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(255, 255, 0));
+        creationMenuPos.y + 10), buttonSize, creationMenu, al_map_rgb(255, 255, 0), CreatableRoomType::SUPPLIER);
 
     creationMenu->addButton(workshopButton);
     creationMenu->addButton(supplierButton);
@@ -71,6 +73,25 @@ std::vector<UIElement*> GameLoop::getUI()
     return m_UI;
 }
 
+void GameLoop::CreateFactoryRoom(CreatableRoomType roomType, WorkshopCoords roomPos)
+{
+    switch (roomType)
+    {
+    case CreatableRoomType::WORKSHOP:
+        m_Factory.buildWorkshop(roomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);  // we should change the output to be chosen instead of random
+        setState(GameState::IDLE_MODE);
+        setRoomTypeToCreate(CreatableRoomType::NONE);
+        break;
+
+    case CreatableRoomType::SUPPLIER:
+        // #TODO
+        break;
+
+    default:
+        break;
+    }
+}
+
 bool GameLoop::tick()
 {
     static long currTick = 0;
@@ -80,7 +101,7 @@ bool GameLoop::tick()
     // Draw factory
     m_Factory.render(Renderer);
 
-    if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
+    /*if (currTick % 30 == 0 && numWorkshops < MAX_NUM_WORKSHOPS.area())
     {
         WorkshopCoords pos;
         do
@@ -115,7 +136,7 @@ bool GameLoop::tick()
         } while (i == 4);
 
         registerAgent(m_Factory.addResourceSupplier(pos, Resource(), 0.1f, CardinalDir(i)));
-    }
+    }*/
 
     // Resize the UI in case the window size changed
     ResizeUI(Renderer->windowSize());

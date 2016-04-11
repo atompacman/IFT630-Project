@@ -28,6 +28,8 @@ public:
 
     float getZoom() { return m_Zoom; }
 
+    WorldCoords getPosition() { return m_Position; }
+
     ALLEGRO_TRANSFORM * getTransform(PixelDimensions i_WindowSize)
     {
         al_identity_transform (&m_Transform);
