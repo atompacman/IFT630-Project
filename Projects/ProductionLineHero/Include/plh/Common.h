@@ -58,8 +58,29 @@ WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 auto const THREADMILL_SPEED = .001;
 
 // Resources
+std::vector<uint16_t> const RESOURCE_COLORS = { 255,   0,   0,
+                                                  0, 255,   0,
+                                                  0,   0, 255 };
+
 std::vector<uint16_t> const RAFFINEMENT_COLORS = { 224, 200, 143,
                                                     50, 150, 246,
                                                    142,  40,  46 };
+
+inline ALLEGRO_COLOR getColorConstant(uint8_t i_ColorID, std::vector<uint16_t> const & i_Vec)
+{
+    auto s = i_ColorID * 3;
+    LOG_IF(s >= i_Vec.size(), FATAL) << "Invalid color ID";
+    return al_map_rgb(i_Vec[s], i_Vec[s + 1], i_Vec[s + 2]);
+}
+
+inline ALLEGRO_COLOR getResourceColor(uint8_t i_ColorID)
+{
+    return getColorConstant(i_ColorID, RESOURCE_COLORS);
+}
+
+inline ALLEGRO_COLOR getRaffinementColor(uint8_t i_ColorID)
+{
+    return getColorConstant(i_ColorID, RAFFINEMENT_COLORS);
+}
 
 #endif // PLH_COMMON

@@ -26,10 +26,10 @@ public:
     sptr<Workshop> getWorkshop  (WorkshopCoords i_Pos) const;
     bool           hasWorkshopAt(WorkshopCoords i_Pos) const;
 
-    sptr<ResourceSupplier> addResourceSupplier(WorkshopCoords i_Pos,
-                                               sptr<Resource> i_RsrcArchetype,
-                                               float          i_SpeedSec,
-                                               CardinalDir    i_Side);
+    sptr<ResourceSupplier> addResourceSupplier(WorkshopCoords      i_Pos,
+                                               sptr<BasicResource> i_RsrcArchetype,
+                                               float               i_SpeedSec,
+                                               CardinalDir         i_Side);
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 

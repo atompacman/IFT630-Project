@@ -87,10 +87,10 @@ bool Factory::hasWorkshopAt(WorkshopCoords i_Pos) const
     return m_Workshops[linearize(i_Pos)] != nullptr;
 }
 
-sptr<ResourceSupplier> Factory::addResourceSupplier(WorkshopCoords i_Pos, 
-                                                    sptr<Resource> i_RsrcArchetype, 
-                                                    float          i_SpeedSec, 
-                                                    CardinalDir    i_Side)
+sptr<ResourceSupplier> Factory::addResourceSupplier(WorkshopCoords      i_Pos, 
+                                                    sptr<BasicResource> i_RsrcArchetype,
+                                                    float               i_SpeedSec, 
+                                                    CardinalDir         i_Side)
 {
     auto newStack = getWorkshop(i_Pos)->addInputStack(i_Side);
     auto supplier = std::make_shared<ResourceSupplier>(i_RsrcArchetype, newStack, i_SpeedSec);

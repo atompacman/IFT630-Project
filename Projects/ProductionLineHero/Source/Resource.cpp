@@ -17,14 +17,13 @@ void Resource::drawRaffinment(sptr<alpp::render::Renderer> i_Renderer, WorldCoor
         return;
     }
 
-    auto colorID = std::max<>(static_cast<size_t>(m_RaffinementLvl), RAFFINEMENT_COLORS.size() / 3 - 1);
+    auto colorID = std::min<>(static_cast<size_t>(m_RaffinementLvl), RAFFINEMENT_COLORS.size() / 3 - 1);
 
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     auto delta = 5 * 10 * std::pow(0.5, i_ScaleLvl);
     cmd->UpperLeftPos  = i_Pos - WorldCoords(delta, delta);
     cmd->LowerRightPos = i_Pos + WorldCoords(delta, delta);
-    cmd->Color         = al_map_rgb(RAFFINEMENT_COLORS[colorID], 
-        RAFFINEMENT_COLORS[colorID + 1], RAFFINEMENT_COLORS[colorID + 2]);
+    cmd->Color         = getRaffinementColor(static_cast<uint8_t>(colorID));
     i_Renderer->enqueueCommand(cmd);
 }
 
@@ -35,7 +34,7 @@ void BasicResource::render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords 
     auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
     cmd->CenterPos = i_Pos;
     cmd->Radius    = 5 *   10 * std::pow(0.5, i_ScaleLvl);
-    cmd->Color     = m_Color;
+    cmd->Color     = getResourceColor(m_ColorID);
     i_Renderer->enqueueCommand(cmd);
 }
 

@@ -3,10 +3,10 @@
 
 #include <plh/ResourceSupplier.h>
 
-ResourceSupplier::ResourceSupplier(sptr<Resource>      i_RsrcArchetype,
+ResourceSupplier::ResourceSupplier(sptr<BasicResource> i_RsrcArchetype,
                                    sptr<ResourceStack> i_StackToSupply,
                                    float               i_SpeedSec) :
-    m_Ticker(nullptr),
+    m_Ticker       (nullptr),
     m_StackToSupply(i_StackToSupply),
     m_RsrcArchetype(i_RsrcArchetype)
 {
@@ -22,7 +22,7 @@ ResourceSupplier::~ResourceSupplier()
 
 bool ResourceSupplier::handleEvent(ALLEGRO_EVENT i_Event)
 {
-    m_StackToSupply->push(m_RsrcArchetype);
+    m_StackToSupply->push(std::make_shared<BasicResource>(*m_RsrcArchetype.get()));
     return true;
 }
 

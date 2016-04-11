@@ -68,8 +68,18 @@ void Worker::runWorkerThread()
             }
             else
             {
-                currDestination->get()->push(m_ResourcesHeld.back());
-                m_ResourcesHeld.pop_back();
+                // If worker has only one resource in it's hands, raffine it, else merge items
+                if (m_ResourcesHeld.size() == 1)
+                {
+                    auto resource = m_ResourcesHeld.back();
+                    resource->raffine();
+                    currDestination->get()->push(resource);
+                }
+                else
+                {
+                    currDestination->get()->push(std::make_shared<CompositeResource>(m_ResourcesHeld));
+                }
+                m_ResourcesHeld.clear();
             }
 
             // Set next destination

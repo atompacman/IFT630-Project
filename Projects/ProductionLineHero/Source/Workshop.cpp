@@ -77,12 +77,21 @@ PixelCoords Workshop::getUpperLeftPixelPos() const
 
 void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
+    // Floor
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos  = getUpperLeftPixelPos();
     cmd->LowerRightPos = cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE_PXL);
     cmd->Color         = al_map_rgb(10, 40, 53);
     i_Renderer->enqueueCommand(cmd);
 
+    // Last produced resource visualization
+    auto lastPushed = getOutputStack()->lastPushedResource();
+    if (lastPushed)
+    {
+        lastPushed->render(i_Renderer, cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE_PXL) / 2.f);
+    }
+
+    // Resource stacks
     for (uint8_t i = 0; i < 4; ++i)
     {
         if (m_ResourceStacks[i])
@@ -91,6 +100,7 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
         }
     }
 
+    // Workers
     for (auto const & worker : m_Workers)
     {
         worker->render(i_Renderer);

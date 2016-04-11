@@ -23,6 +23,8 @@ public:
 
     virtual ~Resource() { };
 
+    virtual sptr<Resource> copy() = 0;
+
     void raffine() { ++m_RaffinementLvl; }
 
     void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos) const;
@@ -40,15 +42,20 @@ class BasicResource : public Resource
 {
 public:
 
-    BasicResource(ALLEGRO_COLOR i_Color) :
-        m_Color(i_Color)
+    BasicResource(uint8_t i_ColorID) :
+        m_ColorID(i_ColorID)
     {}
+
+    sptr<Resource> copy() override
+    {
+        return std::make_shared<BasicResource>(m_ColorID);
+    }
 
     void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const;
 
 private:
 
-    ALLEGRO_COLOR m_Color;
+    uint8_t m_ColorID;
 };
 
 class CompositeResource : public Resource
@@ -63,8 +70,25 @@ public:
         auto i = 0;
         for (auto component : i_Components)
         {
-            m_SubResource[i++] = component;
+            m_SubResource[i++] = component->copy();
         }
+    }
+
+    CompositeResource(sptr<Resource> * i_SubResource) :
+        m_SubResource()
+    {
+        for (auto i = 0; i < 3; ++i)
+        {
+            if (i_SubResource[i])
+            {
+                m_SubResource[i] = i_SubResource[i]->copy();
+            }
+        }
+    }
+
+    sptr<Resource> copy() override
+    {
+        return std::make_shared<CompositeResource>(&m_SubResource[0]);
     }
 
     void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const;
