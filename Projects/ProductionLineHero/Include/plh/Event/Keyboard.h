@@ -3,8 +3,6 @@
 
 #include <alpp/Event/Keyboard.h>
 
-#include <easylogging++.h>
-
 namespace alpp { namespace render {
 
 class Camera;

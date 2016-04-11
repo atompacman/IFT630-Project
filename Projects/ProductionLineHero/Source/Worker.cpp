@@ -77,7 +77,8 @@ void Worker::runWorkerThread()
                 }
                 else
                 {
-                    currDestination->get()->push(std::make_shared<CompositeResource>(m_ResourcesHeld));
+                    auto resource = std::make_shared<CompositeResource>(m_ResourcesHeld);
+                    currDestination->get()->push(resource);
                 }
                 m_ResourcesHeld.clear();
             }

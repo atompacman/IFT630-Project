@@ -1,14 +1,10 @@
-#include <plh/CreationMenu.h>
 #include <plh/CreationButton.h>
+#include <plh/CreationMenu.h>
 
-CreationMenu::CreationMenu() :
-    UIElement()
+CreationMenu::CreationMenu(WorldCoords i_Position, WorldCoords i_Size) :
+    UIElement(i_Position, i_Size)
 {
-}
 
-CreationMenu::CreationMenu(WorldCoords position, WorldCoords size) :
-    UIElement(position, size)
-{    
 }
 
 void CreationMenu::addButton(CreationButton * button)
@@ -16,7 +12,7 @@ void CreationMenu::addButton(CreationButton * button)
     m_Buttons.push_back(button);
 }
 
-std::vector<CreationButton*> CreationMenu::getButtons()
+std::vector<CreationButton*> CreationMenu::getButtons() const
 {
     return m_Buttons;
 }

@@ -8,7 +8,7 @@
 
 namespace alpp { namespace render {
 
-    class Renderer;
+class Renderer;
 
 }}
 

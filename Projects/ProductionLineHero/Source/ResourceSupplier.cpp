@@ -11,7 +11,8 @@ ResourceSupplier::ResourceSupplier(sptr<BasicResource> i_RsrcArchetype,
     m_RsrcArchetype(i_RsrcArchetype)
 {
 
-    CHECK_AL_FUNC(al_create_timer(i_SpeedSec), m_Ticker, m_InitSuccess, "Could not create ticker timer");
+    CHECK_AL_FUNC(al_create_timer(i_SpeedSec), m_Ticker, 
+        m_InitSuccess, "Could not create ticker timer");
     al_start_timer(m_Ticker);
 }
 
@@ -20,7 +21,7 @@ ResourceSupplier::~ResourceSupplier()
     al_destroy_timer(m_Ticker);
 }
 
-bool ResourceSupplier::handleEvent(ALLEGRO_EVENT i_Event)
+bool ResourceSupplier::handleEvent(ALLEGRO_EVENT /* i_Event */)
 {
     m_StackToSupply->push(std::make_shared<BasicResource>(*m_RsrcArchetype.get()));
     return true;

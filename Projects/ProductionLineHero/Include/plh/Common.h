@@ -21,7 +21,7 @@ PixelDimensions const INIT_WIN_DIM (1200, 800);
 float const KEYBOARD_SCROLL_SPEED (10);
 
 // Mouse scroll factor
-float const MOUSE_SCROLL_ZOOM_FACTOR(0.05);
+float const MOUSE_SCROLL_ZOOM_FACTOR (0.05);
 
 // Timing
 float const TARGET_FPS        (60);
@@ -58,7 +58,8 @@ inline WorkshopCoords worldCoordsULCornerToWorkshopCoords(WorldCoords i_WCoords)
 
 // Placeable factory rooms
 // #TODO: rename enum...
-enum class CreatableRoomType {
+enum class CreatableRoomType 
+{
     WORKSHOP,
     SUPPLIER,
     NONE
@@ -73,7 +74,7 @@ float    const PATH_WIGGLE_FREQUENCY (0.8f);
 WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 
 // Treadmill
-auto const THREADMILL_SPEED = .001;
+auto const THREADMILL_SPEED (.001);
 
 // Resources
 std::vector<uint16_t> const RESOURCE_COLORS = { 255,   0,   0,

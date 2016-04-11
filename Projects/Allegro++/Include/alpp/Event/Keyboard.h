@@ -22,9 +22,9 @@ protected:
 
     ALLEGRO_EVENT_SOURCE * getEventSource() const override;
 
-    virtual bool onKeyPressed    (uint8_t i_Key) { return true; };
-    virtual bool onKeyReleased   (uint8_t i_Key) { return true; };
-    virtual bool onCharacterTyped(uint8_t i_Key) { return true; };
+    virtual bool onKeyPressed    (uint8_t /* i_Key */) { return true; };
+    virtual bool onKeyReleased   (uint8_t /* i_Key */) { return true; };
+    virtual bool onCharacterTyped(uint8_t /* i_Key */) { return true; };
 };
 
 }}

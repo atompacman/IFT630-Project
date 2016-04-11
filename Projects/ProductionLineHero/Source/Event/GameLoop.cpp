@@ -16,18 +16,19 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     // Create game UI
     InitUI(i_WinSettings);
 
-    // Test workshop
+    // Test workshop TODO: remove me
     m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST)->addWorker(1);
-    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
     m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST)->addWorker(1);
     m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST)->addWorker(1);
     m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST)->addWorker(1);
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), 
+        std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
 };
 
-void GameLoop::ResizeUI(PixelDimensions windowSize)
+void GameLoop::ResizeUI(PixelDimensions i_WindowSize)
 {
-    WorldCoords creationMenuSize(windowSize.x / 4, windowSize.y / 8);
-    WorldCoords creationMenuPos(0, windowSize.y - creationMenuSize.y);
+    WorldCoords creationMenuSize(i_WindowSize.x / 4, i_WindowSize.y / 8);
+    WorldCoords creationMenuPos(0, i_WindowSize.y - creationMenuSize.y);
 
     float buttonSide = creationMenuSize.y - 20;
     WorldCoords newSize = WorldCoords(buttonSide, buttonSide);
@@ -74,17 +75,18 @@ void GameLoop::RenderUI()
     }
 }
 
-std::vector<UIElement*> GameLoop::getUI()
+std::vector<UIElement*> GameLoop::getUI() const
 {
     return m_UI;
 }
 
-void GameLoop::CreateFactoryRoom(CreatableRoomType roomType, WorkshopCoords roomPos)
+void GameLoop::CreateFactoryRoom(CreatableRoomType i_RoomType, WorkshopCoords i_RoomPos)
 {
-    switch (roomType)
+    switch (i_RoomType)
     {
     case CreatableRoomType::WORKSHOP:
-        m_Factory.buildWorkshop(roomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);  // we should change the output to be chosen instead of random
+        // we should change the output to be chosen instead of random
+        m_Factory.buildWorkshop(i_RoomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);
         setState(GameState::IDLE_MODE);
         setRoomTypeToCreate(CreatableRoomType::NONE);
         break;

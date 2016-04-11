@@ -32,30 +32,30 @@ public:
 
     PixelCoords       Position;
     Vector2D<int16_t> DeltaPos;
-    int16_t          DeltaScroll;
+    int16_t           DeltaScroll;
 
 protected:
 
     ALLEGRO_EVENT_SOURCE * getEventSource() const override;
 
-    virtual void onMouseMoved()                         { };
+    virtual void onMouseMoved() { };
 
-    virtual void onScroll()                             { };
+    virtual void onScroll() { };
 
-    virtual void onLeftClick()                          { };
-    virtual void onRightClick()                         { };
-    virtual void onMiddleClick()                        { };
-    virtual void onOtherButtonClick(Button i_Button)    { };
+    virtual void onLeftClick()                             { };
+    virtual void onRightClick()                            { };
+    virtual void onMiddleClick()                           { };
+    virtual void onOtherButtonClick(Button /* i_Button */) { };
 
-    virtual void onLeftPressed()                        { };
-    virtual void onRightPressed()                       { };
-    virtual void onMiddlePressed()                      { };
-    virtual void onOtherButtonPressed(Button i_Button)  { };
+    virtual void onLeftPressed()                             { };
+    virtual void onRightPressed()                            { };
+    virtual void onMiddlePressed()                           { };
+    virtual void onOtherButtonPressed(Button /* i_Button */) { };
 
-    virtual void onLeftReleased()                       { };
-    virtual void onRightReleased()                      { };
-    virtual void onMiddleReleased()                     { };
-    virtual void onOtherButtonReleased(Button i_Button) { };
+    virtual void onLeftReleased()                             { };
+    virtual void onRightReleased()                            { };
+    virtual void onMiddleReleased()                           { };
+    virtual void onOtherButtonReleased(Button /* i_Button */) { };
 
 private:
 

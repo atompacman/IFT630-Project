@@ -1,15 +1,13 @@
 #ifndef PLH_RESOURCE
 #define PLH_RESOURCE
 
-#include <allegro5/color.h>
-
 #include <plh/Common.h>
 
 #include <list>
 
 namespace alpp { namespace render {
 
-    class Renderer;
+class Renderer;
 
 }}
 
@@ -29,11 +27,15 @@ public:
 
     void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos) const;
 
-    virtual void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const = 0;
+    virtual void render(sptr<alpp::render::Renderer> i_Renderer, 
+                        WorldCoords                  i_Pos, 
+                        uint8_t                      i_ScaleLvl) const = 0;
 
 protected:
 
-    void drawRaffinment(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const;
+    void drawRaffinment(sptr<alpp::render::Renderer> i_Renderer, 
+                        WorldCoords                  i_Pos, 
+                        uint8_t                      i_ScaleLvl) const;
 
     uint8_t m_RaffinementLvl;
 };
@@ -51,7 +53,9 @@ public:
         return std::make_shared<BasicResource>(m_ColorID);
     }
 
-    void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const;
+    void render(sptr<alpp::render::Renderer> i_Renderer, 
+                WorldCoords                  i_Pos, 
+                uint8_t                      i_ScaleLvl) const override;
 
 private:
 
@@ -91,7 +95,9 @@ public:
         return std::make_shared<CompositeResource>(&m_SubResource[0]);
     }
 
-    void render(sptr<alpp::render::Renderer> i_Renderer, WorldCoords i_Pos, uint8_t i_ScaleLvl) const;
+    void render(sptr<alpp::render::Renderer> i_Renderer, 
+                WorldCoords                  i_Pos, 
+                uint8_t                      i_ScaleLvl) const override;
 
 private:
 

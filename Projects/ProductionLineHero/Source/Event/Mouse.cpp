@@ -1,18 +1,19 @@
+#include <alpp/Render/Camera.h>
+
 #include <easylogging++.h>
 
-#include <plh/Event/Mouse.h>
-
-#include <plh/Event/GameLoop.h>
 #include <plh/CreationMenu.h>
 #include <plh/CreationButton.h>
-#include <alpp/Render/Camera.h>
+#include <plh/Event/GameLoop.h>
+#include <plh/Event/Mouse.h>
 
 void Mouse::onScroll() 
 { 
 
     m_GameObject->Renderer->Camera->adjustZoom(MOUSE_SCROLL_ZOOM_FACTOR * DeltaScroll);
     
-    LOG(INFO) << "onScroll" << "  " << DeltaScroll << "  " << m_GameObject->Renderer->Camera->getZoom();
+    LOG(INFO) << "onScroll" << "  " << DeltaScroll << "  " 
+              << m_GameObject->Renderer->Camera->getZoom();
 };
 
 void Mouse::onLeftClick() 
@@ -32,7 +33,8 @@ void Mouse::onLeftClick()
             {
                 m_GameObject->setState(GameState::CREATION_MODE);
                 m_GameObject->setRoomTypeToCreate(button->getRoomType());
-                LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")" << " : " << (int)button->getRoomType();
+                LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")" 
+                          << " : " << (int)button->getRoomType();
             }
         }
     }
@@ -46,7 +48,7 @@ void Mouse::onLeftClick()
         /*WorldCoords camPos = m_GameObject->Renderer->Camera->getPosition();
         camPos /= 2.0;*/
         
-        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(WorldCoords(Position)/* + camPos*/);
+        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(WorldCoords(Position)/*+camPos*/);
         CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();   // Might be redundant...
 
         m_GameObject->CreateFactoryRoom(roomType, roomPos); // Same ...
@@ -56,26 +58,6 @@ void Mouse::onLeftClick()
     // Check if the click is <insert something else here>
     
 
-};
-
-void Mouse::onLeftPressed()
-{
-    m_LeftPressed = true;
-};
-
-void Mouse::onLeftReleased()
-{
-    m_LeftPressed = false;
-};
-
-void Mouse::onRightPressed()
-{
-    m_RightPressed = true;
-};
-
-void Mouse::onRightReleased()
-{
-    m_RightPressed = false;
 };
 
 void Mouse::onMouseMoved()
@@ -88,7 +70,7 @@ void Mouse::onMouseMoved()
 
     CreationMenu * createMenu = dynamic_cast<CreationMenu*>(ui[0]);
 
-    if (m_RightPressed && !createMenu->isMouseInArea(Position))
+    if (PressedButtons[int(Button::Right)] && !createMenu->isMouseInArea(Position))
     {
         auto cam = m_GameObject->Renderer->Camera;
         translation -= (DeltaPos);

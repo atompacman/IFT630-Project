@@ -30,7 +30,8 @@ typedef Vector2D<uint16_t> PixelCoords;
 typedef Vector2D<uint16_t> PixelDimensions;
 typedef Vector2D<float>    WorldCoords;
 
-namespace alpp {
+namespace alpp 
+{
 
 bool init(std::string const & i_LoggerConfigFilePath);
 
@@ -47,6 +48,15 @@ protected:
 
     bool m_InitSuccess;
 };
+
+namespace render
+{
+
+// Standard font path
+char const * const FONT_FILE = "C:\\Windows\\Fonts\\ARIAL.TTF";
+uint16_t const     FONT_SIZE = 20;
+
+}
 
 }
 

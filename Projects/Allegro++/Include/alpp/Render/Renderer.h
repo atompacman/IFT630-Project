@@ -16,9 +16,6 @@ namespace alpp { namespace render {
 
 class  Camera;
 
-char const * const FONT_FILE = "C:\\Windows\\Fonts\\ARIAL.TTF";
-uint16_t const     FONT_SIZE = 20;
-
 class Renderer : public event::Agent
 {
 public:
@@ -45,7 +42,7 @@ private:
     void createWindow(WindowSettings i_WinSettings);
     
     void runRenderThread(WindowSettings i_WinSettings);
-    void executeCommands(ALLEGRO_TRANSFORM * i_Transform, std::queue<sptr<Command>> & i_Queue);
+    static void executeCommands(ALLEGRO_TRANSFORM * i_Transform, std::queue<sptr<Command>> & i_Queue);
 
     ALLEGRO_DISPLAY *         m_Window;
     bool                      m_CurrQueue;

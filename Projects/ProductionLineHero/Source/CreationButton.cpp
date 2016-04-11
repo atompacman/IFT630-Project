@@ -1,16 +1,14 @@
 #include <plh/CreationButton.h>
 
-CreationButton::CreationButton() :
-    UIElement()
-{
-}
-
-CreationButton::CreationButton(WorldCoords position, WorldCoords size, 
-    UIElement * parent, ALLEGRO_COLOR color, CreatableRoomType objType) :
-    UIElement(position, size),
-    m_ParentUI(parent),
-    m_Color(color),
-    m_RoomType(objType)
+CreationButton::CreationButton(WorldCoords       i_Position, 
+                               WorldCoords       i_Size, 
+                               UIElement *       i_Parent, 
+                               ALLEGRO_COLOR     i_Color, 
+                               CreatableRoomType i_ObjType) :
+    UIElement(i_Position, i_Size),
+    m_ParentUI(i_Parent),
+    m_Color   (i_Color),
+    m_RoomType(i_ObjType)
 {}
 
 void CreationButton::render(sptr<alpp::render::Renderer> i_Renderer) const

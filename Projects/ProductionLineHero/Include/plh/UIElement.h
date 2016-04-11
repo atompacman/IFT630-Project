@@ -3,45 +3,37 @@
 
 #include <alpp/Core.h>
 #include <alpp/Render/Renderer.h>
-#include <alpp/Render/Command.h>
 
 class UIElement
 {
 public:
-    UIElement() :
-    m_Pos(0, 0),
-    m_Size(0, 0)
-    {};
 
-    UIElement(WorldCoords position, WorldCoords size) :
-        m_Pos(position),
-        m_Size(size)
+    UIElement(WorldCoords i_Position, WorldCoords i_Size) :
+        m_Pos (i_Position),
+        m_Size(i_Size)
     {};
+    virtual ~UIElement() { };
 
     virtual void render(sptr<alpp::render::Renderer> i_Renderer) const = 0;
-    bool isMouseInArea(PixelCoords mousePos) 
-    {
-        WorldCoords mouseWP(mousePos);
-        if ((mouseWP.x >= m_Pos.x && mouseWP.x <= m_Pos.x + m_Size.x)
-            && (mouseWP.y >= m_Pos.y && mouseWP.y <= m_Pos.y + m_Size.y))
-        {
-            return true;
-        }
 
-        return false;
+    bool isMouseInArea(PixelCoords i_MousePos) const
+    {
+        WorldCoords mouseWP(i_MousePos);
+        return mouseWP.x >= m_Pos.x && mouseWP.x <= m_Pos.x + m_Size.x
+            && mouseWP.y >= m_Pos.y && mouseWP.y <= m_Pos.y + m_Size.y;
     };
 
-    ~UIElement();
-    WorldCoords getPosition() { return m_Pos; };
-    WorldCoords getSize() { return m_Size; };
+    WorldCoords getPosition() const { return m_Pos; };
+    WorldCoords getSize()     const { return m_Size; };
 
-    void setPositionAndSize(WorldCoords pos, WorldCoords size)
+    void setPositionAndSize(WorldCoords i_Pos, WorldCoords i_Size)
     {
-        m_Pos = pos;
-        m_Size = size;
+        m_Pos  = i_Pos;
+        m_Size = i_Size;
     };
 
 protected:
+
     WorldCoords m_Pos;
     WorldCoords m_Size;
 };
