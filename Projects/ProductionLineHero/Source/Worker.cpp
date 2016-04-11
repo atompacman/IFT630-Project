@@ -16,7 +16,7 @@ Worker::Worker(sptr<Workshop> i_Workshop, float i_Speed) :
     // Put the worker at a random place inside the workshop
     m_Pos  = WorldCoords(i_Workshop->getUpperLeftPixelPos());
     m_Pos += WorldCoords(randUNorm(), randUNorm()) * 
-        (WorldCoords(WORKSHOP_SIZE_PXL) - static_cast<float>(2 * WORKER_RADIUS));
+        (WorldCoords(WORKSHOP_SIZE) - static_cast<float>(2 * WORKER_RADIUS));
     m_Pos += WORKER_RADIUS;
 
     std::thread(&Worker::runWorkerThread, this).detach();
@@ -95,7 +95,7 @@ void Worker::walk(WorldCoords i_DestPos, WorldCoords i_Step)
     static float t = 0;
     t += PATH_WIGGLE_FREQUENCY;
     auto randWiggle    = cos(t * 0.02f + cos(t * 0.3f) * sin(t * 0.5f));
-    auto distFactpr    = m_Pos.distanceTo(i_DestPos) / WORKSHOP_SIZE_PXL.x;
+    auto distFactpr    = m_Pos.distanceTo(i_DestPos) / WORKSHOP_SIZE.x;
     auto overallWiggle = distFactpr * PATH_WIGGLE_AMPLITUDE * randWiggle;
 
     m_Pos += i_Step + WorldCoords(i_Step.y, -i_Step.x) * overallWiggle;

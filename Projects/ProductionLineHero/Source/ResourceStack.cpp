@@ -19,20 +19,20 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     switch (i_Side)
     {
     case CardinalDir::NORTH:
-        m_Pos.x += WORKSHOP_SIZE_PXL.x * 0.5f;
+        m_Pos.x += WORKSHOP_SIZE.x * 0.5f;
         break;
     case CardinalDir::EAST:
-        m_Pos.x += WORKSHOP_SIZE_PXL.x;
-        m_Pos.y += WORKSHOP_SIZE_PXL.y * 0.5f;
+        m_Pos.x += WORKSHOP_SIZE.x;
+        m_Pos.y += WORKSHOP_SIZE.y * 0.5f;
         break;
 
     case CardinalDir::SOUTH:
-        m_Pos.x += WORKSHOP_SIZE_PXL.x * 0.5f;
-        m_Pos.y += WORKSHOP_SIZE_PXL.y;
+        m_Pos.x += WORKSHOP_SIZE.x * 0.5f;
+        m_Pos.y += WORKSHOP_SIZE.y;
         break;
 
     case CardinalDir::WEST:
-        m_Pos.y += WORKSHOP_SIZE_PXL.y * 0.5f;
+        m_Pos.y += WORKSHOP_SIZE.y * 0.5f;
         break;
     }
 }

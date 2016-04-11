@@ -23,7 +23,7 @@ ResourceSupplier::~ResourceSupplier()
 
 bool ResourceSupplier::handleEvent(ALLEGRO_EVENT /* i_Event */)
 {
-    m_StackToSupply->push(std::make_shared<BasicResource>(*m_RsrcArchetype.get()));
+    m_StackToSupply->push(m_RsrcArchetype->copy());
     return true;
 }
 

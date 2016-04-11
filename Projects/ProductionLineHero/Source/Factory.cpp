@@ -105,7 +105,7 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos  = workshopCoordsToWorldCoordsULCorner(WorkshopCoords(0, 0)) - factoryBorders;
     cmd->LowerRightPos = workshopCoordsToWorldCoordsULCorner(MAX_NUM_WORKSHOPS - 
-                            WorkshopCoords(1, 1)) + WORKSHOP_SIZE_PXL + SPACE_BETWEEN_WORKSHOPS;
+                            WorkshopCoords(1, 1)) + WORKSHOP_SIZE + SPACE_BETWEEN_WORKSHOPS;
     cmd->Color = al_map_rgb(30, 30, 30);
     i_Renderer->enqueueCommand(cmd);
 

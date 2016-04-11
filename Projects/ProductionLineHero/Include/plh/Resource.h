@@ -15,7 +15,7 @@ class Resource
 {
 public:
 
-    Resource() :
+    explicit Resource() :
         m_RaffinementLvl(0)
     {}
 
@@ -44,13 +44,16 @@ class BasicResource : public Resource
 {
 public:
 
-    BasicResource(uint8_t i_ColorID) :
+    explicit BasicResource(uint8_t i_ColorID) :
+
         m_ColorID(i_ColorID)
     {}
 
     sptr<Resource> copy() override
     {
-        return std::make_shared<BasicResource>(m_ColorID);
+        auto copy = std::make_shared<BasicResource>(m_ColorID);
+        copy->m_RaffinementLvl = m_RaffinementLvl;
+        return copy;
     }
 
     void render(sptr<alpp::render::Renderer> i_Renderer, 
@@ -66,7 +69,7 @@ class CompositeResource : public Resource
 {
 public:
 
-    CompositeResource(std::list<sptr<Resource>> const & i_Components) :
+    explicit CompositeResource(std::list<sptr<Resource>> const & i_Components) :
         m_SubResource()
     {
         LOG_IF(i_Components.size() != 2 && i_Components.size() != 3, FATAL) <<
@@ -78,7 +81,7 @@ public:
         }
     }
 
-    CompositeResource(sptr<Resource> * i_SubResource) :
+    explicit CompositeResource(sptr<Resource> * i_SubResource) :
         m_SubResource()
     {
         for (auto i = 0; i < 3; ++i)
@@ -92,7 +95,9 @@ public:
 
     sptr<Resource> copy() override
     {
-        return std::make_shared<CompositeResource>(&m_SubResource[0]);
+        auto copy = std::make_shared<CompositeResource>(&m_SubResource[0]);
+        copy->m_RaffinementLvl = m_RaffinementLvl;
+        return copy;
     }
 
     void render(sptr<alpp::render::Renderer> i_Renderer, 

@@ -63,6 +63,20 @@ struct DrawFilledCircle : Command
     }
 };
 
+struct DrawRectangle : Command
+{
+    WorldCoords   UpperLeftPos;
+    WorldCoords   LowerRightPos;
+    float         Thickness;
+    ALLEGRO_COLOR Color;
+
+    void execute() override
+    {
+        al_draw_rectangle(UpperLeftPos.x + 0.5, UpperLeftPos.y + 0.5,
+            LowerRightPos.x + 0.5, LowerRightPos.y + 0.5, Color, Thickness);
+    }
+};
+
 struct DrawFilledRectangle : Command
 {
     WorldCoords   UpperLeftPos;

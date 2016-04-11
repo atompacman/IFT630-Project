@@ -17,12 +17,22 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     InitUI(i_WinSettings);
 
     // Test workshop TODO: remove me
-    m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST )->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST )->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(2, 2), CardinalDir::SOUTH)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST )->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST )->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(4, 4), CardinalDir::NORTH)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(4, 5), CardinalDir::NORTH)->addWorker(1);
+    m_Factory.buildWorkshop(WorkshopCoords(3, 5), CardinalDir::EAST )->addWorker(1);
     registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), 
         std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(2, 2),
+        std::make_shared<BasicResource>(0), 3, CardinalDir::NORTH));
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(3, 5),
+        std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
+    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(4, 3),
+        std::make_shared<BasicResource>(0), 3, CardinalDir::NORTH));
 };
 
 void GameLoop::ResizeUI(PixelDimensions i_WindowSize)

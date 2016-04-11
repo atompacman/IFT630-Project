@@ -15,7 +15,7 @@ using namespace std::chrono_literals;
 std::string const LOGGER_CONFIG_FILE = "../Config/easyloggingpp.config";
 
 // Initial window size
-PixelDimensions const INIT_WIN_DIM (1200, 800);
+PixelDimensions const INIT_WIN_DIM (1500, 900);
 
 // Keyboard scroll speed
 float const KEYBOARD_SCROLL_SPEED (10);
@@ -31,10 +31,11 @@ auto  const THREAD_SLEEP_TIME (16ms);
 typedef Vector2D<uint16_t> WorkshopCoords;
 
 // Workshop
-uint16_t       const MAX_NUM_WORKSHOPS_X     (6);
+uint16_t       const MAX_NUM_WORKSHOPS_X     (8);
 uint16_t       const MAX_NUM_WORKSHOPS_Y     (6);
 WorkshopCoords const MAX_NUM_WORKSHOPS       (MAX_NUM_WORKSHOPS_X, MAX_NUM_WORKSHOPS_Y);
-WorldCoords    const WORKSHOP_SIZE_PXL       (150, 150);
+float          const WORKSHOP_SIDE_SIZE      (150);
+WorldCoords    const WORKSHOP_SIZE           (WORKSHOP_SIDE_SIZE, WORKSHOP_SIDE_SIZE);
 float          const SPACE_BETWEEN_WORKSHOPS (60);
 
 inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
@@ -46,15 +47,20 @@ inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
 inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords)
 {
     auto p = WorldCoords(i_WSCoords);
-    return p * WORKSHOP_SIZE_PXL + (p + WorldCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
+    return p * WORKSHOP_SIZE + (p + WorldCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
 }
 
 inline WorkshopCoords worldCoordsULCornerToWorkshopCoords(WorldCoords i_WCoords)
 {
     auto p = WorkshopCoords(i_WCoords);
     return (p - (WorkshopCoords(1, 1) * uint16_t(SPACE_BETWEEN_WORKSHOPS))) / 
-        (WorkshopCoords(WORKSHOP_SIZE_PXL) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
+        (WorkshopCoords(WORKSHOP_SIZE) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
 }
+
+// Resource preview
+float const RESRC_PREV_PROPORTION (2 / 3.);
+float const RECT_THICKNESS        (1.2);
+float const ADDITIONAL_RECT_PROP  (0.9);
 
 // Placeable factory rooms
 // #TODO: rename enum...
@@ -77,13 +83,11 @@ WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 auto const THREADMILL_SPEED (.001);
 
 // Resources
+uint8_t const MAX_NUM_RAFFINEMENTS (5);
+
 std::vector<uint16_t> const RESOURCE_COLORS = { 255,   0,   0,
                                                   0, 255,   0,
                                                   0,   0, 255 };
-
-std::vector<uint16_t> const RAFFINEMENT_COLORS = { 224, 200, 143,
-                                                    50, 150, 246,
-                                                   142,  40,  46 };
 
 inline ALLEGRO_COLOR getColorConstant(uint8_t i_ColorID, std::vector<uint16_t> const & i_Vec)
 {
@@ -95,11 +99,6 @@ inline ALLEGRO_COLOR getColorConstant(uint8_t i_ColorID, std::vector<uint16_t> c
 inline ALLEGRO_COLOR getResourceColor(uint8_t i_ColorID)
 {
     return getColorConstant(i_ColorID, RESOURCE_COLORS);
-}
-
-inline ALLEGRO_COLOR getRaffinementColor(uint8_t i_ColorID)
-{
-    return getColorConstant(i_ColorID, RAFFINEMENT_COLORS);
 }
 
 #endif // PLH_COMMON
