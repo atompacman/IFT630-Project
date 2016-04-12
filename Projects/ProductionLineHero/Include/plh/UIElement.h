@@ -8,9 +8,10 @@ class UIElement
 {
 public:
 
-    UIElement(WorldCoords i_Position, WorldCoords i_Size) :
+    UIElement(WorldCoords i_Position, WorldCoords i_Size, ALLEGRO_COLOR i_Color) :
         m_Pos (i_Position),
-        m_Size(i_Size)
+        m_Size(i_Size),
+        m_Color(i_Color)
     {};
     virtual ~UIElement() { };
 
@@ -32,10 +33,14 @@ public:
         m_Size = i_Size;
     };
 
+    void setColor(ALLEGRO_COLOR color) { m_Color = color; }
+    ALLEGRO_COLOR getColor() { return m_Color; }
+
 protected:
 
     WorldCoords m_Pos;
     WorldCoords m_Size;
+    ALLEGRO_COLOR m_Color;
 };
 
 #endif // PLH_UIELEMENT

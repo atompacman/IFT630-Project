@@ -5,9 +5,8 @@ CreationButton::CreationButton(WorldCoords       i_Position,
                                UIElement *       i_Parent, 
                                ALLEGRO_COLOR     i_Color, 
                                CreatableRoomType i_ObjType) :
-    UIElement(i_Position, i_Size),
+    UIElement(i_Position, i_Size, i_Color),
     m_ParentUI(i_Parent),
-    m_Color   (i_Color),
     m_RoomType(i_ObjType)
 {}
 

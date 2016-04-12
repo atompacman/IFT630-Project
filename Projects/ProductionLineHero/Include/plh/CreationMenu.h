@@ -11,7 +11,7 @@ class CreationMenu : public UIElement
 {
 public:
 
-    CreationMenu(WorldCoords i_Position, WorldCoords i_Size);
+    CreationMenu(WorldCoords i_Position, WorldCoords i_Size, ALLEGRO_COLOR i_Color);
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const override;
 

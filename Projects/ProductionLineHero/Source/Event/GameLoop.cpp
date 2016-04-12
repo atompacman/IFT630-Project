@@ -59,7 +59,7 @@ void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
 {
     WorldCoords creationMenuSize(i_WinSettings.dimensions.x, 100);
     WorldCoords creationMenuPos(0, i_WinSettings.dimensions.y - creationMenuSize.y);
-    CreationMenu * creationMenu = new CreationMenu(creationMenuPos, creationMenuSize);
+    CreationMenu * creationMenu = new CreationMenu(creationMenuPos, creationMenuSize, al_map_rgb(200,200,200));
 
     float buttonSide = creationMenuSize.y - 20;
     WorldCoords buttonSize = WorldCoords(buttonSide, buttonSide);
@@ -102,7 +102,8 @@ void GameLoop::CreateFactoryRoom(CreatableRoomType i_RoomType, WorkshopCoords i_
         break;
 
     case CreatableRoomType::SUPPLIER:
-        // #TODO
+        registerAgent(m_Factory.addResourceSupplier(i_RoomPos,
+            std::make_shared<BasicResource>(0), 3, CardinalDir(randValue(0, 3))));
         break;
 
     default:

@@ -22,7 +22,6 @@ public:
 private:
 
     UIElement *       m_ParentUI;
-    ALLEGRO_COLOR     m_Color;
     CreatableRoomType m_RoomType; // #TODO: rename
 };
 

@@ -1,8 +1,8 @@
 #include <plh/CreationButton.h>
 #include <plh/CreationMenu.h>
 
-CreationMenu::CreationMenu(WorldCoords i_Position, WorldCoords i_Size) :
-    UIElement(i_Position, i_Size)
+CreationMenu::CreationMenu(WorldCoords i_Position, WorldCoords i_Size, ALLEGRO_COLOR i_Color) :
+    UIElement(i_Position, i_Size, i_Color)
 {
 
 }
@@ -22,7 +22,7 @@ void CreationMenu::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos = m_Pos;
     cmd->LowerRightPos = cmd->UpperLeftPos + m_Size;
-    cmd->Color = al_map_rgb(200, 200, 200);
+    cmd->Color = m_Color;
     cmd->Layer = alpp::render::Layer::UI;
     i_Renderer->enqueueCommand(cmd);
 

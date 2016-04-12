@@ -23,16 +23,17 @@ void Mouse::onLeftClick()
     // Check if the click is on UI
 
     auto ui = m_GameObject->getUI();
-
     CreationMenu * createMenu = dynamic_cast<CreationMenu*>(ui[0]);
+    auto buttons = createMenu->getButtons();
 
     if (createMenu->isMouseInArea(Position)) {
-        for (CreationButton * button : createMenu->getButtons())
+        for (CreationButton * button : buttons)
         {
             if (button->isMouseInArea(Position))
             {
                 m_GameObject->setState(GameState::CREATION_MODE);
                 m_GameObject->setRoomTypeToCreate(button->getRoomType());
+                button->setColor(al_map_rgb(10, 100, 200));
                 LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")" 
                           << " : " << (int)button->getRoomType();
             }
@@ -43,15 +44,32 @@ void Mouse::onLeftClick()
 
     else if (m_GameObject->getState() == GameState::CREATION_MODE) 
     {
+        // Change click from pixel to world coordinates (and then workshop)
+        PixelCoords winSize = m_GameObject->Renderer->windowSize();
+        WorldCoords clickWorldPos = Position;
 
-        // In progress
-        /*WorldCoords camPos = m_GameObject->Renderer->Camera->getPosition();
-        camPos /= 2.0;*/
+        ALLEGRO_TRANSFORM * transform = m_GameObject->Renderer->Camera->getTransform(winSize);
+        al_invert_transform(transform);
+        al_transform_coordinates(transform, &clickWorldPos.x, &clickWorldPos.y);
         
-        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(WorldCoords(Position)/*+camPos*/);
-        CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();   // Might be redundant...
+        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(clickWorldPos);
+        CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();
+        // create room/object
+        m_GameObject->CreateFactoryRoom(roomType, roomPos);
 
-        m_GameObject->CreateFactoryRoom(roomType, roomPos); // Same ...
+        // reset the normal color
+        switch (roomType) 
+        {
+        case CreatableRoomType::WORKSHOP:
+            buttons[(int)roomType]->setColor(al_map_rgb(0, 255, 0));
+            break;
+        case CreatableRoomType::SUPPLIER:
+            buttons[(int)roomType]->setColor(al_map_rgb(255, 255, 0));
+        default:
+            break;
+        }
+
+        
     }
     
 
