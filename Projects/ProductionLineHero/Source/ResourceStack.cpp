@@ -16,25 +16,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     // Compute center position in pixel
     m_Pos = workshopCoordsToWorldCoordsULCorner(i_Pos);
 
-    switch (i_Side)
-    {
-    case CardinalDir::NORTH:
-        m_Pos.x += WORKSHOP_SIZE.x * 0.5f;
-        break;
-    case CardinalDir::EAST:
-        m_Pos.x += WORKSHOP_SIZE.x;
-        m_Pos.y += WORKSHOP_SIZE.y * 0.5f;
-        break;
-
-    case CardinalDir::SOUTH:
-        m_Pos.x += WORKSHOP_SIZE.x * 0.5f;
-        m_Pos.y += WORKSHOP_SIZE.y;
-        break;
-
-    case CardinalDir::WEST:
-        m_Pos.y += WORKSHOP_SIZE.y * 0.5f;
-        break;
-    }
+    m_Pos = cardinalDirToWorldCoords(m_Pos, i_Side);
 }
 
 sptr<Resource> ResourceStack::pop()

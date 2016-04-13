@@ -124,4 +124,30 @@ inline ALLEGRO_COLOR getButtonColor(uint8_t i_ColorID)
     return getColorConstant(i_ColorID, BUTTON_COLORS);
 }
 
+inline WorldCoords cardinalDirToWorldCoords(WorldCoords i_Pos, CardinalDir i_Side)
+{
+    WorldCoords newPos = i_Pos;
+    switch (i_Side)
+    {
+    case CardinalDir::NORTH:
+        newPos.x += WORKSHOP_SIZE.x * 0.5f;
+        break;
+    case CardinalDir::EAST:
+        newPos.x += WORKSHOP_SIZE.x;
+        newPos.y += WORKSHOP_SIZE.y * 0.5f;
+        break;
+
+    case CardinalDir::SOUTH:
+        newPos.x += WORKSHOP_SIZE.x * 0.5f;
+        newPos.y += WORKSHOP_SIZE.y;
+        break;
+
+    case CardinalDir::WEST:
+        newPos.y += WORKSHOP_SIZE.y * 0.5f;
+        break;
+    }
+
+    return newPos;
+}
+
 #endif // PLH_COMMON

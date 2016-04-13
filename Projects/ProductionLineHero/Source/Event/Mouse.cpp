@@ -10,7 +10,21 @@
 void Mouse::onScroll() 
 { 
 
-    m_GameObject->Renderer->Camera->adjustZoom(MOUSE_SCROLL_ZOOM_FACTOR * DeltaScroll);
+    if (m_GameObject->getState() == GameState::CREATION_MODE && m_GameObject->getObjectTypeToCreate() == CreatableObjectType::WORKSHOP)
+    {
+        int dir = ((int)m_GameObject->getCreationDir() + DeltaScroll) % 4;
+        if (dir < 0)
+            dir = 3;
+
+
+        m_GameObject->setCreationDir((CardinalDir)(dir));
+    }
+
+    else
+    {
+        m_GameObject->Renderer->Camera->adjustZoom(MOUSE_SCROLL_ZOOM_FACTOR * DeltaScroll);
+    }
+        
     
     LOG(INFO) << "onScroll" << "  " << DeltaScroll << "  " 
               << m_GameObject->Renderer->Camera->getZoom();

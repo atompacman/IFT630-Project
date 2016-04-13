@@ -37,6 +37,9 @@ public:
 
     Factory getFactory() { return m_Factory; }
 
+    CardinalDir getCreationDir() { return m_CreationDir; }
+    void setCreationDir(CardinalDir dir) { m_CreationDir = dir; }
+
 
 protected:
 
@@ -53,6 +56,7 @@ private:
     GameState               m_State;
     CreatableObjectType     m_ObjectToCreate;
     WorldCoords             m_MouseHoverPixelPos;
+    CardinalDir             m_CreationDir;
 };
 
 #endif // PLH_EVENT_GAME_LOOP

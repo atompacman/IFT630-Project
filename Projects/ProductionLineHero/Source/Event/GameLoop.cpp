@@ -14,7 +14,8 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     m_Factory(),
     m_ObjectToCreate(CreatableObjectType::NONE),
     m_State(GameState::IDLE_MODE),
-    m_MouseHoverPixelPos(i_WinSettings.dimensions.x + 1, i_WinSettings.dimensions.y + 1)
+    m_MouseHoverPixelPos(i_WinSettings.dimensions.x + 1, i_WinSettings.dimensions.y + 1),
+    m_CreationDir(CardinalDir::NORTH)
 {
     // Create game UI
     InitUI(i_WinSettings);
@@ -103,10 +104,9 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
     switch (i_RoomType)
     {
     case CreatableObjectType::WORKSHOP:
-        // we should change the output to be chosen instead of random
         if (!m_Factory.hasWorkshopAt(i_RoomPos))
         {
-            m_Factory.buildWorkshop(i_RoomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);
+            m_Factory.buildWorkshop(i_RoomPos, m_CreationDir)->addWorker(1.);
         }
         
         break;
@@ -161,6 +161,15 @@ void GameLoop::previewCreation()
             cmd->Color = al_map_rgb(65, 143, 63);
             cmd->Layer = alpp::render::Layer::WORLD;
             Renderer->enqueueCommand(cmd);
+
+            auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
+
+            WorldCoords realPos = cardinalDirToWorldCoords(upperLeftWS, m_CreationDir);
+            auto cmd2 = std::make_shared<alpp::render::DrawFilledRectangle>();
+            cmd2->UpperLeftPos = realPos - d;
+            cmd2->LowerRightPos = realPos + d;
+            cmd2->Color = al_map_rgb(110, 0, 0);
+            Renderer->enqueueCommand(cmd2);
         }
         break;
 
