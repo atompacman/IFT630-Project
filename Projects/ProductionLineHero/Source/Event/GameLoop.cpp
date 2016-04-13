@@ -136,13 +136,18 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
 
 void GameLoop::previewCreation()
 {
+    // Check if we're not in the UI
     if (m_UI[0]->isMouseInArea(m_MouseHoverPixelPos))
         return;
+
+    // Check if we're in a valid workshop position
     WorldCoords worldPos = pixelCoordsToWorldCoords(m_MouseHoverPixelPos, Renderer);
     WorkshopCoords posWS = worldCoordsULCornerToWorkshopCoords(worldPos);
     if (posWS.x > MAX_NUM_WORKSHOPS.x || posWS.y > MAX_NUM_WORKSHOPS.y 
         || posWS.x < 0 || posWS.y < 0)
         return;
+
+    // Represents the upper left corner of the workshop in world coordinates
     WorldCoords upperLeftWS = workshopCoordsToWorldCoordsULCorner(posWS);
     
     switch (m_ObjectToCreate)
@@ -163,6 +168,15 @@ void GameLoop::previewCreation()
         break;
 
     case CreatableObjectType::WORKER:
+        if (m_Factory.hasWorkshopAt(posWS))
+        {
+            auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
+            cmd->Radius = WORKER_RADIUS;
+            cmd->CenterPos = upperLeftWS + WorldCoords(WORKSHOP_SIZE.x/2, WORKSHOP_SIZE.y/2);
+            cmd->Color = al_map_rgb(65, 143, 63);
+            cmd->Layer = alpp::render::Layer::WORLD;
+            Renderer->enqueueCommand(cmd);
+        }
         break;
 
     default:
