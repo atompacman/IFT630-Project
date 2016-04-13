@@ -2,6 +2,7 @@
 
 #include <plh/Event/Gameloop.h>
 #include <plh/ResourceSupplier.h>
+#include <plh/ResourceStack.h>
 #include <plh/Workshop.h>
 #include <alpp/Render/Command.h>
 
@@ -112,10 +113,10 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
         break;
 
     case CreatableObjectType::SUPPLIER:
-        if (m_Factory.hasWorkshopAt(i_RoomPos))
+        if (m_Factory.hasWorkshopAt(i_RoomPos) && !m_Factory.getWorkshop(i_RoomPos)->hasStack(m_CreationDir))
         {
             registerAgent(m_Factory.addResourceSupplier(i_RoomPos,
-                        std::make_shared<BasicResource>(0), 3, CardinalDir(randValue(0, 3))));
+                        std::make_shared<BasicResource>(0), 3, m_CreationDir));
         }
 
         break;
@@ -174,6 +175,19 @@ void GameLoop::previewCreation()
         break;
 
     case CreatableObjectType::SUPPLIER:
+        if (m_Factory.hasWorkshopAt(posWS) && 
+            !m_Factory.getWorkshop(posWS)->hasStack(m_CreationDir))
+        {
+            auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
+
+            WorldCoords realPos = cardinalDirToWorldCoords(upperLeftWS, m_CreationDir);
+            auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+            cmd->UpperLeftPos = realPos - d;
+            cmd->LowerRightPos = realPos + d;
+            cmd->Color = al_map_rgb(160, 194, 128);
+            Renderer->enqueueCommand(cmd);
+        }
+
         break;
 
     case CreatableObjectType::WORKER:

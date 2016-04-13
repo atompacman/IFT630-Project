@@ -10,12 +10,13 @@
 void Mouse::onScroll() 
 { 
 
-    if (m_GameObject->getState() == GameState::CREATION_MODE && m_GameObject->getObjectTypeToCreate() == CreatableObjectType::WORKSHOP)
+    if (m_GameObject->getState() == GameState::CREATION_MODE && 
+        (m_GameObject->getObjectTypeToCreate() == CreatableObjectType::WORKSHOP
+         || m_GameObject->getObjectTypeToCreate() == CreatableObjectType::SUPPLIER))
     {
         int dir = ((int)m_GameObject->getCreationDir() + DeltaScroll) % 4;
         if (dir < 0)
             dir = 3;
-
 
         m_GameObject->setCreationDir((CardinalDir)(dir));
     }
