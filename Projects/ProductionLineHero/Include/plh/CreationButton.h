@@ -12,17 +12,17 @@ public:
                    WorldCoords       i_Size, 
                    UIElement *       i_Parent, 
                    ALLEGRO_COLOR     i_Color, 
-                   CreatableRoomType i_ObjType);
+                   CreatableObjectType i_ObjType);
     virtual ~CreationButton() { }
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const override;
 
-    CreatableRoomType getRoomType() const { return m_RoomType; }
+    CreatableObjectType getObjectType() const { return m_RoomType; }
 
 private:
 
     UIElement *       m_ParentUI;
-    CreatableRoomType m_RoomType; // #TODO: rename
+    CreatableObjectType m_RoomType; // #TODO: rename
 };
 
 #endif // PLH_CREATION_BUTTON

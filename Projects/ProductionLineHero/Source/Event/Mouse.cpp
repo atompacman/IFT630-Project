@@ -32,49 +32,54 @@ void Mouse::onLeftClick()
             if (button->isMouseInArea(Position))
             {
                 m_GameObject->setState(GameState::CREATION_MODE);
-                m_GameObject->setRoomTypeToCreate(button->getRoomType());
+                m_GameObject->setObjectTypeToCreate(button->getObjectType());
                 button->setColor(al_map_rgb(10, 100, 200));
                 LOG(INFO) << "BUTTON CLICKED" << " (" << Position.x << "," << Position.y << ")" 
-                          << " : " << (int)button->getRoomType();
+                          << " : " << (int)button->getObjectType();
             }
         }
     }
 
-    // Check if click is for creating room in factory
+    // Check if click is for creating object in factory
 
     else if (m_GameObject->getState() == GameState::CREATION_MODE) 
     {
         // Change click from pixel to world coordinates (and then workshop)
-        PixelCoords winSize = m_GameObject->Renderer->windowSize();
-        WorldCoords clickWorldPos = Position;
+        WorldCoords clickWorldPos = pixelCoordsToWorldCoords(Position, m_GameObject->Renderer);
 
-        ALLEGRO_TRANSFORM * transform = m_GameObject->Renderer->Camera->getTransform(winSize);
-        al_invert_transform(transform);
-        al_transform_coordinates(transform, &clickWorldPos.x, &clickWorldPos.y);
-        
-        WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(clickWorldPos);
-        CreatableRoomType roomType = m_GameObject->getRoomTypeToCreate();
-        // create room/object
-        m_GameObject->CreateFactoryRoom(roomType, roomPos);
+        // Get which object we want to create
+        CreatableObjectType objectType = m_GameObject->getObjectTypeToCreate();
 
-        // reset the normal color
-        switch (roomType) 
+        // Check if creation is valid
+        if (!m_GameObject->getFactory().isCoordInFactory(clickWorldPos))
         {
-        case CreatableRoomType::WORKSHOP:
-            buttons[(int)roomType]->setColor(al_map_rgb(0, 255, 0));
+            m_GameObject->setObjectTypeToCreate(CreatableObjectType::NONE);
+            m_GameObject->setState(GameState::IDLE_MODE);
+        }
+        else
+        {
+            // Get corresponding factory grid position and type of creation
+            WorldCoords roomPos = worldCoordsULCornerToWorkshopCoords(clickWorldPos);
+            // create room/object
+            m_GameObject->CreateFactoryObject(objectType, roomPos);
+        }
+        
+        // reset the normal color
+        switch (objectType) 
+        {
+        case CreatableObjectType::WORKSHOP:
+            buttons[(int)objectType]->setColor(getButtonColor(0));
             break;
-        case CreatableRoomType::SUPPLIER:
-            buttons[(int)roomType]->setColor(al_map_rgb(255, 255, 0));
+        case CreatableObjectType::SUPPLIER:
+            buttons[(int)objectType]->setColor(getButtonColor(1));
+            break;
+        case CreatableObjectType::WORKER:
+            buttons[(int)objectType]->setColor(getButtonColor(2));
+            break;
         default:
             break;
         }
-
-        
     }
-    
-
-    // Check if the click is <insert something else here>
-    
 
 };
 
@@ -93,5 +98,12 @@ void Mouse::onMouseMoved()
         auto cam = m_GameObject->Renderer->Camera;
         translation -= (DeltaPos);
         cam->translate(translation);
+    }
+
+    if (m_GameObject->getState() == GameState::CREATION_MODE)
+    {
+        WorldCoords mouseWorldPos = pixelCoordsToWorldCoords(Position, m_GameObject->Renderer);
+        m_GameObject->setMouseHoverPosition(mouseWorldPos);
+
     }
 };

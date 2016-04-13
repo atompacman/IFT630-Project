@@ -4,6 +4,8 @@
 #include <allegro5/color.h>
 
 #include <alpp/Core.h>
+#include <alpp/Render/Renderer.h>
+#include <alpp/Render/Camera.h>
 
 #include <chrono>
 
@@ -40,8 +42,8 @@ float          const SPACE_BETWEEN_WORKSHOPS (60);
 
 inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
 {
-    LOG_IF(!(i_WSCoords < MAX_NUM_WORKSHOPS), FATAL)
-        << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
+    //LOG_IF(!(i_WSCoords < MAX_NUM_WORKSHOPS), FATAL)
+    //    << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
 }
 
 inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords)
@@ -57,19 +59,35 @@ inline WorkshopCoords worldCoordsULCornerToWorkshopCoords(WorldCoords i_WCoords)
         (WorkshopCoords(WORKSHOP_SIZE) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
 }
 
+inline WorldCoords pixelCoordsToWorldCoords(PixelCoords i_PCoord, sptr<alpp::render::Renderer> i_Renderer)
+{
+    WorldCoords worldTransformedCoords = WorldCoords(i_PCoord);
+    PixelCoords winSize = i_Renderer->windowSize();
+    ALLEGRO_TRANSFORM * transform = i_Renderer->Camera->getTransform(winSize);
+    al_invert_transform(transform);
+    al_transform_coordinates(transform, &worldTransformedCoords.x, &worldTransformedCoords.y);
+
+    return worldTransformedCoords;
+}
+
 // Resource preview
 float const RESRC_PREV_PROPORTION (2 / 3.);
 float const RECT_THICKNESS        (1.2);
 float const ADDITIONAL_RECT_PROP  (0.9);
 
-// Placeable factory rooms
-// #TODO: rename enum...
-enum class CreatableRoomType 
+// Placeable factory objects
+enum class CreatableObjectType 
 {
     WORKSHOP,
     SUPPLIER,
+    WORKER,
     NONE
 };
+
+// UI colors
+std::vector<uint16_t> const BUTTON_COLORS = { 10, 40, 53,       // 0
+                                              0, 255, 0,        // 1
+                                              255, 255, 0 };    // 2
 
 // Worker
 uint16_t const WORKER_RADIUS         (10);
@@ -85,9 +103,9 @@ auto const THREADMILL_SPEED (.001);
 // Resources
 uint8_t const MAX_NUM_RAFFINEMENTS (5);
 
-std::vector<uint16_t> const RESOURCE_COLORS = { 255,   0,   0,
-                                                  0, 255,   0,
-                                                  0,   0, 255 };
+std::vector<uint16_t> const RESOURCE_COLORS = { 255,   0,   0,      // 0
+                                                  0, 255,   0,      // 1
+                                                  0,   0, 255 };    // 2
 
 inline ALLEGRO_COLOR getColorConstant(uint8_t i_ColorID, std::vector<uint16_t> const & i_Vec)
 {
@@ -99,6 +117,11 @@ inline ALLEGRO_COLOR getColorConstant(uint8_t i_ColorID, std::vector<uint16_t> c
 inline ALLEGRO_COLOR getResourceColor(uint8_t i_ColorID)
 {
     return getColorConstant(i_ColorID, RESOURCE_COLORS);
+}
+
+inline ALLEGRO_COLOR getButtonColor(uint8_t i_ColorID)
+{
+    return getColorConstant(i_ColorID, BUTTON_COLORS);
 }
 
 #endif // PLH_COMMON

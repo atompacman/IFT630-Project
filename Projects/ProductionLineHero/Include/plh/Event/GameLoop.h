@@ -22,16 +22,21 @@ public:
 
     std::vector<UIElement*> getUI() const;
 
-    void CreateFactoryRoom(CreatableRoomType i_RoomType, WorkshopCoords i_RoomPos);
+    void CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoords i_RoomPos);
 
     GameState getState() const               { return m_State; }
     void      setState(GameState i_NewState) { m_State = i_NewState; }
 
-    CreatableRoomType getRoomTypeToCreate() const                     { return m_RoomToCreate; }
-    void              setRoomTypeToCreate(CreatableRoomType i_RoomType)
-    {
-        m_RoomToCreate = i_RoomType;
-    }
+    CreatableObjectType getObjectTypeToCreate() const                     { return m_ObjectToCreate; }
+    void              setObjectTypeToCreate(CreatableObjectType i_RoomType) { m_ObjectToCreate = i_RoomType; }
+
+    WorldCoords getMouseHoverPosition() { return m_MouseHoverWorldPos; }
+    void setMouseHoverPosition(WorldCoords pos) { m_MouseHoverWorldPos = pos; }
+
+    void previewCreation();
+
+    Factory getFactory() { return m_Factory; }
+
 
 protected:
 
@@ -46,7 +51,8 @@ private:
     Factory                 m_Factory;
     std::vector<UIElement*> m_UI;
     GameState               m_State;
-    CreatableRoomType       m_RoomToCreate;
+    CreatableObjectType     m_ObjectToCreate;
+    WorldCoords             m_MouseHoverWorldPos;
 };
 
 #endif // PLH_EVENT_GAME_LOOP

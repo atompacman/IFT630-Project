@@ -11,7 +11,11 @@ Factory::Factory() :
     m_Treadmills(),
     m_Workshops ()
 {
-
+    WorldCoords factoryBorders(SPACE_BETWEEN_WORKSHOPS, SPACE_BETWEEN_WORKSHOPS);
+    m_Pos = workshopCoordsToWorldCoordsULCorner(WorkshopCoords(0, 0)) - factoryBorders;
+    auto lowerRightPos = workshopCoordsToWorldCoordsULCorner(MAX_NUM_WORKSHOPS -
+        WorkshopCoords(1, 1)) + WORKSHOP_SIZE + SPACE_BETWEEN_WORKSHOPS;
+    m_Size = lowerRightPos - m_Pos;
 }
 
 sptr<Workshop> Factory::buildWorkshop(WorkshopCoords i_Pos, CardinalDir i_OutputStackSide)
@@ -103,9 +107,8 @@ void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
     // Render factory floor
     WorldCoords factoryBorders(SPACE_BETWEEN_WORKSHOPS, SPACE_BETWEEN_WORKSHOPS);
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->UpperLeftPos  = workshopCoordsToWorldCoordsULCorner(WorkshopCoords(0, 0)) - factoryBorders;
-    cmd->LowerRightPos = workshopCoordsToWorldCoordsULCorner(MAX_NUM_WORKSHOPS - 
-                            WorkshopCoords(1, 1)) + WORKSHOP_SIZE + SPACE_BETWEEN_WORKSHOPS;
+    cmd->UpperLeftPos = m_Pos;
+    cmd->LowerRightPos = m_Pos + m_Size;
     cmd->Color = al_map_rgb(30, 30, 30);
     i_Renderer->enqueueCommand(cmd);
 
@@ -151,4 +154,20 @@ uint16_t Factory::linearizeTreadmill(WorkshopCoords i_Pos, CardinalDir i_Dir)
     LOG_IF(!isVertical && i_Pos.x >= MAX_NUM_WORKSHOPS_X - 1, FATAL) << "There is no treadmill right";
 
     return isVertical ? MAX_NUM_WORKSHOPS.area() - MAX_NUM_WORKSHOPS_Y + linearize(i_Pos) : linearize(i_Pos) - i_Pos.y;
+}
+
+bool Factory::isCoordInFactory(WorldCoords pos)
+{
+    return pos.x >= m_Pos.x && pos.x <= m_Pos.x + m_Size.x
+        && pos.y >= m_Pos.y && pos.y <= m_Pos.y + m_Size.y;
+}
+
+WorldCoords Factory::getPos()
+{
+    return m_Pos;
+}
+
+WorldCoords Factory::getSize()
+{
+    return m_Size;
 }

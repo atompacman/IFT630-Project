@@ -33,6 +33,11 @@ public:
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
+    bool isCoordInFactory(WorldCoords pos);
+
+    WorldCoords getPos();
+    WorldCoords getSize();
+
 private:
 
     static uint16_t const MAX_NUM_TREADMILLS = 2 * MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y -
@@ -46,6 +51,9 @@ private:
     std::list<sptr<ResourceSupplier>> m_Suppliers;
     sptr<Treadmill>                   m_Treadmills[MAX_NUM_TREADMILLS];
     sptr<Workshop>                    m_Workshops [MAX_NUM_WORKSHOPS_X * MAX_NUM_WORKSHOPS_Y];
+
+    WorldCoords m_Pos;
+    WorldCoords m_Size;
 };
 
 #endif // PLH_FACTORY
