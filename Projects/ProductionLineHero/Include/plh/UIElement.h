@@ -20,8 +20,8 @@ public:
     bool isMouseInArea(PixelCoords i_MousePos) const
     {
         WorldCoords mouseWP(i_MousePos);
-        return mouseWP.x >= m_Pos.x && mouseWP.x <= m_Pos.x + m_Size.x
-            && mouseWP.y >= m_Pos.y && mouseWP.y <= m_Pos.y + m_Size.y;
+        return ((mouseWP.x >= m_Pos.x) && (mouseWP.x <= m_Pos.x + m_Size.x))
+            && ((mouseWP.y >= m_Pos.y) && (mouseWP.y <= m_Pos.y + m_Size.y));
     };
 
     WorldCoords getPosition() const { return m_Pos; };

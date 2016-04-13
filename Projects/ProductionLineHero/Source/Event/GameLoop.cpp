@@ -13,7 +13,8 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
     m_Factory(),
     m_ObjectToCreate(CreatableObjectType::NONE),
-    m_State(GameState::IDLE_MODE)
+    m_State(GameState::IDLE_MODE),
+    m_MouseHoverPixelPos(i_WinSettings.dimensions.x + 1, i_WinSettings.dimensions.y + 1)
 {
     // Create game UI
     InitUI(i_WinSettings);
@@ -103,9 +104,11 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
     {
     case CreatableObjectType::WORKSHOP:
         // we should change the output to be chosen instead of random
-        m_Factory.buildWorkshop(i_RoomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);
-        setState(GameState::IDLE_MODE);
-        setObjectTypeToCreate(CreatableObjectType::NONE);
+        if (!m_Factory.hasWorkshopAt(i_RoomPos))
+        {
+            m_Factory.buildWorkshop(i_RoomPos, CardinalDir(randValue(0, 3)))->addWorker(1.);
+        }
+        
         break;
 
     case CreatableObjectType::SUPPLIER:
@@ -115,8 +118,6 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
                         std::make_shared<BasicResource>(0), 3, CardinalDir(randValue(0, 3))));
         }
 
-        setState(GameState::IDLE_MODE);
-        setObjectTypeToCreate(CreatableObjectType::NONE);
         break;
 
     case CreatableObjectType::WORKER:
@@ -124,32 +125,36 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoord
         {
             m_Factory.getWorkshop(i_RoomPos)->addWorker(1.);
         }
-        setState(GameState::IDLE_MODE);
-        setObjectTypeToCreate(CreatableObjectType::NONE);
 
     default:
         break;
     }
+
+    setState(GameState::IDLE_MODE);
+    setObjectTypeToCreate(CreatableObjectType::NONE);
 }
 
 void GameLoop::previewCreation()
 {
-    WorkshopCoords posWS = worldCoordsULCornerToWorkshopCoords(m_MouseHoverWorldPos);
-    if (posWS.x > MAX_NUM_WORKSHOPS.x || posWS.y > MAX_NUM_WORKSHOPS.y)
+    if (m_UI[0]->isMouseInArea(m_MouseHoverPixelPos))
+        return;
+    WorldCoords worldPos = pixelCoordsToWorldCoords(m_MouseHoverPixelPos, Renderer);
+    WorkshopCoords posWS = worldCoordsULCornerToWorkshopCoords(worldPos);
+    if (posWS.x > MAX_NUM_WORKSHOPS.x || posWS.y > MAX_NUM_WORKSHOPS.y 
+        || posWS.x < 0 || posWS.y < 0)
         return;
     WorldCoords upperLeftWS = workshopCoordsToWorldCoordsULCorner(posWS);
-    upperLeftWS = pixelCoordsToWorldCoords(upperLeftWS, Renderer);
-
+    
     switch (m_ObjectToCreate)
     {
     case CreatableObjectType::WORKSHOP:
-        if (m_Factory.isCoordInFactory(upperLeftWS) && !m_Factory.hasWorkshopAt(posWS))
+        if (m_Factory.isCoordInFactory(upperLeftWS + WorldCoords(1,1)) && !m_Factory.hasWorkshopAt(posWS))
         {
             auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
             cmd->UpperLeftPos = upperLeftWS;
             cmd->LowerRightPos = cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE);
             cmd->Color = al_map_rgb(65, 143, 63);
-            cmd->Layer = alpp::render::Layer::UI;   // HACK
+            cmd->Layer = alpp::render::Layer::WORLD;
             Renderer->enqueueCommand(cmd);
         }
         break;
@@ -168,12 +173,13 @@ void GameLoop::previewCreation()
 
 bool GameLoop::tick()
 {
-    if (m_State == GameState::CREATION_MODE)
-        previewCreation();
-
     // Draw factory
     m_Factory.render(Renderer);
 
+
+    // Draw creation preview (must be drawn on top)
+    if (m_State == GameState::CREATION_MODE)
+        previewCreation();
     
 
     // Resize the UI in case the window size changed

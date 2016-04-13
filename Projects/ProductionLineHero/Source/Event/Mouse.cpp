@@ -93,17 +93,19 @@ void Mouse::onMouseMoved()
 
     CreationMenu * createMenu = dynamic_cast<CreationMenu*>(ui[0]);
 
-    if (PressedButtons[int(Button::Right)] && !createMenu->isMouseInArea(Position))
+    if (!createMenu->isMouseInArea(Position))
     {
-        auto cam = m_GameObject->Renderer->Camera;
-        translation -= (DeltaPos);
-        cam->translate(translation);
+        if (PressedButtons[int(Button::Right)])
+        {
+            auto cam = m_GameObject->Renderer->Camera;
+            translation -= (DeltaPos);
+            cam->translate(translation);
+        }
+
+        if (m_GameObject->getState() == GameState::CREATION_MODE)
+        {
+            m_GameObject->setMouseHoverPosition(Position);
+        }
     }
 
-    if (m_GameObject->getState() == GameState::CREATION_MODE)
-    {
-        WorldCoords mouseWorldPos = pixelCoordsToWorldCoords(Position, m_GameObject->Renderer);
-        m_GameObject->setMouseHoverPosition(mouseWorldPos);
-
-    }
 };

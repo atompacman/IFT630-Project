@@ -30,8 +30,8 @@ public:
     CreatableObjectType getObjectTypeToCreate() const                     { return m_ObjectToCreate; }
     void              setObjectTypeToCreate(CreatableObjectType i_RoomType) { m_ObjectToCreate = i_RoomType; }
 
-    WorldCoords getMouseHoverPosition() { return m_MouseHoverWorldPos; }
-    void setMouseHoverPosition(WorldCoords pos) { m_MouseHoverWorldPos = pos; }
+    WorldCoords getMouseHoverPosition() { return m_MouseHoverPixelPos; }
+    void setMouseHoverPosition(WorldCoords pos) { m_MouseHoverPixelPos = pos; }
 
     void previewCreation();
 
@@ -52,7 +52,7 @@ private:
     std::vector<UIElement*> m_UI;
     GameState               m_State;
     CreatableObjectType     m_ObjectToCreate;
-    WorldCoords             m_MouseHoverWorldPos;
+    WorldCoords             m_MouseHoverPixelPos;
 };
 
 #endif // PLH_EVENT_GAME_LOOP
