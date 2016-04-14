@@ -42,16 +42,18 @@ float          const SPACE_BETWEEN_WORKSHOPS (60);
 
 inline void checkWorkshopCoords(WorkshopCoords i_WSCoords)
 {
-    //LOG_IF(!(i_WSCoords < MAX_NUM_WORKSHOPS), FATAL)
-    //    << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
+    LOG_IF(!(i_WSCoords < MAX_NUM_WORKSHOPS), FATAL)
+        << "Invalid workshop position (" << i_WSCoords.x << ", " << i_WSCoords.y << ")";
 }
 
+// Convert workshop (grid) coordinates to the world coordinates of its upper left corner
 inline WorldCoords workshopCoordsToWorldCoordsULCorner(WorkshopCoords i_WSCoords)
 {
     auto p = WorldCoords(i_WSCoords);
     return p * WORKSHOP_SIZE + (p + WorldCoords(1, 1)) * SPACE_BETWEEN_WORKSHOPS;
 }
 
+// Convert the world coordinates of the workshop's upper left corner to workshop (grid) coordinates
 inline WorkshopCoords worldCoordsULCornerToWorkshopCoords(WorldCoords i_WCoords)
 {
     auto p = WorkshopCoords(i_WCoords);
@@ -59,6 +61,7 @@ inline WorkshopCoords worldCoordsULCornerToWorkshopCoords(WorldCoords i_WCoords)
         (WorkshopCoords(WORKSHOP_SIZE) + uint16_t(SPACE_BETWEEN_WORKSHOPS));
 }
 
+// Convert pixel/screen coordinates to world coordinates using the camera transform
 inline WorldCoords pixelCoordsToWorldCoords(PixelCoords i_PCoord, sptr<alpp::render::Renderer> i_Renderer)
 {
     WorldCoords worldTransformedCoords = WorldCoords(i_PCoord);
@@ -124,6 +127,7 @@ inline ALLEGRO_COLOR getButtonColor(uint8_t i_ColorID)
     return getColorConstant(i_ColorID, BUTTON_COLORS);
 }
 
+// Computes the actual position of something on the side of a workshop using the position of its upper left corner
 inline WorldCoords cardinalDirToWorldCoords(WorldCoords i_Pos, CardinalDir i_Side)
 {
     WorldCoords newPos = i_Pos;

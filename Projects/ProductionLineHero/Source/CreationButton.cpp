@@ -7,7 +7,7 @@ CreationButton::CreationButton(WorldCoords       i_Position,
                                CreatableObjectType i_ObjType) :
     UIElement(i_Position, i_Size, i_Color),
     m_ParentUI(i_Parent),
-    m_RoomType(i_ObjType)
+    m_ObjectType(i_ObjType)
 {}
 
 void CreationButton::render(sptr<alpp::render::Renderer> i_Renderer) const

@@ -5,6 +5,7 @@
 
 #include <plh/ResourceStack.h>
 
+// Represents a resource supplier, which is used to generate resources in input to a workshop
 class ResourceSupplier : public alpp::event::Agent
 {
 public:
@@ -23,8 +24,8 @@ protected:
 private:
 
     ALLEGRO_TIMER *     m_Ticker;
-    sptr<ResourceStack> m_StackToSupply;
-    sptr<BasicResource> m_RsrcArchetype;
+    sptr<ResourceStack> m_StackToSupply;    // Stack in which the generated resources are added
+    sptr<BasicResource> m_RsrcArchetype;    // Resource type
 };
 
 #endif // PLH_RESOURCE_SUPPLIER

@@ -75,6 +75,6 @@ void Treadmill::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto cmd2 = std::make_shared<alpp::render::DrawFilledCircle>();
     cmd2->CenterPos = m_ResourcePos;
     cmd2->Radius = 5;
-    cmd2->Color = al_map_rgb(150, 40, 140);
+    cmd2->Color = al_map_rgb(120, 235, 250);
     i_Renderer->enqueueCommand(cmd2);
 }

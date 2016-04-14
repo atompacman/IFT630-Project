@@ -4,6 +4,7 @@
 #include <alpp/Core.h>
 #include <alpp/Render/Renderer.h>
 
+// Class that represents any UI element, such as a menu or button
 class UIElement
 {
 public:
@@ -15,8 +16,10 @@ public:
     {};
     virtual ~UIElement() { };
 
+    // every UI element must implement its own render function
     virtual void render(sptr<alpp::render::Renderer> i_Renderer) const = 0;
 
+    // Check if a pixel position (mouse) is in this UI element
     bool isMouseInArea(PixelCoords i_MousePos) const
     {
         WorldCoords mouseWP(i_MousePos);
