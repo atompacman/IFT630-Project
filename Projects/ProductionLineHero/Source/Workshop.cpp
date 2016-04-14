@@ -78,17 +78,31 @@ PixelCoords Workshop::getUpperLeftPixelPos() const
 void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     // Floor
-    auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->UpperLeftPos  = getUpperLeftPixelPos();
-    cmd->LowerRightPos = cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE);
-    cmd->Color         = al_map_rgb(10, 40, 53);
-    i_Renderer->enqueueCommand(cmd);
-
-    // Last produced resource visualization
+    {
+        auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+        cmd->UpperLeftPos  = getUpperLeftPixelPos();
+        cmd->LowerRightPos = cmd->UpperLeftPos + WORKSHOP_SIZE;
+        cmd->Color         = al_map_rgb(10, 40, 53);
+        i_Renderer->enqueueCommand(cmd);
+    }
+    // Last produced resource visualization (and worth)
     auto lastPushed = getOutputStack()->lastPushedResource();
     if (lastPushed)
     {
-        lastPushed->render(i_Renderer, cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE) / 2.f);
+        lastPushed->render(i_Renderer, WorldCoords(getUpperLeftPixelPos()) + WORKSHOP_SIZE / 2.f);
+
+        // Display resource worth
+        {
+            std::stringstream ss;
+            ss << "(" << lastPushed->worth() << "$)";
+
+            auto cmd = std::make_shared<alpp::render::DrawCenteredText>();
+            cmd->CenterPos = getUpperLeftPixelPos();
+            cmd->Color     = al_map_rgb(0, 0, 0);
+            cmd->Font      = i_Renderer->StandardFont;
+            cmd->Text      = ss.str();
+            i_Renderer->enqueueCommand(cmd);
+        }
     }
 
     // Resource stacks

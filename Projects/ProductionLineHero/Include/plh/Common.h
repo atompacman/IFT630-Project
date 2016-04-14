@@ -100,6 +100,11 @@ float    const PATH_WIGGLE_FREQUENCY (0.8f);
 // Resource stack
 WorldCoords const RESRC_STACK_SIZE_PXL (20, 20);
 
+uint8_t const CONNECTED_INPUT_RESRC_STACK_COLOR   [] = { 120, 140, 70 };
+uint8_t const CONNECTED_OUTPUT_RESRC_STACK_COLOR  [] = { 120, 140, 70 };
+uint8_t const UNCONNECTED_INPUT_RESRC_STACK_COLOR [] = {  30, 170, 40 };
+uint8_t const UNCONNECTED_OUTPUT_RESRC_STACK_COLOR[] = { 190,  20, 30 };
+
 // Treadmill
 auto const THREADMILL_SPEED (.001);
 
@@ -157,12 +162,16 @@ inline WorldCoords cardinalDirToWorldCoords(WorldCoords i_Pos, CardinalDir i_Sid
 // Budget
 typedef long Dollar;
 
-Dollar const INITIAL_BALANCE = 10000;
+Dollar const INITIAL_BALANCE = 20000;
 
 std::map<CreatableObjectType, Dollar> const CREATABLE_OBJ_PRICES =
 { { CreatableObjectType::WORKSHOP, 1500 },
   { CreatableObjectType::SUPPLIER, 800 },
   { CreatableObjectType::WORKER,   500 }};
+
+Dollar const BASIC_RSRC_BASE_VALUE            (4);
+double const BASIC_RSRC_RAFFINEMENT_VALUATION (1.5);
+double const CMPST_RSRC_RAFFINEMENT_VALUATION (1.1);
 
 // Budget tab
 PixelCoords const BUDGET_TAB_SIZE (200, 80);

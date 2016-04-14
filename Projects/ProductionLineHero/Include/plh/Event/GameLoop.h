@@ -57,6 +57,9 @@ protected:
     void RenderUI();    // UI rendering
     void ResizeUI(PixelDimensions windowSize);  // UI resizing to adjust when changing window size
 
+    // Sell all resources contained in stacks at the end of production lines
+    void sellResources();
+
 private:
 
     Factory                 m_Factory;  // The factory on which everything is placed

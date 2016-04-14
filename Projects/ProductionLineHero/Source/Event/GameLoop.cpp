@@ -226,22 +226,46 @@ void GameLoop::previewCreation()
     
 }
 
+void GameLoop::sellResources()
+{
+    WorkshopCoords coords;
+
+    for (coords.x = 0; coords.x < MAX_NUM_WORKSHOPS_X; ++coords.x)
+    {
+        for (coords.y = 0; coords.y < MAX_NUM_WORKSHOPS_Y; ++coords.y)
+        {
+            if (m_Factory.hasWorkshopAt(coords))
+            {
+                auto stack = m_Factory.getWorkshop(coords)->getOutputStack();
+                if (!stack->isConnected())
+                {
+                    while (stack->numResources() > 0)
+                    {
+                        m_Budget.deposit(stack->pop()->worth());
+                    }
+                }
+            }
+        }
+    }
+}
+
 bool GameLoop::tick()
 {
     // Draw factory
     m_Factory.render(Renderer);
 
-
     // Draw creation preview
     if (m_State == GameState::CREATION_MODE)
-        previewCreation();
-    
+        previewCreation();    
 
     // Resize the UI in case the window size changed
     ResizeUI(Renderer->windowSize());
 
     // Draw UI
     RenderUI();
+
+    // Sell resources at the end of the production lines
+    sellResources();
 
     return true;
 }

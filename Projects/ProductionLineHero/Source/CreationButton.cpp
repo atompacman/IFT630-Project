@@ -20,14 +20,27 @@ void CreationButton::render(sptr<alpp::render::Renderer> i_Renderer) const
         cmd->Layer = alpp::render::Layer::UI;
         i_Renderer->enqueueCommand(cmd);
     }{
+        // Object name
         auto cmd = std::make_shared<alpp::render::DrawCenteredText>();
         cmd->CenterPos = m_Pos;
         cmd->Font = i_Renderer->StandardFont;
-        cmd->Color = al_map_rgb(255, 255, 255);
+        cmd->Color = al_map_rgb(0, 0, 0);
         cmd->Text = m_ObjectType == CreatableObjectType::SUPPLIER ? "Supplier" 
             : m_ObjectType == CreatableObjectType::WORKER ? "Worker" : "Workshop";
         cmd->Layer = alpp::render::Layer::UI;
         i_Renderer->enqueueCommand(cmd);
     }
+    {
+        // Object Cost
+        std::stringstream ss;
+        ss << "(" << CREATABLE_OBJ_PRICES.find(m_ObjectType)->second << "$)";
 
+        auto cmd = std::make_shared<alpp::render::DrawCenteredText>();
+        cmd->CenterPos = m_Pos + WorldCoords(10, 50);
+        cmd->Font      = i_Renderer->StandardFont;
+        cmd->Color     = al_map_rgb(0, 0, 0);
+        cmd->Text      = ss.str();
+        cmd->Layer     = alpp::render::Layer::UI;
+        i_Renderer->enqueueCommand(cmd);
+    }
 }

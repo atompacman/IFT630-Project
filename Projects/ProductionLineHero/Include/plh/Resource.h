@@ -32,6 +32,8 @@ public:
                         WorldCoords                  i_Pos, 
                         uint8_t                      i_ScaleLvl) const = 0;
 
+    virtual Dollar worth() const = 0;
+
 protected:
 
     uint8_t m_RaffinementLvl;
@@ -42,7 +44,7 @@ class BasicResource : public Resource
 public:
 
     explicit BasicResource(uint8_t i_ColorID) :
-
+        Resource(),
         m_ColorID(i_ColorID)
     {}
 
@@ -57,6 +59,8 @@ public:
                 WorldCoords                  i_Pos, 
                 uint8_t                      i_ScaleLvl) const override;
 
+    Dollar worth() const override;
+
 private:
 
     uint8_t m_ColorID;
@@ -67,6 +71,7 @@ class CompositeResource : public Resource
 public:
 
     explicit CompositeResource(std::list<sptr<Resource>> const & i_Components) :
+        Resource(),
         m_SubResource()
     {
         LOG_IF(i_Components.size() != 2 && i_Components.size() != 3, FATAL) <<
@@ -100,6 +105,8 @@ public:
     void render(sptr<alpp::render::Renderer> i_Renderer, 
                 WorldCoords                  i_Pos, 
                 uint8_t                      i_ScaleLvl) const override;
+
+    Dollar worth() const override;
 
 private:
 

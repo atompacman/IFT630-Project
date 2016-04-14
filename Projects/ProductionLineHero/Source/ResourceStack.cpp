@@ -10,6 +10,7 @@ ResourceStack::ResourceStack(Type i_Type, WorkshopCoords i_Pos, CardinalDir i_Si
     m_Pos        (),
     m_Resources  (),
     m_LastPushed (),
+    m_IsConnected(false),
     m_Mutex      (),
     m_WaitingList()
 {
@@ -56,10 +57,15 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
 
+    auto const * color = m_Type == Type::INPUT ? (
+        m_IsConnected ? CONNECTED_INPUT_RESRC_STACK_COLOR  : UNCONNECTED_INPUT_RESRC_STACK_COLOR) : 
+        m_IsConnected ? CONNECTED_OUTPUT_RESRC_STACK_COLOR : UNCONNECTED_OUTPUT_RESRC_STACK_COLOR;
+
+
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
     cmd->UpperLeftPos  = m_Pos - d;
     cmd->LowerRightPos = m_Pos + d;
-    cmd->Color         = m_Type == Type::INPUT ? al_map_rgb(0, 255, 0) : al_map_rgb(255, 0, 0);
+    cmd->Color         = al_map_rgb(color[0], color[1], color[2]);
     i_Renderer->enqueueCommand(cmd);
 
     auto cmd2 = std::make_shared<alpp::render::DrawCenteredText>();

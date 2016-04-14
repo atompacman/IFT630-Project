@@ -18,6 +18,10 @@ Treadmill::Treadmill(sptr<ResourceStack> i_Source,
         << "A threadmill source stack cannot be a stack of type input";
     LOG_IF(m_DestStack->type() == ResourceStack::Type::OUTPUT, FATAL)
         << "A threadmill destination stack cannot be a stack of type output";
+
+    i_Source->setConnected();
+    i_Destination->setConnected();
+
     std::thread(&Treadmill::runThreadmillThread, this).detach();
 }
 

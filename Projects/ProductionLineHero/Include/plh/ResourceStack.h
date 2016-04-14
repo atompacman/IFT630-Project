@@ -35,6 +35,9 @@ public:
 
     void render(sptr<alpp::render::Renderer> i_Renderer) const;
 
+    void setConnected()       { m_IsConnected = true; }
+    bool isConnected () const { return m_IsConnected; }
+
     Type           type()               const { return m_Type; };
     WorldCoords    centerPosition()     const { return m_Pos;  };
     uint32_t       numResources()       const { return static_cast<uint32_t>(m_Resources.size()); };
@@ -46,6 +49,7 @@ private:
     WorldCoords                m_Pos;
     std::stack<sptr<Resource>> m_Resources;
     sptr<Resource>             m_LastPushed;
+    bool                       m_IsConnected;
     std::mutex                 m_Mutex;     // Mutex to manage the worker access to the stack
     std::condition_variable    m_WaitingList;   // Condition variable used as a list of workers waiting for acces to the stack
 };
