@@ -10,6 +10,7 @@
 
 class Workshop;
 
+// Represents a worker in a workshop
 class Worker
 {
 public:

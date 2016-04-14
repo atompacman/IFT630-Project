@@ -5,6 +5,7 @@
 
 class Workshop;
 
+// Represents the treadmill linking 2 workshops together with which resources are transfered
 class Treadmill
 {
 public:
@@ -16,12 +17,12 @@ public:
 
 private:
 
-    void runThreadmillThread();
+    void runThreadmillThread(); // run the treadmill thread
 
-    sptr<ResourceStack> m_SrcStack;
-    sptr<ResourceStack> m_DestStack;
-    sptr<Resource>      m_MovingResource;
-    WorldCoords         m_ResourcePos;
+    sptr<ResourceStack> m_SrcStack;     // Source stack
+    sptr<ResourceStack> m_DestStack;    // Destination stack
+    sptr<Resource>      m_MovingResource;   // Resource moving on the treadmill
+    WorldCoords         m_ResourcePos;      // Position of the resource
 };
 
 #endif // PLH_TREADMILL

@@ -11,6 +11,7 @@ class Renderer;
 
 }}
 
+// Represents a resource, which can be raffined or mixed with another (composite)
 class Resource
 {
 public:

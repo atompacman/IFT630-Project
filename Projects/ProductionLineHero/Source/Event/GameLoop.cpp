@@ -21,7 +21,7 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     // Create game UI
     InitUI(i_WinSettings);
 
-    // Test workshop TODO: remove me
+    //Test workshop TODO: remove me
     m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST )->addWorker(1);
     m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST )->addWorker(1);
     m_Factory.buildWorkshop(WorkshopCoords(2, 2), CardinalDir::SOUTH)->addWorker(1);
@@ -42,7 +42,8 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
 
 void GameLoop::ResizeUI(PixelDimensions i_WindowSize)
 {
-    WorldCoords creationMenuSize(i_WindowSize.x / 3, i_WindowSize.y / 8);
+    // Re-compute the position and size of the menu and buttons using the current window size
+    WorldCoords creationMenuSize(i_WindowSize.x / 4.2, i_WindowSize.y / 8);
     WorldCoords creationMenuPos(0, i_WindowSize.y - creationMenuSize.y);
 
     float buttonSide = creationMenuSize.y - 20;
@@ -64,22 +65,28 @@ void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
 {
     WorldCoords creationMenuSize(i_WinSettings.dimensions.x, 100);
     WorldCoords creationMenuPos(0, i_WinSettings.dimensions.y - creationMenuSize.y);
+
+    // Create the Creation Menu
     CreationMenu * creationMenu = new CreationMenu(creationMenuPos, creationMenuSize, al_map_rgb(200,200,200));
 
     float buttonSide = creationMenuSize.y - 20;
     WorldCoords buttonSize = WorldCoords(buttonSide, buttonSide);
 
+    // Create the Workshop creation button
     CreationButton * workshopButton = new CreationButton(WorldCoords(creationMenuPos.x + 10,
         creationMenuPos.y + 10), buttonSize, creationMenu, getButtonColor(0), CreatableObjectType::WORKSHOP);
 
+    // Create the Supplier creation button
     CreationButton * supplierButton = new CreationButton(
         WorldCoords(workshopButton->getPosition().x + workshopButton->getSize().x + 10,
         creationMenuPos.y + 10), buttonSize, creationMenu, getButtonColor(1), CreatableObjectType::SUPPLIER);
 
+    // Create the Worker creation button
     CreationButton * workerButton = new CreationButton(
         WorldCoords(supplierButton->getPosition().x + supplierButton->getSize().x + 10,
             creationMenuPos.y + 10), buttonSize, creationMenu, getButtonColor(2), CreatableObjectType::WORKER);
 
+    // Add the buttons to the menu
     creationMenu->addButton(workshopButton);
     creationMenu->addButton(supplierButton);
     creationMenu->addButton(workerButton);
@@ -89,6 +96,7 @@ void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
 
 void GameLoop::RenderUI()
 {
+    // Render each UI element
     for (auto const & element : m_UI)
     {
         element->render(Renderer);
@@ -100,37 +108,41 @@ std::vector<UIElement*> GameLoop::getUI() const
     return m_UI;
 }
 
-void GameLoop::CreateFactoryObject(CreatableObjectType i_RoomType, WorkshopCoords i_RoomPos)
+void GameLoop::CreateFactoryObject(CreatableObjectType i_ObjectType, WorkshopCoords i_ObjectPos)
 {
-    switch (i_RoomType)
+    switch (i_ObjectType)
     {
+        // Create workshop on a factory tile
     case CreatableObjectType::WORKSHOP:
-        if (!m_Factory.hasWorkshopAt(i_RoomPos))
+        if (!m_Factory.hasWorkshopAt(i_ObjectPos))
         {
-            m_Factory.buildWorkshop(i_RoomPos, m_CreationDir)->addWorker(1.);
+            m_Factory.buildWorkshop(i_ObjectPos, m_CreationDir)->addWorker(1.);
         }
         
         break;
 
+        // Create Resource Supplier on the side of a workshop
     case CreatableObjectType::SUPPLIER:
-        if (m_Factory.hasWorkshopAt(i_RoomPos) && !m_Factory.getWorkshop(i_RoomPos)->hasStack(m_CreationDir))
+        if (m_Factory.hasWorkshopAt(i_ObjectPos) && !m_Factory.getWorkshop(i_ObjectPos)->hasStack(m_CreationDir))
         {
-            registerAgent(m_Factory.addResourceSupplier(i_RoomPos,
+            registerAgent(m_Factory.addResourceSupplier(i_ObjectPos,
                         std::make_shared<BasicResource>(0), 3, m_CreationDir));
         }
 
         break;
 
+        // Create Worker in a workshop
     case CreatableObjectType::WORKER:
-        if (m_Factory.hasWorkshopAt(i_RoomPos))
+        if (m_Factory.hasWorkshopAt(i_ObjectPos))
         {
-            m_Factory.getWorkshop(i_RoomPos)->addWorker(1.);
+            m_Factory.getWorkshop(i_ObjectPos)->addWorker(1.);
         }
 
     default:
         break;
     }
 
+    // Reset the game state since the creation has been done (or not if placement was invalid)
     setState(GameState::IDLE_MODE);
     setObjectTypeToCreate(CreatableObjectType::NONE);
 }
@@ -153,9 +165,11 @@ void GameLoop::previewCreation()
     
     switch (m_ObjectToCreate)
     {
+        // Workshop preview
     case CreatableObjectType::WORKSHOP:
         if (m_Factory.isCoordInFactory(upperLeftWS + WorldCoords(1,1)) && !m_Factory.hasWorkshopAt(posWS))
         {
+            // Render workshop tile
             auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
             cmd->UpperLeftPos = upperLeftWS;
             cmd->LowerRightPos = cmd->UpperLeftPos + WorldCoords(WORKSHOP_SIZE);
@@ -163,6 +177,7 @@ void GameLoop::previewCreation()
             cmd->Layer = alpp::render::Layer::WORLD;
             Renderer->enqueueCommand(cmd);
 
+            // Render workshop output stack
             auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
 
             WorldCoords realPos = cardinalDirToWorldCoords(upperLeftWS, m_CreationDir);
@@ -174,10 +189,12 @@ void GameLoop::previewCreation()
         }
         break;
 
+        // Supplier preview
     case CreatableObjectType::SUPPLIER:
         if (m_Factory.hasWorkshopAt(posWS) && 
             !m_Factory.getWorkshop(posWS)->hasStack(m_CreationDir))
         {
+            // Render supplier stack
             auto const d = RESRC_STACK_SIZE_PXL / WorldCoords(2, 2);
 
             WorldCoords realPos = cardinalDirToWorldCoords(upperLeftWS, m_CreationDir);
@@ -190,9 +207,11 @@ void GameLoop::previewCreation()
 
         break;
 
+        // Worker preview
     case CreatableObjectType::WORKER:
         if (m_Factory.hasWorkshopAt(posWS))
         {
+            // Render worker
             auto cmd = std::make_shared<alpp::render::DrawFilledCircle>();
             cmd->Radius = WORKER_RADIUS;
             cmd->CenterPos = upperLeftWS + WorldCoords(WORKSHOP_SIZE.x/2, WORKSHOP_SIZE.y/2);
@@ -214,7 +233,7 @@ bool GameLoop::tick()
     m_Factory.render(Renderer);
 
 
-    // Draw creation preview (must be drawn on top)
+    // Draw creation preview
     if (m_State == GameState::CREATION_MODE)
         previewCreation();
     

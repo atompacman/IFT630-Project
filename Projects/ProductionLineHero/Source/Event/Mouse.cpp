@@ -9,7 +9,7 @@
 
 void Mouse::onScroll() 
 { 
-
+    // Change cardinal direction when creating workshop or a resource supplier
     if (m_GameObject->getState() == GameState::CREATION_MODE && 
         (m_GameObject->getObjectTypeToCreate() == CreatableObjectType::WORKSHOP
          || m_GameObject->getObjectTypeToCreate() == CreatableObjectType::SUPPLIER))
@@ -21,6 +21,7 @@ void Mouse::onScroll()
         m_GameObject->setCreationDir((CardinalDir)(dir));
     }
 
+    // Zoom screen
     else
     {
         m_GameObject->Renderer->Camera->adjustZoom(MOUSE_SCROLL_ZOOM_FACTOR * DeltaScroll);
@@ -36,7 +37,6 @@ void Mouse::onLeftClick()
     LOG(INFO) << "onLeftClick" << " (" << Position.x << "," << Position.y << ")";
 
     // Check if the click is on UI
-
     auto ui = m_GameObject->getUI();
     CreationMenu * createMenu = dynamic_cast<CreationMenu*>(ui[0]);
     auto buttons = createMenu->getButtons();
@@ -46,6 +46,7 @@ void Mouse::onLeftClick()
         {
             if (button->isMouseInArea(Position))
             {
+                // Tell to the game which object to create
                 m_GameObject->setState(GameState::CREATION_MODE);
                 m_GameObject->setObjectTypeToCreate(button->getObjectType());
                 button->setColor(al_map_rgb(10, 100, 200));
@@ -56,7 +57,6 @@ void Mouse::onLeftClick()
     }
 
     // Check if click is for creating object in factory
-
     else if (m_GameObject->getState() == GameState::CREATION_MODE) 
     {
         // Change click from pixel to world coordinates (and then workshop)

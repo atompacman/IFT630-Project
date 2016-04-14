@@ -7,6 +7,7 @@
 
 class CreationButton;
 
+// Represents the menu used to create objects in the factory
 class CreationMenu : public UIElement 
 {
 public:

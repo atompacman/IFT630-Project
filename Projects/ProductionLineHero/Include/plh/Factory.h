@@ -16,6 +16,8 @@ class ResourceSupplier;
 class Treadmill;
 class Workshop;
 
+
+// Represents the factory, on which we can place workshops to use resources to generate a particular product (refined and mixed resources)
 class Factory
 {
 public:

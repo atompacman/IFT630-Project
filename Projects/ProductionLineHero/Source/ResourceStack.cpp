@@ -63,9 +63,9 @@ void ResourceStack::render(sptr<alpp::render::Renderer> i_Renderer) const
     i_Renderer->enqueueCommand(cmd);
 
     auto cmd2 = std::make_shared<alpp::render::DrawCenteredText>();
-    cmd2->CenterPos = m_Pos - d * 2.f;
+    cmd2->CenterPos = WorldCoords(m_Pos.x - d.x * 0.5f, m_Pos.y - d.y);
     cmd2->Font      = i_Renderer->StandardFont;
-    cmd2->Color     = al_map_rgb(255, 255, 255);
+    cmd2->Color     = al_map_rgb(0, 0, 10);
     std::stringstream ss;
     ss << numResources();
     cmd2->Text = ss.str();

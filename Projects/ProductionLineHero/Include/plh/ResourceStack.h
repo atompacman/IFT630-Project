@@ -17,6 +17,7 @@ class Renderer;
 
 enum class CardinalDir;
 
+// Represents a workshop resource stack, which can be an input or an output to another workshop
 class ResourceStack
 {
 public:
@@ -45,8 +46,8 @@ private:
     WorldCoords                m_Pos;
     std::stack<sptr<Resource>> m_Resources;
     sptr<Resource>             m_LastPushed;
-    std::mutex                 m_Mutex;
-    std::condition_variable    m_WaitingList;
+    std::mutex                 m_Mutex;     // Mutex to manage the worker access to the stack
+    std::condition_variable    m_WaitingList;   // Condition variable used as a list of workers waiting for acces to the stack
 };
 
 #endif // PLH_RESOURCE_STACK
