@@ -51,6 +51,18 @@ struct DrawLine : Command
     }
 };
 
+struct DrawFilledTriangle : Command
+{
+    WorldCoords   Points[3];
+    ALLEGRO_COLOR Color;
+
+    void execute() override
+    {
+        al_draw_filled_triangle(Points[0].x + 0.5, Points[0].y + 0.5, Points[1].x + 0.5, 
+                                Points[1].y + 0.5, Points[2].x + 0.5, Points[2].y + 0.5, Color);
+    }
+};
+
 struct DrawFilledCircle : Command
 {
     WorldCoords   CenterPos;
@@ -87,6 +99,31 @@ struct DrawFilledRectangle : Command
     {
         al_draw_filled_rectangle(UpperLeftPos .x + 0.5, UpperLeftPos .y + 0.5, 
                                  LowerRightPos.x + 0.5, LowerRightPos.y + 0.5, Color);
+    }
+}; 
+
+struct DrawFilledRoundedRectangle : DrawFilledRectangle
+{
+    float Radius;
+
+    void execute() override
+    {
+        al_draw_filled_rounded_rectangle(UpperLeftPos.x + 0.5, UpperLeftPos.y + 0.5,
+            LowerRightPos.x + 0.5, LowerRightPos.y + 0.5, Radius, Radius, Color);
+    }
+};
+
+struct DrawFilledDiamond : DrawFilledRectangle
+{
+    void execute() override
+    {
+        auto center = (UpperLeftPos + LowerRightPos) / 2.f;
+        auto extent = (LowerRightPos - UpperLeftPos) / 2.f;
+        float vertices[] = { center.x,            center.y - extent.y,
+                             center.x - extent.x, center.y,
+                             center.x,            center.y + extent.y,
+                             center.x + extent.x, center.y };
+        al_draw_filled_polygon(vertices, 8, Color);
     }
 };
 

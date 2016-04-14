@@ -33,10 +33,6 @@ public:
 
 protected:
 
-    void drawRaffinment(sptr<alpp::render::Renderer> i_Renderer, 
-                        WorldCoords                  i_Pos, 
-                        uint8_t                      i_ScaleLvl) const;
-
     uint8_t m_RaffinementLvl;
 };
 
