@@ -12,10 +12,22 @@ CreationButton::CreationButton(WorldCoords       i_Position,
 
 void CreationButton::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
-    auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->UpperLeftPos = m_Pos;
-    cmd->LowerRightPos = cmd->UpperLeftPos + m_Size;
-    cmd->Color = m_Color;
-    cmd->Layer = alpp::render::Layer::UI;
-    i_Renderer->enqueueCommand(cmd);
+    {
+        auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
+        cmd->UpperLeftPos = m_Pos;
+        cmd->LowerRightPos = cmd->UpperLeftPos + m_Size;
+        cmd->Color = m_Color;
+        cmd->Layer = alpp::render::Layer::UI;
+        i_Renderer->enqueueCommand(cmd);
+    }{
+        auto cmd = std::make_shared<alpp::render::DrawCenteredText>();
+        cmd->CenterPos = m_Pos;
+        cmd->Font = i_Renderer->StandardFont;
+        cmd->Color = al_map_rgb(255, 255, 255);
+        cmd->Text = m_ObjectType == CreatableObjectType::SUPPLIER ? "Supplier" 
+            : m_ObjectType == CreatableObjectType::WORKER ? "Worker" : "Workshop";
+        cmd->Layer = alpp::render::Layer::UI;
+        i_Renderer->enqueueCommand(cmd);
+    }
+
 }

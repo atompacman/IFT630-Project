@@ -41,8 +41,8 @@ public:
 
 protected:
 
-    WorldCoords m_Pos;
-    WorldCoords m_Size;
+    WorldCoords   m_Pos;
+    WorldCoords   m_Size;
     ALLEGRO_COLOR m_Color;
 };
 

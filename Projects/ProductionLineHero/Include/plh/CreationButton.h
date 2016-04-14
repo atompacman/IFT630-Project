@@ -22,7 +22,7 @@ public:
 
 private:
 
-    UIElement *       m_ParentUI;
+    UIElement *         m_ParentUI;
     CreatableObjectType m_ObjectType; // which object this button is used to create
 };
 

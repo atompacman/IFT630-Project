@@ -58,6 +58,12 @@
     <ClCompile Include="..\Source\CreationButton.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Budget.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BudgetTab.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -105,6 +111,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\plh\CreationButton.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Budget.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\BudgetTab.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

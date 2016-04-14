@@ -105,9 +105,8 @@ sptr<ResourceSupplier> Factory::addResourceSupplier(WorkshopCoords      i_Pos,
 void Factory::render(sptr<alpp::render::Renderer> i_Renderer) const
 {
     // Render factory floor
-    WorldCoords factoryBorders(SPACE_BETWEEN_WORKSHOPS, SPACE_BETWEEN_WORKSHOPS);
     auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-    cmd->UpperLeftPos = m_Pos;
+    cmd->UpperLeftPos  = m_Pos;
     cmd->LowerRightPos = m_Pos + m_Size;
     cmd->Color = al_map_rgb(30, 30, 30);
     i_Renderer->enqueueCommand(cmd);

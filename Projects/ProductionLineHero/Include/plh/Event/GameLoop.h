@@ -3,7 +3,9 @@
 
 #include <alpp/Event/Gameloop.h>
 
+#include <plh/Budget.h>
 #include <plh/Factory.h>
+
 #include <vector>
 
 class UIElement;
@@ -58,6 +60,7 @@ protected:
 private:
 
     Factory                 m_Factory;  // The factory on which everything is placed
+    Budget                  m_Budget; // Player's bank account
     std::vector<UIElement*> m_UI;       // main UI elements (creation menu, more could easily be added)
     GameState               m_State;    // state of the game (idle or creation)
     CreatableObjectType     m_ObjectToCreate;   // What type of object is currenlty selected to be created when in creation mode

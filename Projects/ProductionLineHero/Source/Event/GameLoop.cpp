@@ -1,18 +1,18 @@
 #include <aplib/Random.h>
 
-#include <plh/Event/Gameloop.h>
-#include <plh/ResourceSupplier.h>
-#include <plh/ResourceStack.h>
-#include <plh/Workshop.h>
 #include <alpp/Render/Command.h>
 
+#include <plh/BudgetTab.h>
 #include <plh/CreationButton.h>
 #include <plh/CreationMenu.h>
-
+#include <plh/Event/Gameloop.h>
+#include <plh/ResourceSupplier.h>
+#include <plh/Workshop.h>
 
 GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     alpp::event::GameLoop(i_WinSettings, TARGET_FPS),
     m_Factory(),
+    m_Budget(),
     m_ObjectToCreate(CreatableObjectType::NONE),
     m_State(GameState::IDLE_MODE),
     m_MouseHoverPixelPos(i_WinSettings.dimensions.x + 1, i_WinSettings.dimensions.y + 1),
@@ -20,24 +20,6 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
 {
     // Create game UI
     InitUI(i_WinSettings);
-
-    //Test workshop TODO: remove me
-    m_Factory.buildWorkshop(WorkshopCoords(1, 3), CardinalDir::EAST )->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(2, 3), CardinalDir::EAST )->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(2, 2), CardinalDir::SOUTH)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(3, 3), CardinalDir::EAST )->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(4, 3), CardinalDir::EAST )->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(4, 4), CardinalDir::NORTH)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(4, 5), CardinalDir::NORTH)->addWorker(1);
-    m_Factory.buildWorkshop(WorkshopCoords(3, 5), CardinalDir::EAST )->addWorker(1);
-    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(1, 3), 
-        std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
-    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(2, 2),
-        std::make_shared<BasicResource>(0), 3, CardinalDir::NORTH));
-    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(3, 5),
-        std::make_shared<BasicResource>(0), 3, CardinalDir::WEST));
-    registerAgent(m_Factory.addResourceSupplier(WorkshopCoords(4, 3),
-        std::make_shared<BasicResource>(0), 3, CardinalDir::NORTH));
 };
 
 void GameLoop::ResizeUI(PixelDimensions i_WindowSize)
@@ -92,6 +74,9 @@ void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
     creationMenu->addButton(workerButton);
 
     m_UI.push_back(creationMenu);
+
+    auto * tab = new BudgetTab(WorldCoords(), WorldCoords(), al_map_rgb(50, 50, 50), m_Budget);
+    m_UI.push_back(tab);
 }
 
 void GameLoop::RenderUI()
@@ -110,13 +95,19 @@ std::vector<UIElement*> GameLoop::getUI() const
 
 void GameLoop::CreateFactoryObject(CreatableObjectType i_ObjectType, WorkshopCoords i_ObjectPos)
 {
+    auto price = CREATABLE_OBJ_PRICES.find(i_ObjectType)->second;
+
     switch (i_ObjectType)
     {
         // Create workshop on a factory tile
     case CreatableObjectType::WORKSHOP:
         if (!m_Factory.hasWorkshopAt(i_ObjectPos))
         {
-            m_Factory.buildWorkshop(i_ObjectPos, m_CreationDir)->addWorker(1.);
+            if (m_Budget.canAfford(price))
+            {
+                m_Budget.withdraw(price);
+                m_Factory.buildWorkshop(i_ObjectPos, m_CreationDir)->addWorker(1.);
+            }
         }
         
         break;
@@ -125,8 +116,12 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_ObjectType, WorkshopCoo
     case CreatableObjectType::SUPPLIER:
         if (m_Factory.hasWorkshopAt(i_ObjectPos) && !m_Factory.getWorkshop(i_ObjectPos)->hasStack(m_CreationDir))
         {
-            registerAgent(m_Factory.addResourceSupplier(i_ObjectPos,
-                        std::make_shared<BasicResource>(0), 3, m_CreationDir));
+            if (m_Budget.canAfford(price))
+            {
+                m_Budget.withdraw(price);
+                registerAgent(m_Factory.addResourceSupplier(i_ObjectPos,
+                    std::make_shared<BasicResource>(0), 3, m_CreationDir));
+            }
         }
 
         break;
@@ -135,7 +130,11 @@ void GameLoop::CreateFactoryObject(CreatableObjectType i_ObjectType, WorkshopCoo
     case CreatableObjectType::WORKER:
         if (m_Factory.hasWorkshopAt(i_ObjectPos))
         {
-            m_Factory.getWorkshop(i_ObjectPos)->addWorker(1.);
+            if (m_Budget.canAfford(price))
+            {
+                m_Budget.withdraw(price);
+                m_Factory.getWorkshop(i_ObjectPos)->addWorker(1.);
+            }
         }
 
     default:

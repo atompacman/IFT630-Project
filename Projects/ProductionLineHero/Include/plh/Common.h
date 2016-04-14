@@ -154,4 +154,17 @@ inline WorldCoords cardinalDirToWorldCoords(WorldCoords i_Pos, CardinalDir i_Sid
     return newPos;
 }
 
+// Budget
+typedef long Dollar;
+
+Dollar const INITIAL_BALANCE = 10000;
+
+std::map<CreatableObjectType, Dollar> const CREATABLE_OBJ_PRICES =
+{ { CreatableObjectType::WORKSHOP, 1500 },
+  { CreatableObjectType::SUPPLIER, 800 },
+  { CreatableObjectType::WORKER,   500 }};
+
+// Budget tab
+PixelCoords const BUDGET_TAB_SIZE (200, 80);
+
 #endif // PLH_COMMON
