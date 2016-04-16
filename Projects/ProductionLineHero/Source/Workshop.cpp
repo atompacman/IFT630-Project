@@ -34,7 +34,7 @@ sptr<ResourceStack> Workshop::addInputStack(CardinalDir i_Side)
 void Workshop::removeInputStack(CardinalDir i_Side)
 {
     LOG_IF(i_Side == m_OutputStackSide, FATAL) << toString() << ": Cannot remove " 
-        << nameOf(i_Side) << " input stack:  Stack is in reality the output stack";
+        << to_string(i_Side) << " input stack:  Stack is in reality the output stack";
     removeStack(i_Side);
 }
 
@@ -58,21 +58,11 @@ std::list<sptr<ResourceStack>> Workshop::getInputStacks() const
     return list;
 }
 
-sptr<ResourceStack> Workshop::getOutputStack() const
-{
-    return getStack(m_OutputStackSide);
-}
-
 sptr<ResourceStack> Workshop::getStack(CardinalDir i_Side) const
 {
     LOG_IF(!hasStack(i_Side), FATAL) << toString() << ": Cannot get " 
-        << nameOf(i_Side) << "stack: No stack found";
+        << to_string(i_Side) << "stack: No stack found";
     return m_ResourceStacks[static_cast<uint32_t>(i_Side)];
-}
-
-PixelCoords Workshop::getUpperLeftPixelPos() const
-{
-    return workshopCoordsToWorldCoordsULCorner(m_Pos);
 }
 
 void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
@@ -80,7 +70,7 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
     // Floor
     {
         auto cmd = std::make_shared<alpp::render::DrawFilledRectangle>();
-        cmd->UpperLeftPos  = getUpperLeftPixelPos();
+        cmd->UpperLeftPos  = upperLeftPixelPos();
         cmd->LowerRightPos = cmd->UpperLeftPos + WORKSHOP_SIZE;
         cmd->Color         = al_map_rgb(10, 40, 53);
         i_Renderer->enqueueCommand(cmd);
@@ -89,7 +79,7 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
     auto lastPushed = getOutputStack()->lastPushedResource();
     if (lastPushed)
     {
-        lastPushed->render(i_Renderer, WorldCoords(getUpperLeftPixelPos()) + WORKSHOP_SIZE / 2.f);
+        lastPushed->render(i_Renderer, WorldCoords(upperLeftPixelPos()) + WORKSHOP_SIZE / 2.f);
 
         // Display resource worth
         {
@@ -97,7 +87,7 @@ void Workshop::render(sptr<alpp::render::Renderer> i_Renderer) const
             ss << "(" << lastPushed->worth() << "$)";
 
             auto cmd = std::make_shared<alpp::render::DrawCenteredText>();
-            cmd->CenterPos = getUpperLeftPixelPos();
+            cmd->CenterPos = upperLeftPixelPos();
             cmd->Color     = al_map_rgb(0, 0, 0);
             cmd->Font      = i_Renderer->StandardFont;
             cmd->Text      = ss.str();
@@ -132,7 +122,7 @@ std::string Workshop::toString() const
 sptr<ResourceStack> Workshop::addStack(CardinalDir i_Side, ResourceStack::Type i_Type)
 {
     LOG_IF(hasStack(i_Side), FATAL) << toString() << ": Cannot add a " 
-        << nameOf(i_Side) << "stack: A stack is is already there";
+        << to_string(i_Side) << "stack: A stack is is already there";
 
     auto stack = std::make_shared<ResourceStack>(i_Type, m_Pos, i_Side);
     m_ResourceStacks[static_cast<uint32_t>(i_Side)] = stack;

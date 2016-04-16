@@ -1,6 +1,13 @@
 #ifndef APLIB_DIRECTION_2D
 #define APLIB_DIRECTION_2D
 
+/*================================================================================================\\
+| Enums and utility methods for manipulating 2D directions
+|--------------------------------------------------------------------------------------------------|
+| Each enum is strongly typed and has associated maps and methods for converting strings to enum 
+| constants and vice-versa.
+\=================================================================================================*/
+
 #include <map>
 
 enum class CardinalDir
@@ -69,17 +76,17 @@ char const * const DIR_2D_NAME[] =
       "LOWER_LEFT",
       "UPPER_LEFT"  };
 
-inline char const * nameOf(CardinalDir i_Dir)
+inline char const * to_string(CardinalDir i_Dir)
 {
     return CARDINAL_DIR_NAMES[static_cast<uint8_t>(i_Dir)];
 }
 
-inline char const * nameOf(Dir2D i_Dir)
+inline char const * to_string(Dir2D i_Dir)
 {
     return DIR_2D_NAME[static_cast<uint8_t>(i_Dir)];
 }
 
-inline char const * nameOf(Dir2DWithDiag i_Dir)
+inline char const * to_string(Dir2DWithDiag i_Dir)
 {
     return DIR_2D_NAME[static_cast<uint8_t>(i_Dir)];
 }

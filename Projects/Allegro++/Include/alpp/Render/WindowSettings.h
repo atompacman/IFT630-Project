@@ -18,13 +18,17 @@ enum class GraphicsLibrary
     DIRECT_3D = ALLEGRO_DIRECT3D_INTERNAL
 };
 
+/*================================================================================================\\
+| Contains info needed to create a window
+\=================================================================================================*/
+
 struct WindowSettings
 {
-    DisplayMode     displayMode = DisplayMode::WINDOWED;
-    GraphicsLibrary library     = GraphicsLibrary::OPEN_GL;
-    PixelDimensions dimensions  = PixelDimensions(800, 600);
-    bool            isResizable = true;
-    std::string     title       = "No title";
+    DisplayMode     DisplayMode = DisplayMode::WINDOWED;
+    GraphicsLibrary Library     = GraphicsLibrary::OPEN_GL;
+    PixelDimensions Dimensions  = PixelDimensions(800, 600);
+    bool            IsResizable = true;
+    std::string     Title       = "No title";
 };
 
 }}

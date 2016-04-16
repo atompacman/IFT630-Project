@@ -13,11 +13,11 @@ int main()
 
     // Set window settings
     alpp::render::WindowSettings winSettings;
-    winSettings.displayMode = alpp::render::DisplayMode::WINDOWED;
-    winSettings.library     = alpp::render::GraphicsLibrary::OPEN_GL;
-    winSettings.dimensions  = INIT_WIN_DIM;
-    winSettings.isResizable = true;
-    winSettings.title       = "Test";
+    winSettings.DisplayMode = alpp::render::DisplayMode::WINDOWED;
+    winSettings.Library     = alpp::render::GraphicsLibrary::OPEN_GL;
+    winSettings.Dimensions  = INIT_WIN_DIM;
+    winSettings.IsResizable = true;
+    winSettings.Title       = "Test";
 
     // Create game loop
     auto gameloop = std::make_shared<GameLoop>(winSettings);

@@ -1,6 +1,12 @@
 #ifndef ALPP_CORE
 #define ALPP_CORE
 
+/*================================================================================================\\
+| Common structures and definitions shared across the Allegro++ wrapper library
+|--------------------------------------------------------------------------------------------------|
+| Allegro validation macros, typedefs, the library initialization method method, constants, etc. 
+\=================================================================================================*/
+
 #include <aplib/Vector2D.h>
 
 #include <memory>

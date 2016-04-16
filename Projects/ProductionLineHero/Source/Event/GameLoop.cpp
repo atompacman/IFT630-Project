@@ -15,7 +15,7 @@ GameLoop::GameLoop(alpp::render::WindowSettings i_WinSettings) :
     m_Budget(),
     m_ObjectToCreate(CreatableObjectType::NONE),
     m_State(GameState::IDLE_MODE),
-    m_MouseHoverPixelPos(i_WinSettings.dimensions.x + 1, i_WinSettings.dimensions.y + 1),
+    m_MouseHoverPixelPos(i_WinSettings.Dimensions.x + 1, i_WinSettings.Dimensions.y + 1),
     m_CreationDir(CardinalDir::NORTH)
 {
     // Create game UI
@@ -45,8 +45,8 @@ void GameLoop::ResizeUI(PixelDimensions i_WindowSize)
 
 void GameLoop::InitUI(alpp::render::WindowSettings i_WinSettings)
 {
-    WorldCoords creationMenuSize(i_WinSettings.dimensions.x, 100);
-    WorldCoords creationMenuPos(0, i_WinSettings.dimensions.y - creationMenuSize.y);
+    WorldCoords creationMenuSize(i_WinSettings.Dimensions.x, 100);
+    WorldCoords creationMenuPos(0, i_WinSettings.Dimensions.y - creationMenuSize.y);
 
     // Create the Creation Menu
     CreationMenu * creationMenu = new CreationMenu(creationMenuPos, creationMenuSize, al_map_rgb(200,200,200));

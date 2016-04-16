@@ -11,6 +11,13 @@ struct ALLEGRO_TIMER;
 
 namespace alpp { namespace event {
 
+/*================================================================================================\\
+| Manages the main update loop and all other registered event Agents
+|--------------------------------------------------------------------------------------------------|
+| Being an Agent itself, the Gameloop sends application update messages that call the abstract 
+| tick() method and that tells its publically available Renderer to flip the backbuffer.
+\=================================================================================================*/
+
 class GameLoop : public Agent, std::enable_shared_from_this<GameLoop>
 {
 public:

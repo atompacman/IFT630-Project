@@ -10,7 +10,13 @@
 
 class Workshop;
 
-// Represents a worker in a workshop
+/*================================================================================================\\
+| Autonomous entity running on its own thread that manipulates resources in the stacks of a workshop
+|--------------------------------------------------------------------------------------------------|
+| In the constructor, a thread is started where the worker continuously queries its workshop for
+| resources in stacks, transport them and manipulate them.
+\=================================================================================================*/
+
 class Worker
 {
 public:

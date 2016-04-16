@@ -9,6 +9,10 @@ namespace alpp { namespace event {
 
 class GameLoop;
 
+/*================================================================================================\\
+| Base class of any real-time agent that can both generate events and handle those events
+\=================================================================================================*/
+
 class Agent : public AllegroInitializable
 {
     friend GameLoop;

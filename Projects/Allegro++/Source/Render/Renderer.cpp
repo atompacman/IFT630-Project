@@ -49,31 +49,31 @@ void alpp::render::Renderer::createWindow(WindowSettings i_WinSettings)
 {
     // Create window
     auto displayFlags = 0;
-    displayFlags |= static_cast<int>(i_WinSettings.displayMode);
-    displayFlags |= static_cast<int>(i_WinSettings.library);
-    displayFlags |= i_WinSettings.isResizable ? ALLEGRO_RESIZABLE : 0;
+    displayFlags |= static_cast<int>(i_WinSettings.DisplayMode);
+    displayFlags |= static_cast<int>(i_WinSettings.Library);
+    displayFlags |= i_WinSettings.IsResizable ? ALLEGRO_RESIZABLE : 0;
 
     al_set_new_display_flags(displayFlags);
 
-    if (i_WinSettings.title.length() > ALLEGRO_NEW_WINDOW_TITLE_MAX_SIZE)
+    if (i_WinSettings.Title.length() > ALLEGRO_NEW_WINDOW_TITLE_MAX_SIZE)
     {
         LOG(WARNING) << "Window title is too long";
     }
     else
     {
-        al_set_new_window_title(i_WinSettings.title.c_str());
+        al_set_new_window_title(i_WinSettings.Title.c_str());
     }
 
     LOG(INFO) << "Creating window";
 
-    if (i_WinSettings.displayMode == DisplayMode::FULLSCREEN)
+    if (i_WinSettings.DisplayMode == DisplayMode::FULLSCREEN)
     {
         struct ALLEGRO_DISPLAY_MODE bestRes;
         al_get_display_mode(al_get_num_display_modes() - 1, &bestRes);
-        i_WinSettings.dimensions = PixelDimensions(bestRes.width, bestRes.height);
+        i_WinSettings.Dimensions = PixelDimensions(bestRes.width, bestRes.height);
     }
 
-    CHECK_AL_FUNC(al_create_display(i_WinSettings.dimensions.x, i_WinSettings.dimensions.y),
+    CHECK_AL_FUNC(al_create_display(i_WinSettings.Dimensions.x, i_WinSettings.Dimensions.y),
         m_Window, m_InitSuccess, "Could not create Window");
 
     // Set default cursor
@@ -116,7 +116,8 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
         al_clear_to_color(al_map_rgb(0, 0, 0));
 
         // Execute World commands with camera transform
-        executeCommands(Camera->getTransform(windowSize()), m_CmdQueues[2 * int(Layer::WORLD) + m_CurrQueue]);
+        executeCommands(Camera->getTransform(windowSize()), 
+                        m_CmdQueues[2 * int(Layer::WORLD) + m_CurrQueue]);
 
         // Execute UI commands with identity transform
         executeCommands(&identityTranform, m_CmdQueues[2 * int(Layer::UI) + m_CurrQueue]);
@@ -135,7 +136,8 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     m_DrawingStarted.notify_one();
 }
 
-void alpp::render::Renderer::executeCommands(ALLEGRO_TRANSFORM * i_Transform, std::queue<sptr<Command>> & i_Queue)
+void alpp::render::Renderer::executeCommands(ALLEGRO_TRANSFORM *         i_Transform, 
+                                             std::queue<sptr<Command>> & i_Queue)
 {
     // Apply transform
     al_use_transform(i_Transform);

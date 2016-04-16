@@ -14,7 +14,15 @@ struct ALLEGRO_TRANSFORM;
 
 namespace alpp { namespace render {
 
-class  Camera;
+class Camera;
+
+/*================================================================================================\\
+| Manages window creation and render command execution
+|--------------------------------------------------------------------------------------------------|
+| In its constructor, the Renderer starts the render thread, who is responsible to create the
+| application window as well to execute render commands contained in the command queues. Command
+| can be enqueue via the enqueueCommand method through the main thread instance of the Renderer.
+\=================================================================================================*/
 
 class Renderer : public event::Agent
 {

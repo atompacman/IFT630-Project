@@ -14,7 +14,7 @@ Worker::Worker(sptr<Workshop> i_Workshop, float i_Speed) :
     m_Workshop     (i_Workshop)
 {
     // Put the worker at a random place inside the workshop
-    m_Pos  = WorldCoords(i_Workshop->getUpperLeftPixelPos());
+    m_Pos  = WorldCoords(i_Workshop->upperLeftPixelPos());
     m_Pos += WorldCoords(randUNorm(), randUNorm()) * 
         (WorldCoords(WORKSHOP_SIZE) - static_cast<float>(2 * WORKER_RADIUS));
     m_Pos += WORKER_RADIUS;

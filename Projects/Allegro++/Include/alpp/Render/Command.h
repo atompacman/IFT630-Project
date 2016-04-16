@@ -7,9 +7,6 @@
 
 #include <alpp/Core.h>
 
-struct ALLEGRO_DISPLAY;
-struct ALLEGRO_FONT;
-
 namespace alpp { namespace render {
 
 enum class Layer
@@ -18,6 +15,13 @@ enum class Layer
     UI,
     MAX
 };
+
+/*================================================================================================\\
+| Rendering commands that can be enqueued by the Renderer
+|--------------------------------------------------------------------------------------------------|
+| Commands have an assigned layer: WORLD if the camera transform should be applied on the command
+| and UI if it should not. UI commands are also rendered on top of the world commands.
+\=================================================================================================*/
 
 struct Command
 {
@@ -47,7 +51,8 @@ struct DrawLine : Command
 
     void execute() override
     {
-        al_draw_line(BegPos.x + 0.5, BegPos.y + 0.5, EndPos.x + 0.5, EndPos.y + 0.5, Color, Thickness);
+        al_draw_line(BegPos.x + 0.5, BegPos.y + 0.5, EndPos.x + 0.5, 
+                     EndPos.y + 0.5, Color, Thickness);
     }
 };
 

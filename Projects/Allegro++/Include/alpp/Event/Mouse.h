@@ -5,6 +5,12 @@
 
 namespace alpp { namespace event {
 
+/*================================================================================================\\
+| Base class for mouse input handling
+|--------------------------------------------------------------------------------------------------|
+| Virtual protected methods can be overided to add a behavior for certain types of input.
+\=================================================================================================*/    
+
 class Mouse : public Agent
 {
 public:

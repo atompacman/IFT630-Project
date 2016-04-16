@@ -7,6 +7,12 @@
 
 namespace alpp { namespace event {
 
+/*================================================================================================\\
+| Base class for keyboard input handling
+|--------------------------------------------------------------------------------------------------|
+| Virtual protected methods can be overided to add a behavior for certain types of input.
+\=================================================================================================*/
+
 class Keyboard : public Agent
 {
 public:

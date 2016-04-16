@@ -1,6 +1,13 @@
 #ifndef APLIB_RANDOM
 #define APLIB_RANDOM
 
+/*================================================================================================\\
+| Utiliies for generating pseudo-random numbers
+|--------------------------------------------------------------------------------------------------|
+| A global instance of the std::mt19937 generator is used to sample random distributions via utilty
+| functions.
+\=================================================================================================*/
+
 #include <cassert>
 #include <chrono>
 #include <random>
@@ -11,7 +18,7 @@ long long const g_Seed(std::chrono::high_resolution_clock::now().time_since_epoc
 static std::mt19937 g_MarsenneTwister(static_cast<uint32_t>(g_Seed));
 
 std::uniform_real_distribution<double> const g_UniformUNormDist  (0.0, 1.0);
-std::uniform_int_distribution<int>     const g_UniformBooleanDist(0, 1);
+std::uniform_int_distribution <int>    const g_UniformBooleanDist(0,   1);
 
 inline double randUNorm()
 {
