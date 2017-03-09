@@ -170,6 +170,11 @@
     <ClInclude Include="..\Include\plh\Worker.h" />
     <ClInclude Include="..\Include\plh\Workshop.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Allegro++\Project\Allegro++.vcxproj">
+      <Project>{346a3c7f-c278-4888-9d2d-7d2b17e8d088}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\..\Solution\packages\Allegro.5.2.0.0\build\native\Allegro.targets" Condition="Exists('..\..\..\Solution\packages\Allegro.5.2.0.0\build\native\Allegro.targets')" />
