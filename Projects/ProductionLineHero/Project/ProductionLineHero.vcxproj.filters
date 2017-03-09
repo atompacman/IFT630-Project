@@ -9,10 +9,13 @@
       <UniqueIdentifier>{b793319e-ee3b-48cb-bff0-215884708f59}</UniqueIdentifier>
     </Filter>
     <Filter Include="Include">
-      <UniqueIdentifier>{67b31b38-8248-49e5-bc99-8758b39e2335}</UniqueIdentifier>
+      <UniqueIdentifier>{27fa72f8-4087-44c5-98c7-8d44eb37be9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include\aplib">
-      <UniqueIdentifier>{2b10d2fb-c503-408a-bf52-294073d30ae1}</UniqueIdentifier>
+    <Filter Include="Source\Event">
+      <UniqueIdentifier>{8e2e4e05-64e0-4388-9a69-09a127eece45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Event">
+      <UniqueIdentifier>{be06d6fe-fa1c-472a-a5ea-b64e0e016ebc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +37,33 @@
     <ClCompile Include="..\Source\Resource.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Treadmill.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\Mouse.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\GameLoop.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Event\Keyboard.cpp">
+      <Filter>Source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ResourceSupplier.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CreationMenu.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CreationButton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Budget.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BudgetTab.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Allegro++\Project\packages.config">
@@ -41,32 +71,53 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Factory.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Resource.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Workshop.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\ResourceStack.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\ResourceStack.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Worker.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Worker.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Workshop.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Resource.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Common.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Common.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\Include\plh\Factory.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Direction2D.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Treadmill.h">
+      <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Vector2D.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Event\Keyboard.h">
+      <Filter>Include\Event</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\aplib\Random.h">
-      <Filter>Include\aplib</Filter>
+    <ClInclude Include="..\Include\plh\Event\Mouse.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Event\GameLoop.h">
+      <Filter>Include\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\ResourceSupplier.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\UIElement.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\CreationMenu.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\CreationButton.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\Budget.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\plh\BudgetTab.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

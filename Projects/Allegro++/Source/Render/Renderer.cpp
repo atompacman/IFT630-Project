@@ -1,28 +1,25 @@
-// allegro
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/display.h>
 
-// alpp
-#include <Render/Command.h>
-#include <Render/Renderer.h>
+#include <alpp/Render/Camera.h>
+#include <alpp/Render/Renderer.h>
 
-// el
 #include <easylogging++.h>
 
-// std
 #include <thread>
 
 alpp::render::Renderer::Renderer(WindowSettings i_WinSettings) :
     Agent(),
-    StandardFont           (nullptr),
-    m_Window               (nullptr),
-    m_CurrQueue            (0),
-    m_StopRenderThread     (false),
-    m_CmdQueues            (),
-    m_RenderThreadMutex    (),
-    m_Flip                 (),
-    m_DrawingStarted()
+    Camera             (std::make_shared<render::Camera>()),
+    StandardFont       (nullptr),
+    m_Window           (nullptr),
+    m_CurrQueue        (0),
+    m_StopRenderThread (false),
+    m_CmdQueues        (),
+    m_RenderThreadMutex(),
+    m_Flip             (),
+    m_DrawingStarted   ()
 {
     // Initialize primitive addon
     CHECK_BOOL_AL_FUNC(al_init_primitives_addon(), m_InitSuccess,
@@ -52,32 +49,31 @@ void alpp::render::Renderer::createWindow(WindowSettings i_WinSettings)
 {
     // Create window
     auto displayFlags = 0;
-    displayFlags |= static_cast<int>(i_WinSettings.displayMode);
-    displayFlags |= static_cast<int>(i_WinSettings.library);
-    displayFlags |= i_WinSettings.isResizable ? ALLEGRO_RESIZABLE : 0;
+    displayFlags |= static_cast<int>(i_WinSettings.DisplayMode);
+    displayFlags |= static_cast<int>(i_WinSettings.Library);
+    displayFlags |= i_WinSettings.IsResizable ? ALLEGRO_RESIZABLE : 0;
 
     al_set_new_display_flags(displayFlags);
 
-    if (i_WinSettings.title.length() > ALLEGRO_NEW_WINDOW_TITLE_MAX_SIZE)
+    if (i_WinSettings.Title.length() > ALLEGRO_NEW_WINDOW_TITLE_MAX_SIZE)
     {
         LOG(WARNING) << "Window title is too long";
     }
     else
     {
-        al_set_new_window_title(i_WinSettings.title.c_str());
+        al_set_new_window_title(i_WinSettings.Title.c_str());
     }
 
     LOG(INFO) << "Creating window";
 
-    if (i_WinSettings.displayMode == DisplayMode::FULLSCREEN)
+    if (i_WinSettings.DisplayMode == DisplayMode::FULLSCREEN)
     {
         struct ALLEGRO_DISPLAY_MODE bestRes;
         al_get_display_mode(al_get_num_display_modes() - 1, &bestRes);
-        i_WinSettings.width = bestRes.width;
-        i_WinSettings.height = bestRes.height;
+        i_WinSettings.Dimensions = PixelDimensions(bestRes.width, bestRes.height);
     }
 
-    CHECK_AL_FUNC(al_create_display(i_WinSettings.width, i_WinSettings.height),
+    CHECK_AL_FUNC(al_create_display(i_WinSettings.Dimensions.x, i_WinSettings.Dimensions.y),
         m_Window, m_InitSuccess, "Could not create Window");
 
     // Set default cursor
@@ -109,21 +105,22 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     // Notify main thread that drawing started
     m_DrawingStarted.notify_one();
 
+    // Identity transform (for UI layer)
+    ALLEGRO_TRANSFORM identityTranform;
+    al_identity_transform(&identityTranform);
+
     // Until thread is asked to stop (by main thread destructor)
     while (!m_StopRenderThread)
     {   
         // Clear frame
         al_clear_to_color(al_map_rgb(0, 0, 0));
 
-        // Get the current draw command queue
-        auto & queue = m_CmdQueues[m_CurrQueue];
+        // Execute World commands with camera transform
+        executeCommands(Camera->getTransform(windowSize()), 
+                        m_CmdQueues[2 * int(Layer::WORLD) + m_CurrQueue]);
 
-        // Execute all commands
-        while (!queue.empty())
-        {
-            queue.front()->execute();
-            queue.pop();
-        }
+        // Execute UI commands with identity transform
+        executeCommands(&identityTranform, m_CmdQueues[2 * int(Layer::UI) + m_CurrQueue]);
 
         // Wait for main thread to flip display
         m_Flip.wait(lock);
@@ -139,10 +136,24 @@ void alpp::render::Renderer::runRenderThread(WindowSettings i_WinSettings)
     m_DrawingStarted.notify_one();
 }
 
+void alpp::render::Renderer::executeCommands(ALLEGRO_TRANSFORM *         i_Transform, 
+                                             std::queue<sptr<Command>> & i_Queue)
+{
+    // Apply transform
+    al_use_transform(i_Transform);
+
+    // Execute commands
+    while (!i_Queue.empty())
+    {
+        i_Queue.front()->execute();
+        i_Queue.pop();
+    }
+}
+
 void alpp::render::Renderer::enqueueCommand(sptr<Command> i_Cmd)
 {
     // Enqueue command in a the queue that will be used to draw the next frame
-    m_CmdQueues[!m_CurrQueue].push(i_Cmd);
+    m_CmdQueues[2 * int(i_Cmd->Layer) + !m_CurrQueue].push(i_Cmd);
 }
 
 void alpp::render::Renderer::flip()
@@ -172,6 +183,11 @@ bool alpp::render::Renderer::handleEvent(ALLEGRO_EVENT i_Event)
     }
 
     return true;
+}
+
+PixelDimensions alpp::render::Renderer::windowSize() const
+{
+    return PixelDimensions(al_get_display_width(m_Window), al_get_display_height(m_Window));
 }
 
 ALLEGRO_EVENT_SOURCE* alpp::render::Renderer::getEventSource() const

@@ -1,60 +1,96 @@
-// allegro
 #include <allegro5/mouse.h>
 
-// alpp
-#include <Core.h>
-#include <Event/Mouse.h>
+#include <alpp/Core.h>
+#include <alpp/Event/Mouse.h>
 
-// el
 #include <easylogging++.h>
 
-alpp::event::Mouse::Mouse() :
+alpp::event::Mouse::Mouse(float i_MaxDurationForClickMS) :
     Agent(),
-    m_PressedButtons(),
-    m_PosX          (0),
-    m_PosY          (0),
-    m_DeltaX        (0),
-    m_DeltaY        (0),
-    m_DeltaScroll   (0)
+    PressedButtons          (),
+    Position                (),
+    DeltaPos                (),
+    DeltaScroll             (0),
+    m_MaxDurationForClickSec(i_MaxDurationForClickMS / 1000.),
+    m_PressedTimestamps     ()
 {
     CHECK_BOOL_AL_FUNC(al_install_mouse(), m_InitSuccess, "Could not initialize mouse");
 }
 
 bool alpp::event::Mouse::handleEvent(ALLEGRO_EVENT i_Event)
 {
+    auto button = Button(i_Event.mouse.button);
+
     switch (i_Event.type)
     {
     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-        if (i_Event.mouse.button < MAX_NUM_BUTTONS)
+        if (i_Event.mouse.button >= NUM_BUTTONS)
         {
-            m_PressedButtons[i_Event.mouse.button] = true;
+            LOG(WARNING) << "Cannot handle mouse buttons over " << NUM_BUTTONS;
+            return true;
         }
-        else
+
+        PressedButtons     [i_Event.mouse.button] = true;
+        m_PressedTimestamps[i_Event.mouse.button] = i_Event.any.timestamp;
+
+        switch (button)
         {
-            LOG(WARNING) << "Cannot handle mouse button over " << MAX_NUM_BUTTONS;
+        case Button::Left  : onLeftPressed();              break;
+        case Button::Right : onRightPressed();             break;
+        case Button::Middle: onMiddlePressed();            break;
+        default:             onOtherButtonPressed(button); break;
         }
-        onButtonPressed(i_Event.mouse.button);
+
         break;
 
     case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-        if (i_Event.mouse.button < MAX_NUM_BUTTONS)
+        if (i_Event.mouse.button >= NUM_BUTTONS)
         {
-            m_PressedButtons[i_Event.mouse.button] = false;
+            LOG(WARNING) << "Cannot handle mouse buttons over " << NUM_BUTTONS;
+            return true;
         }
-        else
+
+        PressedButtons[i_Event.mouse.button] = false;
+
+        switch (button)
         {
-            LOG(WARNING) << "Cannot handle mouse button over " << MAX_NUM_BUTTONS;
+        case Button::Left  : onLeftReleased();              break;
+        case Button::Right : onRightReleased();             break;
+        case Button::Middle: onMiddleReleased();            break;
+        default:             onOtherButtonReleased(button); break;
         }
-        onButtonReleased(i_Event.mouse.button);
+
+        // Handle rapid clicks
+        if (i_Event.any.timestamp - m_PressedTimestamps[i_Event.mouse.button] 
+                > m_MaxDurationForClickSec)
+        {
+            return true;
+        }
+
+        switch (button)
+        {
+        case Button::Left:   onLeftClick();              break;
+        case Button::Right:  onRightClick();             break;
+        case Button::Middle: onMiddleClick();            break;
+        default:             onOtherButtonClick(button); break;
+        }
+
         break;
 
     case ALLEGRO_EVENT_MOUSE_AXES:
-        m_PosX        = i_Event.mouse.x;
-        m_PosY        = i_Event.mouse.y;
-        m_DeltaX      = i_Event.mouse.dx;
-        m_DeltaY      = i_Event.mouse.dy;
-        m_DeltaScroll = i_Event.mouse.dy;
-        onMouseMoved();
+        Position    = PixelCoords(i_Event.mouse.x, i_Event.mouse.y);
+        DeltaPos    = Vector2D<int16_t>(i_Event.mouse.dx, i_Event.mouse.dy);
+        DeltaScroll = i_Event.mouse.dz;
+        
+        if (DeltaPos != Vector2D<int16_t>(0, 0))
+        {
+            onMouseMoved();
+        }
+        if (DeltaScroll != 0)
+        {
+            onScroll();
+        }
+        
         break;
     }
 

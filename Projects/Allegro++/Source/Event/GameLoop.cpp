@@ -1,18 +1,15 @@
-// allegro
 #include <allegro5/events.h>
 #include <allegro5/timer.h>
 
-// alpp
-#include <Core.h>
-#include <Event/GameLoop.h>
+#include <alpp/Core.h>
+#include <alpp/Event/GameLoop.h>
 
-// el
 #include <easylogging++.h>
 
 alpp::event::GameLoop::GameLoop(render::WindowSettings i_WinSettings,
                                 double                 i_TargetFPS /* = 60. */) :
     Agent(),
-    m_Renderer         (std::make_shared<render::Renderer>(i_WinSettings)),
+    Renderer           (std::make_shared<render::Renderer>(i_WinSettings)),
     m_EventQueue       (nullptr),
     m_EventAgents      (),
     m_Ticker           (nullptr),
@@ -24,7 +21,7 @@ alpp::event::GameLoop::GameLoop(render::WindowSettings i_WinSettings,
     CHECK_AL_FUNC(al_create_timer(1.0 / i_TargetFPS), m_Ticker, m_InitSuccess, 
                   "Could not create ticker timer");
    
-    registerAgent(m_Renderer);
+    registerAgent(Renderer);
 
     m_TickerEventSource = al_get_timer_event_source(m_Ticker);
 }
@@ -48,14 +45,14 @@ bool alpp::event::GameLoop::handleEvent(ALLEGRO_EVENT /* i_Event */)
     auto success = tick();
 
     // Flip display (or wait after render thread to finish current frame)
-    m_Renderer->flip();
+    Renderer->flip();
 
     return success;
 }
 
 ALLEGRO_EVENT_SOURCE * alpp::event::GameLoop::getEventSource() const
 {
-    return al_get_timer_event_source(m_Ticker);
+    return m_TickerEventSource;
 }
 
 void alpp::event::GameLoop::run()

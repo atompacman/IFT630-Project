@@ -1,10 +1,14 @@
 #ifndef APLIB_VECTOR_2D
 #define APLIB_VECTOR_2D
 
-// aplib
+/*================================================================================================\\
+| 2D mathematical vector of type T
+|--------------------------------------------------------------------------------------------------|
+| Supports a variety of standard vectorial operators.
+\=================================================================================================*/
+
 #include <aplib/Direction2D.h>
 
-// std
 #include <sstream>
 
 template <typename T>
@@ -13,24 +17,20 @@ struct Vector2D
     T x;
     T y;
 
-    Vector2D<T>() 
-    {
+    Vector2D<T>() :
+        x(),
+        y()
+    {}
 
-    }
-
-    Vector2D<T>(T i_X, T i_Y) : 
+    Vector2D<T>(T const & i_X, T const & i_Y) : 
         x(i_X), 
         y(i_Y)
-    {
-        
-    }
+    {}
 
     Vector2D<T>(Vector2D<T> const & i_Other) : 
         x(i_Other.x), 
         y(i_Other.y)
-    {
-        
-    }
+    {}
 
     template <typename U>
     operator Vector2D<U>() const

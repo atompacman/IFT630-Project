@@ -1,9 +1,15 @@
 #ifndef ALPP_CORE
 #define ALPP_CORE
 
-// std
+/*================================================================================================\\
+| Common structures and definitions shared across the Allegro++ wrapper library
+|--------------------------------------------------------------------------------------------------|
+| Allegro validation macros, typedefs, the library initialization method method, constants, etc. 
+\=================================================================================================*/
+
+#include <aplib/Vector2D.h>
+
 #include <memory>
-#include <string>
 
 #define CHECK_BOOL_AL_FUNC(funcCall, successFlag, errorMsg) \
     if (!funcCall) \
@@ -26,7 +32,12 @@ using sptr = std::shared_ptr<T>;
 template <typename T>
 using sptrc = std::shared_ptr<T const>;
 
-namespace alpp {
+typedef Vector2D<uint16_t> PixelCoords;
+typedef Vector2D<uint16_t> PixelDimensions;
+typedef Vector2D<float>    WorldCoords;
+
+namespace alpp 
+{
 
 bool init(std::string const & i_LoggerConfigFilePath);
 
@@ -43,6 +54,15 @@ protected:
 
     bool m_InitSuccess;
 };
+
+namespace render
+{
+
+// Standard font path
+char const * const FONT_FILE = "C:\\Windows\\Fonts\\ARIAL.TTF";
+uint16_t const     FONT_SIZE = 20;
+
+}
 
 }
 
