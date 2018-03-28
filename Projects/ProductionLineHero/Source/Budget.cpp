@@ -2,12 +2,12 @@
 
 void Budget::deposit(Dollar i_Amount)
 {
-    std::unique_lock<std::mutex>(m_Mutex);
+    std::unique_lock<std::mutex> g(m_Mutex);
     m_Balance += i_Amount;
 }
 
 void Budget::withdraw(Dollar i_Amount)
 {
-    std::unique_lock<std::mutex>(m_Mutex);
+    std::unique_lock<std::mutex> g(m_Mutex);
     m_Balance -= i_Amount;
 }
